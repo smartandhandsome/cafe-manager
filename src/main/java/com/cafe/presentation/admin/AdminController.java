@@ -5,6 +5,7 @@ import com.cafe.common.MyCafeResponse;
 import com.cafe.service.admin.AdminService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
+import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -21,7 +22,7 @@ public class AdminController {
 
     @Operation(description = "관리자 회원가입")
     @PostMapping
-    public MyCafeResponse<Void> signUp(@RequestBody SignUpRequest signupRequest) {
+    public MyCafeResponse<Void> signUp(@RequestBody @Valid SignUpRequest signupRequest) {
         adminService.signUp(signupRequest.toSignUpForm());
         return MyCafeResponse.success();
     }
