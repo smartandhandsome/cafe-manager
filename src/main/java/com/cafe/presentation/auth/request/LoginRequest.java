@@ -1,6 +1,6 @@
-package com.cafe.presentation.admin.request;
+package com.cafe.presentation.auth.request;
 
-import com.cafe.service.admin.vo.LoginForm;
+import com.cafe.service.auth.vo.LoginForm;
 
 public record LoginRequest(
         String phoneNumber,

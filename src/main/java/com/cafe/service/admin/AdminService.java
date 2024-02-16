@@ -17,8 +17,8 @@ public class AdminService {
     private final AdminCreator adminCreator;
 
     public void signUp(SignUpForm signUpForm) {
-        EncryptedSignUpForm encryptedSignUpForm = sensitiveDataEncryptor.encrypt(signUpForm);
         adminValidator.validate(signUpForm);
+        EncryptedSignUpForm encryptedSignUpForm = sensitiveDataEncryptor.encrypt(signUpForm);
         adminCreator.create(encryptedSignUpForm);
     }
 

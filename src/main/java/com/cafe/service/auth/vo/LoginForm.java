@@ -1,4 +1,4 @@
-package com.cafe.service.admin.vo;
+package com.cafe.service.auth.vo;
 
 public record LoginForm(
         String phoneNumber,

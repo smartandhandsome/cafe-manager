@@ -1,7 +1,7 @@
 package com.cafe.presentation.admin;
 
-import com.cafe.presentation.admin.request.SignUpRequest;
 import com.cafe.common.MyCafeResponse;
+import com.cafe.presentation.admin.request.SignUpRequest;
 import com.cafe.service.admin.AdminService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
@@ -22,7 +22,7 @@ public class AdminController {
 
     @Operation(description = "관리자 회원가입")
     @PostMapping
-    public MyCafeResponse<Void> signUp(@RequestBody @Valid SignUpRequest signupRequest) {
+    public MyCafeResponse<Void> requestSignUp(@RequestBody @Valid SignUpRequest signupRequest) {
         adminService.signUp(signupRequest.toSignUpForm());
         return MyCafeResponse.success();
     }
