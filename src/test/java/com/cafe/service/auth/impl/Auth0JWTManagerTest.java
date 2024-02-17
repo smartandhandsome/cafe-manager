@@ -5,6 +5,7 @@ import com.cafe.exception.ExpiredTokenException;
 import com.cafe.exception.IllegalTokenException;
 import com.cafe.service.admin.impl.AdminReader;
 import com.cafe.service.auth.vo.AuthToken;
+import com.cafe.service.auth.vo.AuthTokenFixture;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayNameGeneration;
 import org.junit.jupiter.api.DisplayNameGenerator;
@@ -83,20 +84,20 @@ class Auth0JWTManagerTest {
             // then
             String tokenValue = authToken.value();
             assertThatThrownBy(() -> expiredTokenManager.extractAdminId(tokenValue))
-                    .isInstanceOf(ExpiredTokenException.class);
+                    .isExactlyInstanceOf(ExpiredTokenException.class);
         }
 
         @Test
         void 올바르지_않은_토큰() {
             // given
-            AuthToken authToken = new AuthToken("invalid");
+            AuthToken authToken = AuthTokenFixture.ILLEGAL.newInstance();
 
             // when
 
             // then
             String tokenValue = authToken.value();
             assertThatThrownBy(() -> auth0JWTManager.extractAdminId(tokenValue))
-                    .isInstanceOf(IllegalTokenException.class);
+                    .isExactlyInstanceOf(IllegalTokenException.class);
         }
 
         private AuthToken getAuthToken(Auth0JWTManager auth0JWTManager) {

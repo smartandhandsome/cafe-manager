@@ -6,3 +6,7 @@ spring:
     properties:
       hibernate:
         format_sql: true
+
+jwt:
+  secret-key: secret
+  validity-in-millis: 1800000
