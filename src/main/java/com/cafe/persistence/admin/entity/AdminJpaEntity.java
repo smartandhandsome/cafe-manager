@@ -6,13 +6,16 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.Index;
 import jakarta.persistence.Table;
 import lombok.AccessLevel;
 import lombok.Builder;
+import lombok.Getter;
 import lombok.NoArgsConstructor;
 
+@Getter
 @Entity
-@Table(name = "admins")
+@Table(name = "admins", indexes = {@Index(name = "admin_phone_number_index", columnList = "phone_number")})
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 public class AdminJpaEntity extends BaseEntity {
 
@@ -31,5 +34,4 @@ public class AdminJpaEntity extends BaseEntity {
         this.phoneNumber = phoneNumber;
         this.encodedPassword = encodedPassword;
     }
-
 }

@@ -10,7 +10,7 @@ import org.springframework.web.filter.CharacterEncodingFilter;
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
 
 @Configuration
-public abstract class ControllerConfig {
+public abstract class ControllerTestConfig {
 
     @Bean
     public MockMvc mockMvc(WebApplicationContext context) {
