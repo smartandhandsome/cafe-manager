@@ -1,19 +1,18 @@
 package com.cafe.service.admin.impl;
 
-import com.cafe.persistence.admin.repository.AdminJpaRepository;
-import lombok.RequiredArgsConstructor;
-import org.springframework.stereotype.Component;
+import com.cafe.service.admin.vo.Admin;
 import org.springframework.transaction.annotation.Transactional;
 
-@Component
-@RequiredArgsConstructor
-public class AdminReader {
 
-    private final AdminJpaRepository adminJpaRepository;
+public interface AdminReader {
 
     @Transactional(readOnly = true)
-    public boolean hasDuplicatedPhoneNumber(String phoneNumber) {
-        return adminJpaRepository.existsByPhoneNumber(phoneNumber);
-    }
+    boolean hasDuplicatedPhoneNumber(String phoneNumber);
+
+    @Transactional(readOnly = true)
+    Admin readByPhoneNumber(String phoneNumber);
+
+    @Transactional(readOnly = true)
+    Long readAdminIdByPhoneNumber(String phoneNumber);
 
 }
