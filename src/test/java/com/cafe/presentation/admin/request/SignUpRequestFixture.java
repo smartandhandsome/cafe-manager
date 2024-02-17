@@ -1,14 +1,14 @@
 package com.cafe.presentation.admin.request;
 
 public enum SignUpRequestFixture {
-    STANDARD(Constants.phoneNumber, Constants.password),
-    NULL_PHONE_NUMBER(null, Constants.phoneNumber),
-    NULL_PASSWORD(Constants.phoneNumber, null),
+    STANDARD(Constants.PHONE_NUMBER, Constants.PASSWORD),
+    NULL_PHONE_NUMBER(null, Constants.PHONE_NUMBER),
+    NULL_PASSWORD(Constants.PHONE_NUMBER, null),
     NULL_PHONE_NUMBER_NULL_PASSWORD(null, null),
-    BLANK_PHONE_NUMBER(Constants.blank, Constants.password),
-    BLANK_PASSWORD(Constants.phoneNumber, Constants.blank),
-    BLANK_PHONE_NUMBER_BLANK_PASSWORD(Constants.blank, Constants.blank),
-    WRONG_PHONE_NUMBER(Constants.wrongPhoneNumber, Constants.password),
+    BLANK_PHONE_NUMBER(Constants.BLANK, Constants.PASSWORD),
+    BLANK_PASSWORD(Constants.PHONE_NUMBER, Constants.BLANK),
+    BLANK_PHONE_NUMBER_BLANK_PASSWORD(Constants.BLANK, Constants.BLANK),
+    WRONG_PHONE_NUMBER(Constants.WRONG_PHONE_NUMBER, Constants.PASSWORD),
     ;
 
     private final String phoneNumber;
@@ -23,11 +23,11 @@ public enum SignUpRequestFixture {
         return new SignUpRequest(phoneNumber, password);
     }
 
-    private static class Constants {
-        private static final String phoneNumber = "010-1234-5678";
-        private static final String password = "password";
-        private static final String blank = "";
-        private static final String wrongPhoneNumber = "0101-1111-112121";
+    private static final class Constants {
+        private static final String PHONE_NUMBER = "010-1234-5678";
+        private static final String PASSWORD = "password";
+        private static final String BLANK = "";
+        private static final String WRONG_PHONE_NUMBER = "0101-1111-112121";
     }
 
 }

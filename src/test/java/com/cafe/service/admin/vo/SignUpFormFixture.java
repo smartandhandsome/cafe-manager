@@ -15,7 +15,7 @@ public enum SignUpFormFixture {
         return new SignUpForm(phoneNumber, password);
     }
 
-    private static class Constants {
+    private static final class Constants {
         private static final String phoneNumber = "010-1234-5678";
         private static final String password = "password";
     }
