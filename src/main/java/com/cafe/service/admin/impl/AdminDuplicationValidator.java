@@ -1,12 +1,12 @@
 package com.cafe.service.admin.impl;
 
-import com.cafe.common.exception.DuplicatedResourceException;
+import com.cafe.exception.DuplicatedResourceException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
 
 import java.text.MessageFormat;
 
-import static com.cafe.common.ResponseMetadata.DUPLICATED_PHONE_NUMBER;
+import static com.cafe.exception.ErrorCode.DUPLICATED_PHONE_NUMBER;
 
 @Component
 @RequiredArgsConstructor

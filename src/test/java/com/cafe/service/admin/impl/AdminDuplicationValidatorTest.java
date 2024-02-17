@@ -1,6 +1,6 @@
 package com.cafe.service.admin.impl;
 
-import com.cafe.common.exception.DuplicatedResourceException;
+import com.cafe.exception.DuplicatedResourceException;
 import org.junit.jupiter.api.DisplayNameGeneration;
 import org.junit.jupiter.api.DisplayNameGenerator;
 import org.junit.jupiter.api.Nested;
