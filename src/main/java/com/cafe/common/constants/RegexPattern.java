@@ -1,4 +1,4 @@
-package com.cafe.constants;
+package com.cafe.common.constants;
 
 import lombok.NoArgsConstructor;
 

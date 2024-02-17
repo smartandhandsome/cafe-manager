@@ -1,4 +1,4 @@
-package com.cafe.exception;
+package com.cafe.common.exception;
 
 public class IllegalTokenException extends MyCafeException {
 

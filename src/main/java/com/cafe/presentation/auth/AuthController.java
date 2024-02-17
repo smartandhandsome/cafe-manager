@@ -1,6 +1,6 @@
 package com.cafe.presentation.auth;
 
-import com.cafe.common.MyCafeResponse;
+import com.cafe.common.model.MyCafeResponse;
 import com.cafe.presentation.auth.request.LoginRequest;
 import com.cafe.presentation.auth.response.LoginResponse;
 import com.cafe.service.auth.AuthService;

@@ -5,8 +5,8 @@ import com.auth0.jwt.JWTVerifier;
 import com.auth0.jwt.algorithms.Algorithm;
 import com.auth0.jwt.exceptions.JWTVerificationException;
 import com.auth0.jwt.exceptions.TokenExpiredException;
-import com.cafe.exception.ExpiredTokenException;
-import com.cafe.exception.IllegalTokenException;
+import com.cafe.common.exception.ExpiredTokenException;
+import com.cafe.common.exception.IllegalTokenException;
 import com.cafe.service.admin.impl.AdminReader;
 import com.cafe.service.auth.vo.AuthToken;
 import org.springframework.beans.factory.annotation.Value;
@@ -15,8 +15,8 @@ import org.springframework.stereotype.Component;
 import java.text.MessageFormat;
 import java.time.Instant;
 
-import static com.cafe.exception.ErrorCode.EXPIRED_TOKEN;
-import static com.cafe.exception.ErrorCode.ILLEGAL_TOKEN;
+import static com.cafe.common.exception.ErrorCode.EXPIRED_TOKEN;
+import static com.cafe.common.exception.ErrorCode.ILLEGAL_TOKEN;
 
 @Component
 public class Auth0JWTManager implements AuthTokenGenerator, AuthTokenExtractor {

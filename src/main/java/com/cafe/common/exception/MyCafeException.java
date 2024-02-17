@@ -1,4 +1,4 @@
-package com.cafe.exception;
+package com.cafe.common.exception;
 
 import lombok.Getter;
 

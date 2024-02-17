@@ -1,6 +1,6 @@
 package com.cafe.presentation.admin;
 
-import com.cafe.common.MyCafeResponse;
+import com.cafe.common.model.MyCafeResponse;
 import com.cafe.presentation.admin.request.SignUpRequest;
 import com.cafe.service.admin.AdminService;
 import io.swagger.v3.oas.annotations.Operation;

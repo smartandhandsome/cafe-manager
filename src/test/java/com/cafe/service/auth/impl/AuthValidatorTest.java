@@ -1,6 +1,6 @@
 package com.cafe.service.auth.impl;
 
-import com.cafe.exception.LoginFailException;
+import com.cafe.common.exception.LoginFailException;
 import com.cafe.service.admin.impl.AdminReader;
 import com.cafe.service.admin.vo.Admin;
 import com.cafe.service.admin.vo.AdminFixture;

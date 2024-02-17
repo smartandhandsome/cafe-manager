@@ -1,15 +1,12 @@
 package com.cafe.presentation.admin;
 
-import com.cafe.common.MyCafeResponse;
+import com.cafe.common.model.MyCafeResponse;
 import com.cafe.config.ControllerTestConfig;
-import com.cafe.exception.ErrorCode;
-import com.cafe.exception.GlobalExceptionHandler;
+import com.cafe.common.exception.ErrorCode;
 import com.cafe.presentation.admin.request.SignUpRequest;
 import com.cafe.presentation.admin.request.SignUpRequestFixture;
 import com.cafe.service.admin.AdminService;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import org.junit.jupiter.api.BeforeAll;
-import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayNameGeneration;
 import org.junit.jupiter.api.DisplayNameGenerator;
 import org.junit.jupiter.api.Nested;

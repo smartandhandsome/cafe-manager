@@ -1,6 +1,6 @@
-package com.cafe.common;
+package com.cafe.common.model;
 
-import com.cafe.exception.ErrorCode;
+import com.cafe.common.exception.ErrorCode;
 
 public record ResponseMetadata(
         int code,

@@ -5,7 +5,7 @@ import io.swagger.v3.oas.annotations.media.Schema;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.Pattern;
 
-import static com.cafe.constants.RegexPattern.PHONE_REGEX;
+import static com.cafe.common.constants.RegexPattern.PHONE_REGEX;
 
 @Schema(description = "로그인 요청 객체")
 public record LoginRequest(

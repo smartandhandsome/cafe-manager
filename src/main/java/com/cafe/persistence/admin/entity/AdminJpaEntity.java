@@ -1,6 +1,6 @@
 package com.cafe.persistence.admin.entity;
 
-import com.cafe.persistence.common.BaseEntity;
+import com.cafe.common.model.BaseEntity;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;

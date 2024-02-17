@@ -1,4 +1,4 @@
-package com.cafe.persistence.common;
+package com.cafe.common.model;
 
 import jakarta.persistence.EntityListeners;
 import jakarta.persistence.MappedSuperclass;

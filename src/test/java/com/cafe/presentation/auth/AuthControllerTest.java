@@ -1,8 +1,8 @@
 package com.cafe.presentation.auth;
 
-import com.cafe.common.MyCafeResponse;
+import com.cafe.common.model.MyCafeResponse;
 import com.cafe.config.ControllerTestConfig;
-import com.cafe.exception.ErrorCode;
+import com.cafe.common.exception.ErrorCode;
 import com.cafe.presentation.auth.request.LoginRequest;
 import com.cafe.presentation.auth.request.LoginRequestFixture;
 import com.cafe.presentation.auth.response.LoginResponse;
