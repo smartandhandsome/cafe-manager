@@ -1,8 +1,7 @@
-package com.cafe.auth.service.impl;
+package com.cafe.admin.service.impl;
 
-import com.cafe.admin.service.impl.AdminReader;
 import com.cafe.admin.service.vo.Admin;
-import com.cafe.auth.service.vo.LoginForm;
+import com.cafe.admin.service.vo.LoginForm;
 import com.cafe.common.exception.LoginFailException;
 import jakarta.persistence.EntityNotFoundException;
 import lombok.RequiredArgsConstructor;

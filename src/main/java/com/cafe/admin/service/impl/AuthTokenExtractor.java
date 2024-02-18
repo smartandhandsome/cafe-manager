@@ -1,4 +1,4 @@
-package com.cafe.auth.service.impl;
+package com.cafe.admin.service.impl;
 
 public interface AuthTokenExtractor {
 

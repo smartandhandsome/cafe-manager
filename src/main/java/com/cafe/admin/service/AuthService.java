@@ -1,9 +1,9 @@
-package com.cafe.auth.service;
+package com.cafe.admin.service;
 
-import com.cafe.auth.service.impl.AuthTokenGenerator;
-import com.cafe.auth.service.impl.AuthValidator;
-import com.cafe.auth.service.vo.AuthToken;
-import com.cafe.auth.service.vo.LoginForm;
+import com.cafe.admin.service.impl.AuthTokenGenerator;
+import com.cafe.admin.service.impl.AuthValidator;
+import com.cafe.admin.service.vo.AuthToken;
+import com.cafe.admin.service.vo.LoginForm;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 

@@ -2,6 +2,7 @@ package com.cafe.auth.service.impl;
 
 import com.auth0.jwt.JWT;
 import com.cafe.admin.service.impl.AdminReader;
+import com.cafe.admin.service.impl.Auth0JWTManager;
 import com.cafe.auth.service.vo.AuthToken;
 import com.cafe.auth.service.vo.AuthTokenFixture;
 import com.cafe.common.exception.ExpiredTokenException;

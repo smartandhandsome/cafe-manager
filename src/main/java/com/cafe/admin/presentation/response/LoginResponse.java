@@ -1,4 +1,4 @@
-package com.cafe.auth.presentation.response;
+package com.cafe.admin.presentation.response;
 
 public record LoginResponse(String value) {
 }

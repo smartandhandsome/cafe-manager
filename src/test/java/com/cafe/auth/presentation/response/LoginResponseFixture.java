@@ -1,5 +1,7 @@
 package com.cafe.auth.presentation.response;
 
+import com.cafe.admin.presentation.response.LoginResponse;
+
 public enum LoginResponseFixture {
     STANDARD,
     ;

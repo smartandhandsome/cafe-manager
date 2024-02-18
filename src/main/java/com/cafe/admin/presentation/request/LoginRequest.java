@@ -1,6 +1,6 @@
-package com.cafe.auth.presentation.request;
+package com.cafe.admin.presentation.request;
 
-import com.cafe.auth.service.vo.LoginForm;
+import com.cafe.admin.service.vo.LoginForm;
 import io.swagger.v3.oas.annotations.media.Schema;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.Pattern;

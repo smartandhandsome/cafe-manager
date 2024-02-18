@@ -1,9 +1,9 @@
-package com.cafe.auth.presentation;
+package com.cafe.admin.presentation;
 
-import com.cafe.auth.presentation.request.LoginRequest;
-import com.cafe.auth.presentation.response.LoginResponse;
-import com.cafe.auth.service.AuthService;
-import com.cafe.auth.service.vo.AuthToken;
+import com.cafe.admin.presentation.request.LoginRequest;
+import com.cafe.admin.presentation.response.LoginResponse;
+import com.cafe.admin.service.AuthService;
+import com.cafe.admin.service.vo.AuthToken;
 import com.cafe.common.model.MyCafeResponse;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;

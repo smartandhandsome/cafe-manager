@@ -1,10 +1,10 @@
 package com.cafe.auth.presentation;
 
-import com.cafe.auth.presentation.request.LoginRequest;
+import com.cafe.admin.presentation.request.LoginRequest;
 import com.cafe.auth.presentation.request.LoginRequestFixture;
-import com.cafe.auth.presentation.response.LoginResponse;
+import com.cafe.admin.presentation.response.LoginResponse;
 import com.cafe.auth.presentation.response.LoginResponseFixture;
-import com.cafe.auth.service.AuthService;
+import com.cafe.admin.service.AuthService;
 import com.cafe.auth.service.vo.AuthToken;
 import com.cafe.auth.service.vo.AuthTokenFixture;
 import com.cafe.common.config.ControllerTestConfig;

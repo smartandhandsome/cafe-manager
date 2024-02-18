@@ -1,6 +1,6 @@
-package com.cafe.auth.service.impl;
+package com.cafe.admin.service.impl;
 
-import com.cafe.auth.service.vo.AuthToken;
+import com.cafe.admin.service.vo.AuthToken;
 
 public interface AuthTokenGenerator {
 

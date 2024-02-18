@@ -1,5 +1,6 @@
 package com.cafe.auth.service.impl;
 
+import com.cafe.admin.service.impl.PasswordValidator;
 import org.junit.jupiter.api.DisplayNameGeneration;
 import org.junit.jupiter.api.DisplayNameGenerator;
 import org.junit.jupiter.api.Nested;

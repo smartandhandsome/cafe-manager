@@ -1,6 +1,8 @@
 package com.cafe.auth.service.impl;
 
 import com.cafe.admin.service.impl.AdminReader;
+import com.cafe.admin.service.impl.AuthValidator;
+import com.cafe.admin.service.impl.PasswordValidator;
 import com.cafe.admin.service.vo.Admin;
 import com.cafe.admin.service.vo.AdminFixture;
 import com.cafe.auth.service.vo.LoginForm;

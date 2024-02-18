@@ -1,7 +1,8 @@
 package com.cafe.auth.service;
 
-import com.cafe.auth.service.impl.AuthTokenGenerator;
-import com.cafe.auth.service.impl.AuthValidator;
+import com.cafe.admin.service.AuthService;
+import com.cafe.admin.service.impl.AuthTokenGenerator;
+import com.cafe.admin.service.impl.AuthValidator;
 import com.cafe.auth.service.vo.AuthToken;
 import com.cafe.auth.service.vo.AuthTokenFixture;
 import com.cafe.auth.service.vo.LoginForm;

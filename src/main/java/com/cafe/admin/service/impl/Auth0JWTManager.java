@@ -1,12 +1,11 @@
-package com.cafe.auth.service.impl;
+package com.cafe.admin.service.impl;
 
 import com.auth0.jwt.JWT;
 import com.auth0.jwt.JWTVerifier;
 import com.auth0.jwt.algorithms.Algorithm;
 import com.auth0.jwt.exceptions.JWTVerificationException;
 import com.auth0.jwt.exceptions.TokenExpiredException;
-import com.cafe.admin.service.impl.AdminReader;
-import com.cafe.auth.service.vo.AuthToken;
+import com.cafe.admin.service.vo.AuthToken;
 import com.cafe.common.exception.ExpiredTokenException;
 import com.cafe.common.exception.IllegalTokenException;
 import org.springframework.beans.factory.annotation.Value;

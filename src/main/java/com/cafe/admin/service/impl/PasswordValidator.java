@@ -1,4 +1,4 @@
-package com.cafe.auth.service.impl;
+package com.cafe.admin.service.impl;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.crypto.password.PasswordEncoder;
