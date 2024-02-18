@@ -1,5 +1,6 @@
 package com.cafe.product.persistance.repository;
 
+import com.cafe.common.model.BaseRepositoryTest;
 import com.cafe.product.persistance.entity.ProductInfoJpaEntity;
 import com.cafe.product.persistance.entity.ProductInfoJpaEntityFixture;
 import com.cafe.product.persistance.entity.ProductSizeJpaEntity;
@@ -19,7 +20,7 @@ import static org.assertj.core.api.Assertions.assertThatCode;
 @DataJpaTest
 @Import(ProductSizeJdbcRepository.class)
 @DisplayNameGeneration(DisplayNameGenerator.ReplaceUnderscores.class)
-class ProductSizeJdbcRepositoryTest {
+class ProductSizeJdbcRepositoryTest extends BaseRepositoryTest {
 
     @Autowired
     ProductSizeJdbcRepository productSizeJdbcRepository;
@@ -30,8 +31,9 @@ class ProductSizeJdbcRepositoryTest {
 
     @BeforeEach
     void setUp() {
-        productInfoJpaEntity = ProductInfoJpaEntityFixture.STANDARD.newInstance();
-        productInfoJpaRepository.save(productInfoJpaEntity);
+        productInfoJpaEntity = productInfoJpaRepository.save(ProductInfoJpaEntityFixture.STANDARD.newInstance());
+        System.out.println(productInfoJpaEntity.getCreatedDateTime());
+        System.out.println(productInfoJpaEntity.getLastModifiedDateTime());
     }
 
     @Test

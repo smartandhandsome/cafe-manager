@@ -1,10 +1,8 @@
-package com.cafe.auth.service.impl;
+package com.cafe.admin.service.impl;
 
 import com.auth0.jwt.JWT;
-import com.cafe.admin.service.impl.AdminReader;
-import com.cafe.admin.service.impl.Auth0JWTManager;
-import com.cafe.auth.service.vo.AuthToken;
-import com.cafe.auth.service.vo.AuthTokenFixture;
+import com.cafe.admin.service.vo.AuthToken;
+import com.cafe.admin.service.vo.AuthTokenFixture;
 import com.cafe.common.exception.ExpiredTokenException;
 import com.cafe.common.exception.IllegalTokenException;
 import org.junit.jupiter.api.BeforeEach;

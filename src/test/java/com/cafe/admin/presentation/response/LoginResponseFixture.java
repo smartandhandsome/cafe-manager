@@ -1,4 +1,4 @@
-package com.cafe.auth.presentation.response;
+package com.cafe.admin.presentation.response;
 
 import com.cafe.admin.presentation.response.LoginResponse;
 

@@ -1,4 +1,4 @@
-package com.cafe.auth.service.vo;
+package com.cafe.admin.service.vo;
 
 public enum AuthTokenFixture {
     STANDARD(Constants.TOKEN),

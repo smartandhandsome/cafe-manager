@@ -51,7 +51,7 @@ class ProductControllerTest {
 
         // when
         mvc.perform(
-                        post("/v1/products")
+                        post("/v1/products/infos")
                                 .contentType(APPLICATION_JSON)
                                 .content(requestBody)
                 )

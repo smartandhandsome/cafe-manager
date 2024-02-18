@@ -1,12 +1,9 @@
-package com.cafe.auth.service.impl;
+package com.cafe.admin.service.impl;
 
-import com.cafe.admin.service.impl.AdminReader;
-import com.cafe.admin.service.impl.AuthValidator;
-import com.cafe.admin.service.impl.PasswordValidator;
 import com.cafe.admin.service.vo.Admin;
 import com.cafe.admin.service.vo.AdminFixture;
-import com.cafe.auth.service.vo.LoginForm;
-import com.cafe.auth.service.vo.LoginFormFixture;
+import com.cafe.admin.service.vo.LoginForm;
+import com.cafe.admin.service.vo.LoginFormFixture;
 import com.cafe.common.exception.LoginFailException;
 import jakarta.persistence.EntityNotFoundException;
 import org.junit.jupiter.api.DisplayNameGeneration;

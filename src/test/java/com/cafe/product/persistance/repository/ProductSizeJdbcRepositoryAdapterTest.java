@@ -1,5 +1,6 @@
 package com.cafe.product.persistance.repository;
 
+import com.cafe.common.model.BaseRepositoryTest;
 import com.cafe.product.persistance.entity.ProductInfoJpaEntity;
 import com.cafe.product.persistance.entity.ProductInfoJpaEntityFixture;
 import com.cafe.product.service.vo.SizeRegistrationForm;
@@ -19,7 +20,7 @@ import static org.mockito.BDDMockito.then;
 
 @ExtendWith(MockitoExtension.class)
 @DisplayNameGeneration(DisplayNameGenerator.ReplaceUnderscores.class)
-class ProductSizeJdbcRepositoryAdapterTest {
+class ProductSizeJdbcRepositoryAdapterTest extends BaseRepositoryTest {
 
     @InjectMocks
     private ProductSizeJdbcRepositoryAdapter productSizeJdbcRepositoryAdapter;

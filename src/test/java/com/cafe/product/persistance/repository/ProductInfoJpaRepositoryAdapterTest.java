@@ -1,5 +1,6 @@
 package com.cafe.product.persistance.repository;
 
+import com.cafe.common.model.BaseRepositoryTest;
 import com.cafe.product.persistance.entity.ProductInfoJpaEntity;
 import com.cafe.product.service.vo.ProductInfoRegistrationForm;
 import com.cafe.product.service.vo.ProductInfoRegistrationFormFixture;
@@ -17,7 +18,7 @@ import static org.mockito.Mockito.times;
 
 @ExtendWith(MockitoExtension.class)
 @DisplayNameGeneration(DisplayNameGenerator.ReplaceUnderscores.class)
-class ProductInfoJpaRepositoryAdapterTest {
+class ProductInfoJpaRepositoryAdapterTest extends BaseRepositoryTest {
 
     @InjectMocks
     ProductInfoJpaRepositoryAdapter productInfoJpaRepositoryAdapter;

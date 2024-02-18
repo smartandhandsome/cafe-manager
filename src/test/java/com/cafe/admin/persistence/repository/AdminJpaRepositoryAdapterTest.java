@@ -5,6 +5,7 @@ import com.cafe.admin.persistence.entity.AdminJpaEntityFixture;
 import com.cafe.admin.service.vo.Admin;
 import com.cafe.admin.service.vo.EncryptedSignUpForm;
 import com.cafe.admin.service.vo.EncryptedSignUpFormFixture;
+import com.cafe.common.model.BaseRepositoryTest;
 import jakarta.persistence.EntityNotFoundException;
 import org.junit.jupiter.api.DisplayNameGeneration;
 import org.junit.jupiter.api.DisplayNameGenerator;
@@ -26,7 +27,7 @@ import static org.mockito.Mockito.times;
 
 @ExtendWith(MockitoExtension.class)
 @DisplayNameGeneration(DisplayNameGenerator.ReplaceUnderscores.class)
-class AdminJpaRepositoryAdapterTest {
+class AdminJpaRepositoryAdapterTest extends BaseRepositoryTest {
 
     @InjectMocks
     private AdminJpaRepositoryAdapter adapter;

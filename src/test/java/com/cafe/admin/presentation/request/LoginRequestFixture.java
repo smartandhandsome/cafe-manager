@@ -1,4 +1,4 @@
-package com.cafe.auth.presentation.request;
+package com.cafe.admin.presentation.request;
 
 import com.cafe.admin.presentation.request.LoginRequest;
 

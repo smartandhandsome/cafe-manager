@@ -2,6 +2,7 @@ package com.cafe.admin.persistence.repository;
 
 import com.cafe.admin.persistence.entity.AdminJpaEntity;
 import com.cafe.admin.persistence.entity.AdminJpaEntityFixture;
+import com.cafe.common.model.BaseRepositoryTest;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayNameGeneration;
 import org.junit.jupiter.api.DisplayNameGenerator;
@@ -16,7 +17,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 
 @DataJpaTest
 @DisplayNameGeneration(DisplayNameGenerator.ReplaceUnderscores.class)
-class AdminJpaRepositoryTest {
+class AdminJpaRepositoryTest extends BaseRepositoryTest {
 
     @Autowired
     AdminJpaRepository adminJpaRepository;
@@ -70,11 +71,7 @@ class AdminJpaRepositoryTest {
 
             // then
             assertThat(found).isPresent();
-            found.ifPresent(
-                    foundEntity -> assertThat(foundEntity)
-                            .usingRecursiveComparison()
-                            .isEqualTo(entity)
-            );
+            found.ifPresent(foundEntity -> assertThat(foundEntity).usingRecursiveComparison().isEqualTo(entity));
         }
 
         @Test
@@ -102,10 +99,7 @@ class AdminJpaRepositoryTest {
 
             // then
             assertThat(found).isPresent();
-            found.ifPresent(
-                    foundAdminId -> assertThat(foundAdminId)
-                            .isEqualTo(entity.getAdminId())
-            );
+            found.ifPresent(foundAdminId -> assertThat(foundAdminId).isEqualTo(entity.getAdminId()));
         }
 
         @Test
