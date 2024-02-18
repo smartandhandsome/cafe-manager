@@ -68,7 +68,7 @@ class AdminControllerTest {
 
             // when
             mvc.perform(
-                            post("/v1/admin")
+                            post("/v1/admins")
                                     .contentType(APPLICATION_JSON)
                                     .content(requestBody)
                     )
@@ -90,7 +90,7 @@ class AdminControllerTest {
 
             // when
             mvc.perform(
-                            post("/v1/admin")
+                            post("/v1/admins")
                                     .contentType(APPLICATION_JSON)
                                     .content(requestBody)
                     )

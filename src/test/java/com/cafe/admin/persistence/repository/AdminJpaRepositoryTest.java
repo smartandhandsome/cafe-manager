@@ -26,9 +26,8 @@ class AdminJpaRepositoryTest {
 
     @BeforeEach
     void setUp() {
-        entity = AdminJpaEntityFixture.STANDARD.newInstance();
         notExistedEntity = AdminJpaEntityFixture.NOT_EXISTED.newInstance();
-        adminJpaRepository.save(entity);
+        entity = adminJpaRepository.save(AdminJpaEntityFixture.STANDARD.newInstance());
     }
 
     @Nested

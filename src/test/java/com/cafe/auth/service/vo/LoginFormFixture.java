@@ -14,7 +14,7 @@ public enum LoginFormFixture {
         this.password = password;
     }
 
-    public LoginForm getInstance() {
+    public LoginForm newInstance() {
         return new LoginForm(phoneNumber, password);
     }
 

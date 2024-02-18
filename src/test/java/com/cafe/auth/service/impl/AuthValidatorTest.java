@@ -39,7 +39,7 @@ class AuthValidatorTest {
         @Test
         void 정상_로그인_정보() {
             // given
-            LoginForm loginForm = LoginFormFixture.STANDARD.getInstance();
+            LoginForm loginForm = LoginFormFixture.STANDARD.newInstance();
             Admin admin = AdminFixture.STANDARD.newInstance();
 
             given(adminReader.readByPhoneNumber(loginForm.phoneNumber()))
@@ -56,7 +56,7 @@ class AuthValidatorTest {
         @Test
         void 존재하지_않는_휴대폰_번호() {
             // given
-            LoginForm loginForm = LoginFormFixture.STANDARD.getInstance();
+            LoginForm loginForm = LoginFormFixture.STANDARD.newInstance();
             Admin admin = AdminFixture.STANDARD.newInstance();
 
             given(adminReader.readByPhoneNumber(loginForm.phoneNumber()))
@@ -70,7 +70,7 @@ class AuthValidatorTest {
         @Test
         void 비밀번호_불일치() {
             // given
-            LoginForm loginForm = LoginFormFixture.STANDARD.getInstance();
+            LoginForm loginForm = LoginFormFixture.STANDARD.newInstance();
             Admin admin = AdminFixture.STANDARD.newInstance();
 
             given(adminReader.readByPhoneNumber(loginForm.phoneNumber()))

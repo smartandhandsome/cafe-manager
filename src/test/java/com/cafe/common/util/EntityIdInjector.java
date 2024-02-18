@@ -1,7 +1,5 @@
 package com.cafe.common.util;
 
-import com.cafe.admin.persistence.entity.AdminJpaEntity;
-
 import java.lang.reflect.Field;
 
 public final class EntityIdInjector {
@@ -11,7 +9,7 @@ public final class EntityIdInjector {
 
     public static <T> void inject(T entity, String fieldName, Long id) {
         try {
-            Field adminIdField = AdminJpaEntity.class.getDeclaredField(fieldName);
+            Field adminIdField = entity.getClass().getDeclaredField(fieldName);
             adminIdField.setAccessible(true);
             adminIdField.set(entity, id);
             adminIdField.setAccessible(false);

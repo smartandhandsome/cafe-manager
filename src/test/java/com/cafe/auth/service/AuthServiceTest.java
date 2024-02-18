@@ -33,7 +33,7 @@ class AuthServiceTest {
     @Test
     void 로그인할_수_있다() {
         // given
-        LoginForm loginForm = LoginFormFixture.STANDARD.getInstance();
+        LoginForm loginForm = LoginFormFixture.STANDARD.newInstance();
         AuthToken authToken = AuthTokenFixture.STANDARD.newInstance();
 
         given(tokenGenerator.generate(loginForm.phoneNumber())).willReturn(authToken);
