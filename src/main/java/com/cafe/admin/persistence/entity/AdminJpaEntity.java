@@ -15,7 +15,9 @@ import lombok.NoArgsConstructor;
 
 @Getter
 @Entity
-@Table(name = "admins", indexes = {@Index(name = "admin_phone_number_index", columnList = "phone_number")})
+@Table(name = "admins", indexes = {
+        @Index(name = "admin_phone_number_index", columnList = "phone_number", unique = true)
+})
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 public class AdminJpaEntity extends BaseEntity {
 
