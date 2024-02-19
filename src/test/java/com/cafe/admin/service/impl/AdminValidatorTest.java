@@ -29,7 +29,7 @@ class AdminValidatorTest {
         adminValidator.validate(signUpForm);
 
         // then
-        then(adminDuplicationValidator).should(times(1)).validatePhoneNumber(signUpForm.phoneNumber());
+        then(adminDuplicationValidator).should(times(1)).validate(signUpForm.phoneNumber());
     }
 
 }

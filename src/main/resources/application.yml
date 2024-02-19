@@ -7,6 +7,10 @@ spring:
       hibernate:
         format_sql: true
 
+logging:
+  level:
+    root: debug
+
 jwt:
   secret-key: secret
   validity-in-millis: 1800000

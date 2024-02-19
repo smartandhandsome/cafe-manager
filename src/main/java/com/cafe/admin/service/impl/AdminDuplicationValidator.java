@@ -14,7 +14,7 @@ public class AdminDuplicationValidator {
 
     private final AdminReader adminReader;
 
-    public void validatePhoneNumber(String phoneNumber) {
+    public void validate(String phoneNumber) {
         if (adminReader.hasDuplicatedPhoneNumber(phoneNumber)) {
             throw new DuplicatedResourceException(
                     DUPLICATED_PHONE_NUMBER,

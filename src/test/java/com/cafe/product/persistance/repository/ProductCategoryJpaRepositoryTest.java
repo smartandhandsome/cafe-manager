@@ -23,7 +23,7 @@ class ProductCategoryJpaRepositoryTest extends BaseRepositoryTest {
     @BeforeEach
     void setUp() {
         notExistedEntity = ProductCategoryJpaEntityFixture.NOT_EXISTED.newInstance();
-        entity= ProductCategoryJpaEntityFixture.STANDARD.newInstance();
+        entity = ProductCategoryJpaEntityFixture.STANDARD.newInstance();
         ProductCategoryJpaRepository.save(entity);
     }
 

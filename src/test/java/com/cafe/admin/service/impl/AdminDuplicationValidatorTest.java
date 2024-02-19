@@ -34,7 +34,7 @@ class AdminDuplicationValidatorTest {
             given(adminReader.hasDuplicatedPhoneNumber(phoneNumber)).willReturn(false);
 
             // when, then
-            assertThatCode(() -> adminDuplicationValidator.validatePhoneNumber(phoneNumber))
+            assertThatCode(() -> adminDuplicationValidator.validate(phoneNumber))
                     .doesNotThrowAnyException();
         }
 
@@ -46,7 +46,7 @@ class AdminDuplicationValidatorTest {
             given(adminReader.hasDuplicatedPhoneNumber(phoneNumber)).willReturn(true);
 
             // when, then
-            assertThatThrownBy(() -> adminDuplicationValidator.validatePhoneNumber(phoneNumber))
+            assertThatThrownBy(() -> adminDuplicationValidator.validate(phoneNumber))
                     .isExactlyInstanceOf(DuplicatedResourceException.class);
         }
 

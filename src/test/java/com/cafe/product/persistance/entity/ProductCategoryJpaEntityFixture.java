@@ -16,15 +16,15 @@ public enum ProductCategoryJpaEntityFixture {
     private final Long productCategoryId;
     private final String name;
 
+    ProductCategoryJpaEntityFixture(Long productCategoryId, String name) {
+        this.productCategoryId = productCategoryId;
+        this.name = name;
+    }
+
     public ProductCategoryJpaEntity newInstance() {
         ProductCategoryJpaEntity entity = new ProductCategoryJpaEntity(name);
         EntityIdInjector.inject(entity, "productCategoryId", productCategoryId);
         return entity;
-    }
-
-    ProductCategoryJpaEntityFixture(Long productCategoryId, String name) {
-        this.productCategoryId = productCategoryId;
-        this.name = name;
     }
 
     private static final class Constants {

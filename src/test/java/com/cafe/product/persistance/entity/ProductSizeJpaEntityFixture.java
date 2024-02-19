@@ -22,6 +22,13 @@ public enum ProductSizeJpaEntityFixture {
     private final int extraCharge;
     private final int extraCost;
 
+    ProductSizeJpaEntityFixture(Long productSizeId, String name, int extraCharge, int extraCost) {
+        this.productSizeId = productSizeId;
+        this.name = name;
+        this.extraCharge = extraCharge;
+        this.extraCost = extraCost;
+    }
+
     public ProductSizeJpaEntity newInstance(ProductInfoJpaEntity productInfoJpaEntity) {
         ProductSizeJpaEntity entity = ProductSizeJpaEntity.builder()
                 .name(name)
@@ -32,13 +39,6 @@ public enum ProductSizeJpaEntityFixture {
 
         EntityIdInjector.inject(entity, "productSizeId", productSizeId);
         return entity;
-    }
-
-    ProductSizeJpaEntityFixture(Long productSizeId, String name, int extraCharge, int extraCost) {
-        this.productSizeId = productSizeId;
-        this.name = name;
-        this.extraCharge = extraCharge;
-        this.extraCost = extraCost;
     }
 
     private static final class Constants {

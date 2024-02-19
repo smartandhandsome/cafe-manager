@@ -19,8 +19,8 @@ public class ProductCategoryJpaRepositoryAdapter implements ProductCategoryCreat
     private final ProductCategoryJpaRepository productCategoryJpaRepository;
 
     @Override
-    public void create(ProductCategoryRegistrationForm productInfoRegistrationForm) {
-        productCategoryJpaRepository.save(convertToEntity(productInfoRegistrationForm));
+    public void create(ProductCategoryRegistrationForm productCategoryRegistrationForm) {
+        productCategoryJpaRepository.save(convertToEntity(productCategoryRegistrationForm));
     }
 
     @Override

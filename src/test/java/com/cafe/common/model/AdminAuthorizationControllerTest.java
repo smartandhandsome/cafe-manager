@@ -1,9 +1,6 @@
 package com.cafe.common.model;
 
-import com.cafe.admin.service.impl.AuthTokenExtractor;
-import com.cafe.common.authorization.AdminAuthorizationArgumentResolver;
 import org.junit.jupiter.api.BeforeEach;
-import org.springframework.boot.test.mock.mockito.MockBean;
 
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.ArgumentMatchers.anyString;

@@ -66,7 +66,7 @@ class ProductInfoDuplicationValidatorTest {
             // given
             ProductDetailInfoUpdateForm productDetailInfoUpdateForm = ProductDetailInfoUpdateFormFixture.STANDARD.newInstance();
 
-            given(productInfoReader.existsByBarcodeProductInfoIdNot(productDetailInfoUpdateForm.barcode(),productDetailInfoUpdateForm.productInfoId())).willReturn(false);
+            given(productInfoReader.existsByBarcodeProductInfoIdNot(productDetailInfoUpdateForm.barcode(), productDetailInfoUpdateForm.productInfoId())).willReturn(false);
 
             // when, then
             assertThatCode(
@@ -79,7 +79,7 @@ class ProductInfoDuplicationValidatorTest {
             // given
             ProductDetailInfoUpdateForm productDetailInfoUpdateForm = ProductDetailInfoUpdateFormFixture.STANDARD.newInstance();
 
-            given(productInfoReader.existsByBarcodeProductInfoIdNot(productDetailInfoUpdateForm.barcode(),productDetailInfoUpdateForm.productInfoId())).willReturn(true);
+            given(productInfoReader.existsByBarcodeProductInfoIdNot(productDetailInfoUpdateForm.barcode(), productDetailInfoUpdateForm.productInfoId())).willReturn(true);
 
             // when, then
             assertThatThrownBy(

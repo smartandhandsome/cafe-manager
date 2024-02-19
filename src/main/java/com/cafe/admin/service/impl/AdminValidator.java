@@ -11,7 +11,7 @@ public class AdminValidator {
     private final AdminDuplicationValidator adminDuplicationValidator;
 
     public void validate(SignUpForm signUpForm) {
-        adminDuplicationValidator.validatePhoneNumber(signUpForm.phoneNumber());
+        adminDuplicationValidator.validate(signUpForm.phoneNumber());
     }
 
 }

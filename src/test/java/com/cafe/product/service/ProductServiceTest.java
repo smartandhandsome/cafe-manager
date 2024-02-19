@@ -1,8 +1,15 @@
 package com.cafe.product.service;
 
-import com.cafe.product.service.impl.ProductChanger;
-import com.cafe.product.service.impl.ProductRegister;
-import com.cafe.product.service.impl.ProductValidator;
+import com.cafe.product.persistance.entity.ProductInfoJpaEntity;
+import com.cafe.product.persistance.entity.ProductInfoJpaEntityFixture;
+import com.cafe.product.service.impl.ProductCategoryChanger;
+import com.cafe.product.service.impl.ProductCategoryCreator;
+import com.cafe.product.service.impl.ProductCategoryDuplicationValidator;
+import com.cafe.product.service.impl.ProductInfoChanger;
+import com.cafe.product.service.impl.ProductInfoCreator;
+import com.cafe.product.service.impl.ProductInfoDuplicationValidator;
+import com.cafe.product.service.impl.ProductSizeChanger;
+import com.cafe.product.service.impl.ProductSizeCreator;
 import com.cafe.product.service.vo.ProductCategoryRegistrationForm;
 import com.cafe.product.service.vo.ProductCategoryRegistrationFormFixture;
 import com.cafe.product.service.vo.ProductCategoryUpdateForm;
@@ -29,6 +36,7 @@ import org.mockito.junit.jupiter.MockitoExtension;
 
 import java.util.List;
 
+import static org.mockito.BDDMockito.given;
 import static org.mockito.BDDMockito.then;
 import static org.mockito.Mockito.times;
 
@@ -38,12 +46,25 @@ class ProductServiceTest {
 
     @InjectMocks
     ProductService productService;
+
     @Mock
-    ProductRegister productRegister;
+    ProductCategoryDuplicationValidator productCategoryDuplicationValidator;
     @Mock
-    ProductValidator productValidator;
+    ProductInfoDuplicationValidator productInfoDuplicationValidator;
+
     @Mock
-    ProductChanger productChanger;
+    ProductCategoryCreator productCategoryCreator;
+    @Mock
+    ProductInfoCreator productInfoCreator;
+    @Mock
+    ProductSizeCreator productSizeCreator;
+
+    @Mock
+    ProductInfoChanger productInfoChanger;
+    @Mock
+    ProductCategoryChanger productCategoryChanger;
+    @Mock
+    ProductSizeChanger productSizeChanger;
 
     @Test
     void 상품_카테고리를_등록할_수_있다() {
@@ -53,22 +74,29 @@ class ProductServiceTest {
         // when
         productService.register(productCategoryRegistrationForm);
 
-        // then1
-        then(productValidator).should(times(1)).validate(productCategoryRegistrationForm);
-        then(productRegister).should(times(1)).register(productCategoryRegistrationForm);
+        // then
+        then(productCategoryDuplicationValidator).should(times(1)).validate(productCategoryRegistrationForm.name());
+        then(productCategoryCreator).should(times(1)).create(productCategoryRegistrationForm);
     }
 
     @Test
     void 상품을_등록할_수_있다() {
         // given
         ProductInfoRegistrationForm productInfoRegistrationForm = ProductInfoRegistrationFormFixture.STANDARD.newInstance();
-        List<SizeRegistrationForm> sizeRegistrationForms = List.of(SizeRegistrationFormFixture.SMALL.newInstance(), SizeRegistrationFormFixture.LARGE.newInstance());
+        List<SizeRegistrationForm> sizeRegistrationFormList = List.of(
+                SizeRegistrationFormFixture.SMALL.newInstance(),
+                SizeRegistrationFormFixture.LARGE.newInstance()
+        );
+        ProductInfoJpaEntity productInfoJpaEntity = ProductInfoJpaEntityFixture.STANDARD.newInstance();
+
+        given(productInfoCreator.create(productInfoRegistrationForm)).willReturn(productInfoJpaEntity);
 
         // when
-        productService.register(productInfoRegistrationForm, sizeRegistrationForms);
+        productService.register(productInfoRegistrationForm, sizeRegistrationFormList);
 
         // then
-        then(productRegister).should(times(1)).register(productInfoRegistrationForm, sizeRegistrationForms);
+
+        then(productSizeCreator).should(times(1)).createAll(productInfoJpaEntity, sizeRegistrationFormList);
     }
 
     @Test
@@ -80,7 +108,7 @@ class ProductServiceTest {
         productService.update(productPriceInfoUpdateForm);
 
         // then
-        then(productChanger).should(times(1)).change(productPriceInfoUpdateForm);
+        then(productInfoChanger).should(times(1)).change(productPriceInfoUpdateForm);
     }
 
     @Test
@@ -92,8 +120,8 @@ class ProductServiceTest {
         productService.update(productDetailInfoUpdateForm);
 
         // then
-        then(productValidator).should(times(1)).validate(productDetailInfoUpdateForm);
-        then(productChanger).should(times(1)).change(productDetailInfoUpdateForm);
+        then(productInfoDuplicationValidator).should(times(1)).validate(productDetailInfoUpdateForm);
+        then(productInfoChanger).should(times(1)).change(productDetailInfoUpdateForm);
     }
 
     @Test
@@ -105,8 +133,8 @@ class ProductServiceTest {
         productService.update(productCategoryUpdateForm);
 
         // then
-        then(productValidator).should(times(1)).validate(productCategoryUpdateForm);
-        then(productChanger).should(times(1)).change(productCategoryUpdateForm);
+        then(productCategoryDuplicationValidator).should(times(1)).validate(productCategoryUpdateForm.name());
+        then(productCategoryChanger).should(times(1)).change(productCategoryUpdateForm);
     }
 
     @Test
@@ -118,7 +146,7 @@ class ProductServiceTest {
         productService.update(productSizePriceUpdateForm);
 
         // then
-        then(productChanger).should(times(1)).change(productSizePriceUpdateForm);
+        then(productSizeChanger).should(times(1)).change(productSizePriceUpdateForm);
     }
 
     @Test
@@ -130,7 +158,7 @@ class ProductServiceTest {
         productService.update(productSizeInfoUpdateForm);
 
         // then
-        then(productChanger).should(times(1)).change(productSizeInfoUpdateForm);
+        then(productSizeChanger).should(times(1)).change(productSizeInfoUpdateForm);
     }
 
 }

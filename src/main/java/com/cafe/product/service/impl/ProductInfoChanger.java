@@ -11,4 +11,5 @@ public interface ProductInfoChanger {
 
     @Transactional
     void change(ProductDetailInfoUpdateForm productDetailInfoUpdateForm);
+
 }

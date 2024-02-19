@@ -1,7 +1,5 @@
 package com.cafe.admin.presentation.request;
 
-import com.cafe.admin.presentation.request.LoginRequest;
-
 public enum LoginRequestFixture {
     STANDARD(Constants.PHONE_NUMBER, Constants.PASSWORD),
     NULL_PHONE_NUMBER(null, Constants.PHONE_NUMBER),
