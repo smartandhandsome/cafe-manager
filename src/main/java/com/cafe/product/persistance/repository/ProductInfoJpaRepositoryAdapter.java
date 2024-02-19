@@ -2,13 +2,14 @@ package com.cafe.product.persistance.repository;
 
 import com.cafe.product.persistance.entity.ProductInfoJpaEntity;
 import com.cafe.product.service.impl.ProductInfoCreator;
+import com.cafe.product.service.impl.ProductInfoReader;
 import com.cafe.product.service.vo.ProductInfoRegistrationForm;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
 
 @Component
 @RequiredArgsConstructor
-public class ProductInfoJpaRepositoryAdapter implements ProductInfoCreator {
+public class ProductInfoJpaRepositoryAdapter implements ProductInfoCreator, ProductInfoReader {
 
     private final ProductInfoJpaRepository productInfoJpaRepository;
 
@@ -17,6 +18,11 @@ public class ProductInfoJpaRepositoryAdapter implements ProductInfoCreator {
         return productInfoJpaRepository.save(
                 convertToEntity(productInfoRegistrationForm)
         );
+    }
+
+    @Override
+    public boolean existsByBarcode(String barcode) {
+        return productInfoJpaRepository.existsByBarcode(barcode);
     }
 
     private ProductInfoJpaEntity convertToEntity(ProductInfoRegistrationForm domain) {

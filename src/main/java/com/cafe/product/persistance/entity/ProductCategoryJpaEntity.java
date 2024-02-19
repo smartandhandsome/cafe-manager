@@ -17,7 +17,7 @@ public class ProductCategoryJpaEntity extends BaseEntity {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long categoryId;
+    private Long productCategoryId;
 
     @Column(nullable = false, unique = true)
     private String name;
@@ -26,4 +26,7 @@ public class ProductCategoryJpaEntity extends BaseEntity {
         this.name = name;
     }
 
+    public String getName() {
+        return name;
+    }
 }

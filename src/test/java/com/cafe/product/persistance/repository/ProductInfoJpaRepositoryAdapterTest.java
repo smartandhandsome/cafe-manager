@@ -26,6 +26,18 @@ class ProductInfoJpaRepositoryAdapterTest extends BaseRepositoryTest {
     ProductInfoJpaRepository productInfoJpaRepository;
 
     @Test
+    void 상품_바코드_중복을_확인할_수_있다() {
+        // given
+        String barcode = "barcode";
+
+        // when
+        productInfoJpaRepositoryAdapter.existsByBarcode(barcode);
+
+        // then
+        then(productInfoJpaRepository).should(times(1)).existsByBarcode(barcode);
+    }
+
+    @Test
     void 상품_정보를_생성할_수_있다() {
         // given
         ProductInfoRegistrationForm productInfoRegistrationForm = ProductInfoRegistrationFormFixture.STANDARD.newInstance();

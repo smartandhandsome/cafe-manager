@@ -15,6 +15,16 @@ public enum ProductInfoJpaEntityFixture {
             Constants.EXPIRATION_DURATION,
             Constants.ONE
     ),
+    NOT_EXISTED(
+            Constants.ONE,
+            Constants.NAME,
+            Constants.DESCRIPTION,
+            Constants.NOT_EXISTED_BARCODE,
+            Constants.ZERO,
+            Constants.ZERO,
+            Constants.EXPIRATION_DURATION,
+            Constants.ONE
+    ),
     ;
 
     private final Long productInfoId;
@@ -58,6 +68,8 @@ public enum ProductInfoJpaEntityFixture {
         private static final int ZERO = 0;
         private static final Long ONE = 1L;
         private static final String EXPIRATION_DURATION = "7일";
+
+        private static final String NOT_EXISTED_BARCODE = "notExistedBarcode";
     }
 
 }

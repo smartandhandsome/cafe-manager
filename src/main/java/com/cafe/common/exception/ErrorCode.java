@@ -18,6 +18,7 @@ public enum ErrorCode {
 
     // PRODUCT
     DUPLICATED_CATEGORY_NAME(409, "중복된 카테고리 이름입니다."),
+    DUPLICATED_BARCODE(409, "중복된 바코드입니다."),
 
     // COMMON
     INVALID_INPUT(400, "잘못된 입력 값입니다."),

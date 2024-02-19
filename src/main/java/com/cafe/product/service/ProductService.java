@@ -26,7 +26,7 @@ public class ProductService {
             ProductInfoRegistrationForm productInfoRegistrationForm,
             List<SizeRegistrationForm> sizeRegistrationFormList
     ) {
-        // TODO: 2/19/24 따닥 막기
+        productValidator.validate(productInfoRegistrationForm);
         productRegister.register(
                 productInfoRegistrationForm,
                 sizeRegistrationFormList
