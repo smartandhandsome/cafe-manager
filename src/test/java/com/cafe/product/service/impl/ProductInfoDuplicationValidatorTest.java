@@ -1,6 +1,8 @@
 package com.cafe.product.service.impl;
 
 import com.cafe.common.exception.DuplicatedResourceException;
+import com.cafe.product.service.vo.ProductDetailInfoUpdateForm;
+import com.cafe.product.service.vo.ProductDetailInfoUpdateFormFixture;
 import com.cafe.product.service.vo.ProductInfoRegistrationForm;
 import com.cafe.product.service.vo.ProductInfoRegistrationFormFixture;
 import org.junit.jupiter.api.DisplayNameGeneration;
@@ -55,4 +57,36 @@ class ProductInfoDuplicationValidatorTest {
         }
 
     }
+
+    @Nested
+    class 특정_아이디_제외한_상품_정보_중복을_검증할_수_있다 {
+
+        @Test
+        void 중복_데이터_없을_때() {
+            // given
+            ProductDetailInfoUpdateForm productDetailInfoUpdateForm = ProductDetailInfoUpdateFormFixture.STANDARD.newInstance();
+
+            given(productInfoReader.existsByBarcodeProductInfoIdNot(productDetailInfoUpdateForm.barcode(),productDetailInfoUpdateForm.productInfoId())).willReturn(false);
+
+            // when, then
+            assertThatCode(
+                    () -> productInfoDuplicationValidator.validate(productDetailInfoUpdateForm)
+            ).doesNotThrowAnyException();
+        }
+
+        @Test
+        void 중복_데이터_있을_때() {
+            // given
+            ProductDetailInfoUpdateForm productDetailInfoUpdateForm = ProductDetailInfoUpdateFormFixture.STANDARD.newInstance();
+
+            given(productInfoReader.existsByBarcodeProductInfoIdNot(productDetailInfoUpdateForm.barcode(),productDetailInfoUpdateForm.productInfoId())).willReturn(true);
+
+            // when, then
+            assertThatThrownBy(
+                    () -> productInfoDuplicationValidator.validate(productDetailInfoUpdateForm)
+            ).isExactlyInstanceOf(DuplicatedResourceException.class);
+        }
+
+    }
+
 }

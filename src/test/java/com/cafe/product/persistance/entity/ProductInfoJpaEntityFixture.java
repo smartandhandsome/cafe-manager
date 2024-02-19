@@ -2,28 +2,26 @@ package com.cafe.product.persistance.entity;
 
 import com.cafe.common.util.EntityIdInjector;
 
-import java.time.Duration;
-
 public enum ProductInfoJpaEntityFixture {
     STANDARD(
-            Constants.ONE,
+            Constants.ID,
             Constants.NAME,
             Constants.DESCRIPTION,
             Constants.BARCODE,
             Constants.ZERO,
             Constants.ZERO,
             Constants.EXPIRATION_DURATION,
-            Constants.ONE
+            Constants.ID
     ),
     NOT_EXISTED(
-            Constants.ONE,
+            Constants.NOT_EXISTED_ID,
             Constants.NAME,
             Constants.DESCRIPTION,
             Constants.NOT_EXISTED_BARCODE,
             Constants.ZERO,
             Constants.ZERO,
             Constants.EXPIRATION_DURATION,
-            Constants.ONE
+            Constants.ID
     ),
     ;
 
@@ -66,9 +64,10 @@ public enum ProductInfoJpaEntityFixture {
         private static final String DESCRIPTION = "description";
         private static final String BARCODE = "barcode";
         private static final int ZERO = 0;
-        private static final Long ONE = 1L;
+        private static final Long ID = 1L;
         private static final String EXPIRATION_DURATION = "7일";
 
+        private static final Long NOT_EXISTED_ID = 999999999999L;
         private static final String NOT_EXISTED_BARCODE = "notExistedBarcode";
     }
 

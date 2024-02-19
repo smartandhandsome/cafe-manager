@@ -4,11 +4,14 @@ import com.cafe.common.model.AdminAuthorizationControllerTest;
 import com.cafe.common.model.MyCafeResponse;
 import com.cafe.product.presentation.request.ProductCategoryRegistrationRequest;
 import com.cafe.product.presentation.request.ProductCategoryRegistrationRequestFixture;
+import com.cafe.product.presentation.request.ProductDetailInfoUpdateRequest;
+import com.cafe.product.presentation.request.ProductDetailInfoUpdateRequestFixture;
 import com.cafe.product.presentation.request.ProductPriceInfoUpdateRequest;
 import com.cafe.product.presentation.request.ProductPriceInfoUpdateRequestFixture;
 import com.cafe.product.presentation.request.ProductRegistrationRequest;
 import com.cafe.product.presentation.request.ProductRegistrationRequestFixture;
 import com.cafe.product.service.ProductService;
+import com.fasterxml.jackson.core.JsonProcessingException;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
@@ -97,6 +100,29 @@ class ProductControllerTest extends AdminAuthorizationControllerTest {
                 .andExpect(content().json(responseBody));
 
         then(productService).should(times(1)).update(request.toProductPriceInfoUpdateForm());
+    }
+
+    @Test
+    void 상품_디테일_정보를_수정할_수_있다() throws Exception {
+        // given
+        ProductDetailInfoUpdateRequest request = ProductDetailInfoUpdateRequestFixture.STANDARD.newInstance();
+        MyCafeResponse<Void> response = MyCafeResponse.success();
+
+        String requestBody = om.writeValueAsString(request);
+        String responseBody = om.writeValueAsString(response);
+
+        // when
+        mvc.perform(
+                        patch("/v1/products/info")
+                                .header(AUTHORIZATION, authorizationHeader)
+                                .contentType(APPLICATION_JSON)
+                                .content(requestBody)
+                )
+                // then
+                .andExpect(status().isOk())
+                .andExpect(content().json(responseBody));
+
+        then(productService).should(times(1)).update(request.toProductDetailInfoUpdateForm());
     }
 
 }

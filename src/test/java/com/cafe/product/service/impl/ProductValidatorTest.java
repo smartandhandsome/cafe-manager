@@ -2,6 +2,8 @@ package com.cafe.product.service.impl;
 
 import com.cafe.product.service.vo.ProductCategoryRegistrationForm;
 import com.cafe.product.service.vo.ProductCategoryRegistrationFormFixture;
+import com.cafe.product.service.vo.ProductDetailInfoUpdateForm;
+import com.cafe.product.service.vo.ProductDetailInfoUpdateFormFixture;
 import org.junit.jupiter.api.DisplayNameGeneration;
 import org.junit.jupiter.api.DisplayNameGenerator;
 import org.junit.jupiter.api.Test;
@@ -9,7 +11,6 @@ import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
-import org.springframework.transaction.annotation.Transactional;
 
 import static org.mockito.BDDMockito.then;
 import static org.mockito.Mockito.times;
@@ -22,11 +23,8 @@ class ProductValidatorTest {
     ProductValidator productValidator;
     @Mock
     ProductCategoryDuplicationValidator productCategoryDuplicationValidator;
-
-    @Transactional(readOnly = true)
-    public void validate(ProductCategoryRegistrationForm productCategoryRegistrationForm) {
-
-    }
+    @Mock
+    ProductInfoDuplicationValidator productInfoDuplicationValidator;
 
     @Test
     void 카테고리_등록_폼을_검증할_수_있다() {
@@ -38,6 +36,30 @@ class ProductValidatorTest {
 
         // then
         then(productCategoryDuplicationValidator).should(times(1)).validate(productCategoryRegistrationForm);
+    }
+
+    @Test
+    void 상품_가격_정보_수정_폼을_검증할_수_있다() {
+        // given
+        ProductDetailInfoUpdateForm productInfoRegistrationForm = ProductDetailInfoUpdateFormFixture.STANDARD.newInstance();
+
+        // when
+        productValidator.validate(productInfoRegistrationForm);
+
+        // then
+        then(productInfoDuplicationValidator).should(times(1)).validate(productInfoRegistrationForm);
+    }
+
+    @Test
+    void 상품_디테일_정보_수정_폼을_검증할_수_있다() {
+        // given
+        ProductDetailInfoUpdateForm productDetailInfoUpdateForm = ProductDetailInfoUpdateFormFixture.STANDARD.newInstance();
+
+        // when
+        productValidator.validate(productDetailInfoUpdateForm);
+
+        // then
+        then(productInfoDuplicationValidator).should(times(1)).validate(productDetailInfoUpdateForm);
     }
 
 }

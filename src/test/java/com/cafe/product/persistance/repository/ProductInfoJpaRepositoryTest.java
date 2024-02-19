@@ -56,4 +56,36 @@ class ProductInfoJpaRepositoryTest extends BaseRepositoryTest {
 
     }
 
+    @Nested
+    class 특정_아이디를_제외한_상품_바코드_존재하는지_확인할_수_있다 {
+
+
+        @Test
+        void 특정_아이디를_제외하고_동일한_바코드_존재할_때() {
+            // given
+            String barcode = entity.getBarcode();
+            Long anotherProductInfoId = notExistedEntity.getProductInfoId();
+
+            // when
+            boolean isExisted = productInfoJpaRepository.existsByBarcodeAndProductInfoIdNot(barcode, anotherProductInfoId);
+
+            // then
+            assertThat(isExisted).isTrue();
+        }
+
+        @Test
+        void 특정_아이디를_제외하고_동일한_바코드_존재하지_않을_때() {
+            // given
+            String barcode = entity.getBarcode();
+            Long productInfoId = entity.getProductInfoId();
+
+            // when
+            boolean isExisted = productInfoJpaRepository.existsByBarcodeAndProductInfoIdNot(barcode, productInfoId);
+
+            // then
+            assertThat(isExisted).isFalse();
+        }
+
+    }
+
 }
