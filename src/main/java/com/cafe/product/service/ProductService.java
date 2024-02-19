@@ -9,6 +9,7 @@ import com.cafe.product.service.vo.ProductDetailInfoUpdateForm;
 import com.cafe.product.service.vo.ProductInfoRegistrationForm;
 import com.cafe.product.service.vo.ProductPriceInfoUpdateForm;
 import com.cafe.product.service.vo.ProductSizePriceUpdateForm;
+import com.cafe.product.service.vo.ProductSizeInfoUpdateForm;
 import com.cafe.product.service.vo.SizeRegistrationForm;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -55,5 +56,9 @@ public class ProductService {
 
     public void update(ProductSizePriceUpdateForm productSizePriceUpdateForm) {
         productChanger.change(productSizePriceUpdateForm);
+    }
+
+    public void update(ProductSizeInfoUpdateForm productSizeInfoUpdateForm) {
+        productChanger.change(productSizeInfoUpdateForm);
     }
 }

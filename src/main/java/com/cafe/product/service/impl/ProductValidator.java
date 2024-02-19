@@ -34,4 +34,5 @@ public class ProductValidator {
     public void validate(ProductCategoryUpdateForm productCategoryUpdateForm) {
         productCategoryDuplicationValidator.validate(productCategoryUpdateForm.name());
     }
+
 }

@@ -18,7 +18,7 @@ import static org.springframework.http.HttpHeaders.AUTHORIZATION;
 
 @Component
 @RequiredArgsConstructor
-public class AdminAuthorizationArgumentResolver implements HandlerMethodArgumentResolver {
+public class AdminAuthorizationArgumentResolver implements HandlerMethodArgumentResolver {   // TODO: 2/20/24 인증 어노테이션 기반으로 변경
 
     public static final String JWT_TYPE_PREFIX = "Bearer ";
     private final AuthTokenExtractor authTokenExtractor;

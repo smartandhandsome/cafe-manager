@@ -64,4 +64,8 @@ public class ProductSizeJpaEntity extends BaseEntity {
         this.extraCost = extraCost;
     }
 
+    public void changeName(String name) {
+        this.name = name;
+    }
+
 }

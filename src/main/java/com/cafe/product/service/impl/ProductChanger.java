@@ -4,6 +4,7 @@ import com.cafe.product.service.vo.ProductCategoryUpdateForm;
 import com.cafe.product.service.vo.ProductDetailInfoUpdateForm;
 import com.cafe.product.service.vo.ProductPriceInfoUpdateForm;
 import com.cafe.product.service.vo.ProductSizePriceUpdateForm;
+import com.cafe.product.service.vo.ProductSizeInfoUpdateForm;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
@@ -34,5 +35,10 @@ public class ProductChanger {
     @Transactional
     public void change(ProductSizePriceUpdateForm productSizePriceUpdateForm) {
         productSizeChanger.change(productSizePriceUpdateForm);
+    }
+
+    @Transactional
+    public void change(ProductSizeInfoUpdateForm productSizeInfoUpdateForm) {
+        productSizeChanger.change(productSizeInfoUpdateForm);
     }
 }
