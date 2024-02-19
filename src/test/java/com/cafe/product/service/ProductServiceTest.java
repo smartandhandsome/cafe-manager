@@ -13,6 +13,10 @@ import com.cafe.product.service.vo.ProductInfoRegistrationForm;
 import com.cafe.product.service.vo.ProductInfoRegistrationFormFixture;
 import com.cafe.product.service.vo.ProductPriceInfoUpdateForm;
 import com.cafe.product.service.vo.ProductPriceInfoUpdateFormFixture;
+import com.cafe.product.service.vo.ProductSizeInfoUpdateForm;
+import com.cafe.product.service.vo.ProductSizeInfoUpdateFormFixture;
+import com.cafe.product.service.vo.ProductSizePriceUpdateForm;
+import com.cafe.product.service.vo.ProductSizePriceUpdateFormFixture;
 import com.cafe.product.service.vo.SizeRegistrationForm;
 import com.cafe.product.service.vo.SizeRegistrationFormFixture;
 import org.junit.jupiter.api.DisplayNameGeneration;
@@ -103,6 +107,30 @@ class ProductServiceTest {
         // then
         then(productValidator).should(times(1)).validate(productCategoryUpdateForm);
         then(productChanger).should(times(1)).change(productCategoryUpdateForm);
+    }
+
+    @Test
+    void 상품_사이즈_가격을_수정할_수_있다() {
+        // given
+        ProductSizePriceUpdateForm productSizePriceUpdateForm = ProductSizePriceUpdateFormFixture.STANDARD.newInstance();
+
+        // when
+        productService.update(productSizePriceUpdateForm);
+
+        // then
+        then(productChanger).should(times(1)).change(productSizePriceUpdateForm);
+    }
+
+    @Test
+    void 상품_사이즈_정보를_수정할_수_있다() {
+        // given
+        ProductSizeInfoUpdateForm productSizeInfoUpdateForm = ProductSizeInfoUpdateFormFixture.STANDARD.newInstance();
+
+        // when
+        productService.update(productSizeInfoUpdateForm);
+
+        // then
+        then(productChanger).should(times(1)).change(productSizeInfoUpdateForm);
     }
 
 }

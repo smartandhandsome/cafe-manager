@@ -12,6 +12,10 @@ import com.cafe.product.presentation.request.ProductPriceInfoUpdateRequest;
 import com.cafe.product.presentation.request.ProductPriceInfoUpdateRequestFixture;
 import com.cafe.product.presentation.request.ProductRegistrationRequest;
 import com.cafe.product.presentation.request.ProductRegistrationRequestFixture;
+import com.cafe.product.presentation.request.ProductSizeInfoUpdateRequest;
+import com.cafe.product.presentation.request.ProductSizeInfoUpdateRequestFixture;
+import com.cafe.product.presentation.request.ProductSizePriceUpdateRequest;
+import com.cafe.product.presentation.request.ProductSizePriceUpdateRequestFixture;
 import com.cafe.product.service.ProductService;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -151,5 +155,54 @@ class ProductControllerTest extends AdminAuthorizationControllerTest {
 
         then(productService).should(times(1)).update(request.toProductCategoryUpdateForm(productCategoryId));
     }
+
+    @Test
+    void 상품_사이즈_가격_수정을_요청할_수_있다() throws Exception {
+        // given
+        Long productSizeId = 1L;
+        ProductSizePriceUpdateRequest request = ProductSizePriceUpdateRequestFixture.STANDARD.newInstance();
+        MyCafeResponse<Void> response = MyCafeResponse.success();
+
+        String requestBody = om.writeValueAsString(request);
+        String responseBody = om.writeValueAsString(response);
+
+        // when
+        mvc.perform(
+                        patch("/v1/products/sizes/{productSizeId}/price", productSizeId)
+                                .header(AUTHORIZATION, authorizationHeader)
+                                .contentType(APPLICATION_JSON)
+                                .content(requestBody)
+                )
+                // then
+                .andExpect(status().isOk())
+                .andExpect(content().json(responseBody));
+
+        then(productService).should(times(1)).update(request.toProductSizePriceUpdateForm(productSizeId));
+    }
+
+    @Test
+    void 상품_사이즈_정보_수정을_요청할_수_있다() throws Exception {
+        // given
+        Long productSizeId = 1L;
+        ProductSizeInfoUpdateRequest request = ProductSizeInfoUpdateRequestFixture.STANDARD.newInstance();
+        MyCafeResponse<Void> response = MyCafeResponse.success();
+
+        String requestBody = om.writeValueAsString(request);
+        String responseBody = om.writeValueAsString(response);
+
+        // when
+        mvc.perform(
+                        patch("/v1/products/sizes/{productSizeId}/info", productSizeId)
+                                .header(AUTHORIZATION, authorizationHeader)
+                                .contentType(APPLICATION_JSON)
+                                .content(requestBody)
+                )
+                // then
+                .andExpect(status().isOk())
+                .andExpect(content().json(responseBody));
+
+        then(productService).should(times(1)).update(request.toProductSizeUpdateForm(productSizeId));
+    }
+
 
 }
