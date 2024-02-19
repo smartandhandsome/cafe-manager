@@ -19,7 +19,7 @@ public class ProductCategoryJpaEntity extends BaseEntity {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long categoryId;
 
-    @Column(nullable = false)
+    @Column(nullable = false, unique = true)
     private String name;
 
     public ProductCategoryJpaEntity(String name) {

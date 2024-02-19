@@ -1,6 +1,8 @@
 package com.cafe.product.service;
 
 import com.cafe.product.service.impl.ProductRegister;
+import com.cafe.product.service.impl.ProductValidator;
+import com.cafe.product.service.vo.ProductCategoryRegistrationForm;
 import com.cafe.product.service.vo.ProductInfoRegistrationForm;
 import com.cafe.product.service.vo.SizeRegistrationForm;
 import lombok.RequiredArgsConstructor;
@@ -13,11 +15,18 @@ import java.util.List;
 public class ProductService {
 
     private final ProductRegister productRegister;
+    private final ProductValidator productValidator;
+
+    public void register(ProductCategoryRegistrationForm productCategoryRegistrationForm) {
+        productValidator.validate(productCategoryRegistrationForm);
+        productRegister.register(productCategoryRegistrationForm);
+    }
 
     public void register(
             ProductInfoRegistrationForm productInfoRegistrationForm,
             List<SizeRegistrationForm> sizeRegistrationFormList
     ) {
+        // TODO: 2/19/24 따닥 막기
         productRegister.register(
                 productInfoRegistrationForm,
                 sizeRegistrationFormList
