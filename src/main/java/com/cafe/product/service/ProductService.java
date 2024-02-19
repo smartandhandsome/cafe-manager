@@ -42,6 +42,7 @@ public class ProductService {
     }
 
     public void update(ProductDetailInfoUpdateForm productDetailInfoUpdateForm) {
+        productValidator.validate(productDetailInfoUpdateForm);
         productChanger.change(productDetailInfoUpdateForm);
     }
 }

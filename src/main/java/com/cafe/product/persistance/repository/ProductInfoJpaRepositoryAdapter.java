@@ -33,6 +33,11 @@ public class ProductInfoJpaRepositoryAdapter implements ProductInfoCreator, Prod
     }
 
     @Override
+    public boolean existsByBarcodeProductInfoIdNot(String barcode, Long productInfoId) {
+        return productInfoJpaRepository.existsByBarcodeAndProductInfoIdNot(barcode, productInfoId);
+    }
+
+    @Override
     public void change(ProductPriceInfoUpdateForm productPriceInfoUpdateForm) {
         ProductInfoJpaEntity entity = getById(productPriceInfoUpdateForm.productInfoId());
         entity.changePriceInfo(
