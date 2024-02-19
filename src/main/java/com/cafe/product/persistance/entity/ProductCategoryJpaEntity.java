@@ -29,4 +29,9 @@ public class ProductCategoryJpaEntity extends BaseEntity {
     public String getName() {
         return name;
     }
+
+    public void changeName(String name) {
+        this.name = name;
+    }
+
 }

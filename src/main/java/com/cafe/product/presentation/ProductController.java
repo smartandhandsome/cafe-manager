@@ -73,6 +73,16 @@ public class ProductController {
         return MyCafeResponse.success();
     }
 
+    @Operation(description = "상품 카테고리 수정", security = @SecurityRequirement(name = "Authorization"))
+    @PatchMapping("/category")
+    public MyCafeResponse<Void> requestProductCategoryUpdate(
+            AdminAuthorization adminAuthorization,
+            @RequestBody @Valid ProductCategoryUpdateRequest productCategoryUpdateRequest
+    ) {
+        productService.update(productCategoryUpdateRequest.toProductCategoryUpdateForm());
+        return MyCafeResponse.success();
+    }
+
 }
 
 

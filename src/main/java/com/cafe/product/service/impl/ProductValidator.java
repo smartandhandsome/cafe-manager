@@ -1,6 +1,7 @@
 package com.cafe.product.service.impl;
 
 import com.cafe.product.service.vo.ProductCategoryRegistrationForm;
+import com.cafe.product.service.vo.ProductCategoryUpdateForm;
 import com.cafe.product.service.vo.ProductDetailInfoUpdateForm;
 import com.cafe.product.service.vo.ProductInfoRegistrationForm;
 import lombok.RequiredArgsConstructor;
@@ -16,7 +17,7 @@ public class ProductValidator {
 
     @Transactional(readOnly = true)
     public void validate(ProductCategoryRegistrationForm productCategoryRegistrationForm) {
-        productCategoryDuplicationValidator.validate(productCategoryRegistrationForm);
+        productCategoryDuplicationValidator.validate(productCategoryRegistrationForm.name());
     }
 
     @Transactional(readOnly = true)
@@ -27,5 +28,10 @@ public class ProductValidator {
     @Transactional(readOnly = true)
     public void validate(ProductDetailInfoUpdateForm productDetailInfoUpdateForm) {
         productInfoDuplicationValidator.validate(productDetailInfoUpdateForm);
+    }
+
+    @Transactional(readOnly = true)
+    public void validate(ProductCategoryUpdateForm productCategoryUpdateForm) {
+        productCategoryDuplicationValidator.validate(productCategoryUpdateForm.name());
     }
 }

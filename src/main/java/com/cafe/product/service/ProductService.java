@@ -4,6 +4,7 @@ import com.cafe.product.service.impl.ProductChanger;
 import com.cafe.product.service.impl.ProductRegister;
 import com.cafe.product.service.impl.ProductValidator;
 import com.cafe.product.service.vo.ProductCategoryRegistrationForm;
+import com.cafe.product.service.vo.ProductCategoryUpdateForm;
 import com.cafe.product.service.vo.ProductDetailInfoUpdateForm;
 import com.cafe.product.service.vo.ProductInfoRegistrationForm;
 import com.cafe.product.service.vo.ProductPriceInfoUpdateForm;
@@ -44,5 +45,10 @@ public class ProductService {
     public void update(ProductDetailInfoUpdateForm productDetailInfoUpdateForm) {
         productValidator.validate(productDetailInfoUpdateForm);
         productChanger.change(productDetailInfoUpdateForm);
+    }
+
+    public void update(ProductCategoryUpdateForm productCategoryUpdateForm) {
+        productValidator.validate(productCategoryUpdateForm);
+        productChanger.change(productCategoryUpdateForm);
     }
 }

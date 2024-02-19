@@ -35,7 +35,7 @@ class ProductValidatorTest {
         productValidator.validate(productCategoryRegistrationForm);
 
         // then
-        then(productCategoryDuplicationValidator).should(times(1)).validate(productCategoryRegistrationForm);
+        then(productCategoryDuplicationValidator).should(times(1)).validate(productCategoryRegistrationForm.name());
     }
 
     @Test

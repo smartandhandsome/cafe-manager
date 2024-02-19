@@ -37,20 +37,20 @@ class ProductCategoryDuplicationValidatorTest {
 
             // when,then
             assertThatCode(
-                    () -> productCategoryDuplicationValidator.validate(productCategoryRegistrationForm)
+                    () -> productCategoryDuplicationValidator.validate(productCategoryRegistrationForm.name())
             ).doesNotThrowAnyException();
         }
 
         @Test
         void 증복_데이터_있을_떄() {
             // given
-            ProductCategoryRegistrationForm productCategoryRegistrationForm = ProductCategoryRegistrationFormFixture.STANDARD.newInstance();
+            String name = "nameUpdate";
 
-            given(productCategoryReader.existsByName(productCategoryRegistrationForm.name())).willReturn(true);
+            given(productCategoryReader.existsByName(name)).willReturn(true);
 
             // when,then
             assertThatThrownBy(
-                    () -> productCategoryDuplicationValidator.validate(productCategoryRegistrationForm)
+                    () -> productCategoryDuplicationValidator.validate(name)
             ).isExactlyInstanceOf(DuplicatedResourceException.class);
         }
 
