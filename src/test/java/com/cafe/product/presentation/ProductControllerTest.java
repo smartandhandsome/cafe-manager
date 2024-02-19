@@ -82,6 +82,7 @@ class ProductControllerTest extends AdminAuthorizationControllerTest {
     @Test
     void 상품_가격_정보를_수정할_수_있다() throws Exception {
         // given
+        Long productInfoId = 1L;
         ProductPriceInfoUpdateRequest request = ProductPriceInfoUpdateRequestFixture.STANDARD.newInstance();
         MyCafeResponse<Void> response = MyCafeResponse.success();
 
@@ -90,7 +91,7 @@ class ProductControllerTest extends AdminAuthorizationControllerTest {
 
         // when
         mvc.perform(
-                        patch("/v1/products/price")
+                        patch("/v1/products/infos/{productInfoId}/price", productInfoId)
                                 .header(AUTHORIZATION, authorizationHeader)
                                 .contentType(APPLICATION_JSON)
                                 .content(requestBody)
@@ -99,12 +100,13 @@ class ProductControllerTest extends AdminAuthorizationControllerTest {
                 .andExpect(status().isOk())
                 .andExpect(content().json(responseBody));
 
-        then(productService).should(times(1)).update(request.toProductPriceInfoUpdateForm());
+        then(productService).should(times(1)).update(request.toProductPriceInfoUpdateForm(productInfoId));
     }
 
     @Test
     void 상품_디테일_정보를_수정할_수_있다() throws Exception {
         // given
+        Long productInfoId = 1L;
         ProductDetailInfoUpdateRequest request = ProductDetailInfoUpdateRequestFixture.STANDARD.newInstance();
         MyCafeResponse<Void> response = MyCafeResponse.success();
 
@@ -113,7 +115,7 @@ class ProductControllerTest extends AdminAuthorizationControllerTest {
 
         // when
         mvc.perform(
-                        patch("/v1/products/info")
+                        patch("/v1/products/infos/{productInfoId}/detail", productInfoId)
                                 .header(AUTHORIZATION, authorizationHeader)
                                 .contentType(APPLICATION_JSON)
                                 .content(requestBody)
@@ -122,7 +124,7 @@ class ProductControllerTest extends AdminAuthorizationControllerTest {
                 .andExpect(status().isOk())
                 .andExpect(content().json(responseBody));
 
-        then(productService).should(times(1)).update(request.toProductDetailInfoUpdateForm());
+        then(productService).should(times(1)).update(request.toProductDetailInfoUpdateForm(productInfoId));
     }
 
 }

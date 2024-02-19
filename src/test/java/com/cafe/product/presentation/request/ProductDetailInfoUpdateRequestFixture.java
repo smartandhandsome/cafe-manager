@@ -2,7 +2,6 @@ package com.cafe.product.presentation.request;
 
 public enum ProductDetailInfoUpdateRequestFixture {
     STANDARD(
-            Constants.ID,
             Constants.NAME,
             Constants.DESCRIPTION,
             Constants.BARCODE,
@@ -10,14 +9,12 @@ public enum ProductDetailInfoUpdateRequestFixture {
     ),
     ;
 
-    private final Long productInfoId;
     private final String name;
     private final String description;
     private final String barcode;
     private final String expirationDuration;
 
-    ProductDetailInfoUpdateRequestFixture(Long productInfoId, String name, String description, String barcode, String expirationDuration) {
-        this.productInfoId = productInfoId;
+    ProductDetailInfoUpdateRequestFixture(String name, String description, String barcode, String expirationDuration) {
         this.name = name;
         this.description = description;
         this.barcode = barcode;
@@ -26,7 +23,6 @@ public enum ProductDetailInfoUpdateRequestFixture {
 
     public ProductDetailInfoUpdateRequest newInstance() {
         return new ProductDetailInfoUpdateRequest(
-                productInfoId,
                 name,
                 description,
                 barcode,
@@ -35,7 +31,6 @@ public enum ProductDetailInfoUpdateRequestFixture {
     }
 
     private final static class Constants {
-        private static final Long ID = 1L;
         private static final String NAME = "name";
         private static final String DESCRIPTION = "description";
         private static final String BARCODE = "barcode";

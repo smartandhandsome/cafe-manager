@@ -3,15 +3,9 @@ package com.cafe.product.presentation.request;
 import com.cafe.product.service.vo.ProductDetailInfoUpdateForm;
 import io.swagger.v3.oas.annotations.media.Schema;
 import jakarta.validation.constraints.NotBlank;
-import jakarta.validation.constraints.NotNull;
-import jakarta.validation.constraints.Positive;
 
 @Schema(description = "상품 디테일 정보 수정 객체")
 public record ProductDetailInfoUpdateRequest(
-        @Schema(description = "상품 정보 id")
-        @Positive
-        @NotNull
-        Long productInfoId,
         @Schema(description = "이름")
         @NotBlank
         String name,
@@ -26,7 +20,7 @@ public record ProductDetailInfoUpdateRequest(
         String expirationDuration
 ) {
 
-    public ProductDetailInfoUpdateForm toProductDetailInfoUpdateForm() {
+    public ProductDetailInfoUpdateForm toProductDetailInfoUpdateForm(Long productInfoId) {
         return new ProductDetailInfoUpdateForm(
                 productInfoId,
                 name,

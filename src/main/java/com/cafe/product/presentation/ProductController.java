@@ -3,6 +3,7 @@ package com.cafe.product.presentation;
 import com.cafe.common.model.AdminAuthorization;
 import com.cafe.common.model.MyCafeResponse;
 import com.cafe.product.presentation.request.ProductCategoryRegistrationRequest;
+import com.cafe.product.presentation.request.ProductCategoryUpdateRequest;
 import com.cafe.product.presentation.request.ProductDetailInfoUpdateRequest;
 import com.cafe.product.presentation.request.ProductPriceInfoUpdateRequest;
 import com.cafe.product.presentation.request.ProductRegistrationRequest;
@@ -13,6 +14,7 @@ import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.PatchMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -50,36 +52,39 @@ public class ProductController {
     }
 
     @Operation(description = "상품 가격 정보 수정", security = @SecurityRequirement(name = "Authorization"))
-    @PatchMapping("/price")
+    @PatchMapping("/infos/{productInfoId}/price")
     public MyCafeResponse<Void> requestProductPriceInfoUpdate(
             AdminAuthorization adminAuthorization,
+            @PathVariable Long productInfoId,
             @RequestBody @Valid ProductPriceInfoUpdateRequest productPriceInfoUpdateRequest
     ) {
         productService.update(
-                productPriceInfoUpdateRequest.toProductPriceInfoUpdateForm()
+                productPriceInfoUpdateRequest.toProductPriceInfoUpdateForm(productInfoId)
         );
         return MyCafeResponse.success();
     }
 
     @Operation(description = "상품 상세 정보 수정", security = @SecurityRequirement(name = "Authorization"))
-    @PatchMapping("/info")
+    @PatchMapping("/infos/{productInfoId}/detail")
     public MyCafeResponse<Void> requestProductDetailInfoUpdate(
             AdminAuthorization adminAuthorization,
+            @PathVariable Long productInfoId,
             @RequestBody @Valid ProductDetailInfoUpdateRequest productDetailInfoUpdateRequest
     ) {
         productService.update(
-                productDetailInfoUpdateRequest.toProductDetailInfoUpdateForm()
+                productDetailInfoUpdateRequest.toProductDetailInfoUpdateForm(productInfoId)
         );
         return MyCafeResponse.success();
     }
 
     @Operation(description = "상품 카테고리 수정", security = @SecurityRequirement(name = "Authorization"))
-    @PatchMapping("/category")
+    @PatchMapping("/categories/{productCategoryId}")
     public MyCafeResponse<Void> requestProductCategoryUpdate(
             AdminAuthorization adminAuthorization,
+            @PathVariable Long productCategoryId,
             @RequestBody @Valid ProductCategoryUpdateRequest productCategoryUpdateRequest
     ) {
-        productService.update(productCategoryUpdateRequest.toProductCategoryUpdateForm());
+        productService.update(productCategoryUpdateRequest.toProductCategoryUpdateForm(productCategoryId));
         return MyCafeResponse.success();
     }
 
