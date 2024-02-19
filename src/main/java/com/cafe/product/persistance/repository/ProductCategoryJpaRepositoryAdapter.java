@@ -18,12 +18,13 @@ public class ProductCategoryJpaRepositoryAdapter implements ProductCategoryCreat
         productCategoryJpaRepository.save(convertToEntity(productInfoRegistrationForm));
     }
 
-    private ProductCategoryJpaEntity convertToEntity(ProductCategoryRegistrationForm domain) {
-        return new ProductCategoryJpaEntity(domain.name());
-    }
-
     @Override
     public boolean existsByName(String name) {
         return productCategoryJpaRepository.existsByName(name);
     }
+
+    private ProductCategoryJpaEntity convertToEntity(ProductCategoryRegistrationForm domain) {
+        return new ProductCategoryJpaEntity(domain.name());
+    }
+
 }
