@@ -1,5 +1,7 @@
 package com.cafe.product.service.impl;
 
+import com.cafe.product.service.vo.ProductCategoryUpdateForm;
+import com.cafe.product.service.vo.ProductCategoryUpdateFormFixture;
 import com.cafe.product.service.vo.ProductDetailInfoUpdateForm;
 import com.cafe.product.service.vo.ProductDetailInfoUpdateFormFixture;
 import com.cafe.product.service.vo.ProductPriceInfoUpdateForm;
@@ -11,9 +13,7 @@ import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
-import org.springframework.transaction.annotation.Transactional;
 
-import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.BDDMockito.then;
 import static org.mockito.Mockito.times;
 
@@ -25,6 +25,8 @@ class ProductChangerTest {
     ProductChanger productChanger;
     @Mock
     ProductInfoChanger productInfoChanger;
+    @Mock
+    ProductCategoryChanger productCategoryChanger;
 
     @Test
     void 상품_가격_정보를_변경할_수_있다() {
@@ -48,6 +50,18 @@ class ProductChangerTest {
 
         // then
         then(productInfoChanger).should(times(1)).change(productDetailInfoUpdateForm);
+    }
+
+    @Test
+    void 상품_카테고리를_변경할_수_있다() {
+        // given
+        ProductCategoryUpdateForm productCategoryUpdateForm = ProductCategoryUpdateFormFixture.STANDARD.newInstance();
+
+        // when
+        productChanger.change(productCategoryUpdateForm);
+
+        // then
+        then(productCategoryChanger).should(times(1)).change(productCategoryUpdateForm);
     }
 
 }

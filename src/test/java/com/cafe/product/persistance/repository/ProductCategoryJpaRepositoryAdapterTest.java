@@ -1,17 +1,28 @@
 package com.cafe.product.persistance.repository;
 
 import com.cafe.product.persistance.entity.ProductCategoryJpaEntity;
+import com.cafe.product.persistance.entity.ProductCategoryJpaEntityFixture;
 import com.cafe.product.service.vo.ProductCategoryRegistrationForm;
 import com.cafe.product.service.vo.ProductCategoryRegistrationFormFixture;
+import com.cafe.product.service.vo.ProductCategoryUpdateForm;
+import com.cafe.product.service.vo.ProductCategoryUpdateFormFixture;
+import jakarta.persistence.EntityNotFoundException;
 import org.junit.jupiter.api.DisplayNameGeneration;
 import org.junit.jupiter.api.DisplayNameGenerator;
+import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 
+import java.util.Optional;
+
+import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.assertThatThrownBy;
+import static org.junit.jupiter.api.Assertions.assertAll;
 import static org.mockito.ArgumentMatchers.any;
+import static org.mockito.BDDMockito.given;
 import static org.mockito.BDDMockito.then;
 import static org.mockito.Mockito.times;
 
@@ -34,6 +45,75 @@ class ProductCategoryJpaRepositoryAdapterTest {
 
         // then
         then(productCategoryJpaRepository).should(times(1)).save(any(ProductCategoryJpaEntity.class));
+    }
+
+    @Nested
+    class 카테고리_이름이_존재하는지_확인할_수_있다 {
+
+        @Test
+        void 이름이_존재할_때() {
+            // given
+            String name = "existedName";
+            given(productCategoryJpaRepository.existsByName(name)).willReturn(true);
+
+            // when
+            boolean isExisted = productCategoryJpaRepositoryAdapter.existsByName(name);
+
+            // then
+            assertThat(isExisted).isTrue();
+        }
+
+        @Test
+        void 이름이_존재하지_않을_때() {
+            // given
+            String name = "notExistedName";
+            given(productCategoryJpaRepository.existsByName(name)).willReturn(false);
+
+            // when
+            boolean isExisted = productCategoryJpaRepositoryAdapter.existsByName(name);
+
+            // then
+            assertThat(isExisted).isFalse();
+        }
+
+    }
+
+    @Nested
+    class 상품_카테고리를_수정할_수_있다 {
+
+        @Test
+        void 데이터_존재할_때() {
+            // given
+            ProductCategoryJpaEntity entity = ProductCategoryJpaEntityFixture.STANDARD.newInstance();
+            ProductCategoryUpdateForm productCategoryUpdateForm
+                    = ProductCategoryUpdateFormFixture.STANDARD.newInstance();
+
+            given(productCategoryJpaRepository.findById(productCategoryUpdateForm.productCategoryId()))
+                    .willReturn(Optional.of(entity));
+
+            // when
+            productCategoryJpaRepositoryAdapter.change(productCategoryUpdateForm);
+
+            // then
+            assertAll(
+                    () -> assertThat(entity.getName()).isEqualTo(productCategoryUpdateForm.name())
+            );
+        }
+
+        @Test
+        void 데이터_존재하지_않을_때() {
+            // given
+            ProductCategoryUpdateForm productCategoryUpdateForm
+                    = ProductCategoryUpdateFormFixture.STANDARD.newInstance();
+
+            given(productCategoryJpaRepository.findById(productCategoryUpdateForm.productCategoryId()))
+                    .willReturn(Optional.empty());
+
+            // when, then
+            assertThatThrownBy(() -> productCategoryJpaRepositoryAdapter.change(productCategoryUpdateForm))
+                    .isExactlyInstanceOf(EntityNotFoundException.class);
+        }
+
     }
 
 }

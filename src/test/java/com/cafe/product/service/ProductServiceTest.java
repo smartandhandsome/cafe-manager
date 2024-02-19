@@ -5,6 +5,8 @@ import com.cafe.product.service.impl.ProductRegister;
 import com.cafe.product.service.impl.ProductValidator;
 import com.cafe.product.service.vo.ProductCategoryRegistrationForm;
 import com.cafe.product.service.vo.ProductCategoryRegistrationFormFixture;
+import com.cafe.product.service.vo.ProductCategoryUpdateForm;
+import com.cafe.product.service.vo.ProductCategoryUpdateFormFixture;
 import com.cafe.product.service.vo.ProductDetailInfoUpdateForm;
 import com.cafe.product.service.vo.ProductDetailInfoUpdateFormFixture;
 import com.cafe.product.service.vo.ProductInfoRegistrationForm;
@@ -88,6 +90,19 @@ class ProductServiceTest {
         // then
         then(productValidator).should(times(1)).validate(productDetailInfoUpdateForm);
         then(productChanger).should(times(1)).change(productDetailInfoUpdateForm);
+    }
+
+    @Test
+    void 상품_카테고리를_수정할_수_있다() {
+        // given
+        ProductCategoryUpdateForm productCategoryUpdateForm = ProductCategoryUpdateFormFixture.STANDARD.newInstance();
+
+        // when
+        productService.update(productCategoryUpdateForm);
+
+        // then
+        then(productValidator).should(times(1)).validate(productCategoryUpdateForm);
+        then(productChanger).should(times(1)).change(productCategoryUpdateForm);
     }
 
 }

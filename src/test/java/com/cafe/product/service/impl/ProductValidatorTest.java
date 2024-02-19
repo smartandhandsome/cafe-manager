@@ -2,6 +2,8 @@ package com.cafe.product.service.impl;
 
 import com.cafe.product.service.vo.ProductCategoryRegistrationForm;
 import com.cafe.product.service.vo.ProductCategoryRegistrationFormFixture;
+import com.cafe.product.service.vo.ProductCategoryUpdateForm;
+import com.cafe.product.service.vo.ProductCategoryUpdateFormFixture;
 import com.cafe.product.service.vo.ProductDetailInfoUpdateForm;
 import com.cafe.product.service.vo.ProductDetailInfoUpdateFormFixture;
 import org.junit.jupiter.api.DisplayNameGeneration;
@@ -60,6 +62,18 @@ class ProductValidatorTest {
 
         // then
         then(productInfoDuplicationValidator).should(times(1)).validate(productDetailInfoUpdateForm);
+    }
+
+    @Test
+    void 카테고리_수정_폼을_검증할_수_있다() {
+        // given
+        ProductCategoryUpdateForm productCategoryUpdateForm = ProductCategoryUpdateFormFixture.STANDARD.newInstance();
+
+        // when
+        productValidator.validate(productCategoryUpdateForm);
+
+        // then
+        then(productCategoryDuplicationValidator).should(times(1)).validate(productCategoryUpdateForm.name());
     }
 
 }
