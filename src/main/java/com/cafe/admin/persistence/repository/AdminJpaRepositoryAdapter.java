@@ -15,7 +15,7 @@ import java.text.MessageFormat;
 @RequiredArgsConstructor
 public class AdminJpaRepositoryAdapter implements AdminReader, AdminCreator {
 
-    public static final String ADMIN_NOT_FOUND_PHONE_NUMBER = "해당 휴대폰 번호[phoneNumber: {0}]를 갖는 관리자가 존재하지 않습니다.";
+    public static final String ADMIN_NOT_FOUND_PHONE_NUMBER = "해당 휴대폰 번호를 갖는 관리자가 존재하지 않습니다. [phoneNumber: {0}]";
 
     private final AdminJpaRepository adminJpaRepository;
 

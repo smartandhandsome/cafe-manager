@@ -3,6 +3,7 @@ package com.cafe.product.presentation;
 import com.cafe.common.model.AdminAuthorization;
 import com.cafe.common.model.MyCafeResponse;
 import com.cafe.product.presentation.request.ProductCategoryRegistrationRequest;
+import com.cafe.product.presentation.request.ProductPriceInfoUpdateRequest;
 import com.cafe.product.presentation.request.ProductRegistrationRequest;
 import com.cafe.product.service.ProductService;
 import io.swagger.v3.oas.annotations.Operation;
@@ -10,6 +11,7 @@ import io.swagger.v3.oas.annotations.security.SecurityRequirement;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
+import org.springframework.web.bind.annotation.PatchMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -46,4 +48,33 @@ public class ProductController {
         return MyCafeResponse.success();
     }
 
+    @Operation(description = "상품 가격 정보 수정", security = @SecurityRequirement(name = "Authorization"))
+    @PatchMapping("/price")
+    public MyCafeResponse<Void> requestProductPriceInfoUpdate(
+            AdminAuthorization adminAuthorization,
+            @RequestBody @Valid ProductPriceInfoUpdateRequest productRegistrationRequest
+    ) {
+        productService.update(
+                productRegistrationRequest.toProductPriceInfoUpdateForm()
+        );
+        return MyCafeResponse.success();
+    }
+
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

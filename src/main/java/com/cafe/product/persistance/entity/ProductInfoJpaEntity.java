@@ -56,4 +56,9 @@ public class ProductInfoJpaEntity extends BaseEntity {
         this.productCategoryId = productCategoryId;
     }
 
+    public void changePriceInfo(int basePrice, int baseCost) {
+        this.basePrice = basePrice;
+        this.baseCost = baseCost;
+    }
+
 }

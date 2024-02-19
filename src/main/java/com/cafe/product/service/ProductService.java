@@ -1,9 +1,11 @@
 package com.cafe.product.service;
 
+import com.cafe.product.service.impl.ProductChanger;
 import com.cafe.product.service.impl.ProductRegister;
 import com.cafe.product.service.impl.ProductValidator;
 import com.cafe.product.service.vo.ProductCategoryRegistrationForm;
 import com.cafe.product.service.vo.ProductInfoRegistrationForm;
+import com.cafe.product.service.vo.ProductPriceInfoUpdateForm;
 import com.cafe.product.service.vo.SizeRegistrationForm;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -16,6 +18,7 @@ public class ProductService {
 
     private final ProductRegister productRegister;
     private final ProductValidator productValidator;
+    private final ProductChanger productChanger;
 
     public void register(ProductCategoryRegistrationForm productCategoryRegistrationForm) {
         productValidator.validate(productCategoryRegistrationForm);
@@ -31,6 +34,10 @@ public class ProductService {
                 productInfoRegistrationForm,
                 sizeRegistrationFormList
         );
+    }
+
+    public void update(ProductPriceInfoUpdateForm productPriceInfoUpdateForm) {
+        productChanger.change(productPriceInfoUpdateForm);
     }
 
 }
