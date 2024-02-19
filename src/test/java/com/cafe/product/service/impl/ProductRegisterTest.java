@@ -2,6 +2,8 @@ package com.cafe.product.service.impl;
 
 import com.cafe.product.persistance.entity.ProductInfoJpaEntity;
 import com.cafe.product.persistance.entity.ProductInfoJpaEntityFixture;
+import com.cafe.product.service.vo.ProductCategoryRegistrationForm;
+import com.cafe.product.service.vo.ProductCategoryRegistrationFormFixture;
 import com.cafe.product.service.vo.ProductInfoRegistrationForm;
 import com.cafe.product.service.vo.ProductInfoRegistrationFormFixture;
 import com.cafe.product.service.vo.SizeRegistrationForm;
@@ -30,6 +32,20 @@ class ProductRegisterTest {
     private ProductInfoCreator productInfoCreator;
     @Mock
     private ProductSizeCreator productSizeCreator;
+    @Mock
+    private ProductCategoryCreator productCategoryCreator;
+
+    @Test
+    void 상품_카테고리를_생성할_수_있다() {
+        // given
+        ProductCategoryRegistrationForm productCategoryRegistrationForm = ProductCategoryRegistrationFormFixture.STANDARD.newInstance();
+
+        // when
+        productRegister.register(productCategoryRegistrationForm);
+
+        // then
+        then(productCategoryCreator).should(times(1)).create(productCategoryRegistrationForm);
+    }
 
     @Test
     void 상품_및_추가옵션를_생성할_수_있다() {

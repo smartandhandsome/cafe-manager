@@ -7,8 +7,8 @@ import com.cafe.admin.presentation.response.LoginResponseFixture;
 import com.cafe.admin.service.AuthService;
 import com.cafe.admin.service.vo.AuthToken;
 import com.cafe.admin.service.vo.AuthTokenFixture;
-import com.cafe.common.config.ControllerTestConfig;
 import com.cafe.common.exception.ErrorCode;
+import com.cafe.common.model.BaseControllerTest;
 import com.cafe.common.model.MyCafeResponse;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.junit.jupiter.api.DisplayNameGeneration;
@@ -32,10 +32,9 @@ import static org.springframework.test.web.servlet.request.MockMvcRequestBuilder
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
-@Import(ControllerTestConfig.class)
 @WebMvcTest(AuthController.class)
 @DisplayNameGeneration(DisplayNameGenerator.ReplaceUnderscores.class)
-class AuthControllerTest {
+class AuthControllerTest extends BaseControllerTest {
 
     @Autowired
     private MockMvc mvc;

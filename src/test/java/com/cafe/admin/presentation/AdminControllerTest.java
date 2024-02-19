@@ -3,8 +3,8 @@ package com.cafe.admin.presentation;
 import com.cafe.admin.presentation.request.SignUpRequest;
 import com.cafe.admin.presentation.request.SignUpRequestFixture;
 import com.cafe.admin.service.AdminService;
-import com.cafe.common.config.ControllerTestConfig;
 import com.cafe.common.exception.ErrorCode;
+import com.cafe.common.model.BaseControllerTest;
 import com.cafe.common.model.MyCafeResponse;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.junit.jupiter.api.DisplayNameGeneration;
@@ -17,7 +17,6 @@ import org.junit.jupiter.params.provider.MethodSource;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
-import org.springframework.context.annotation.Import;
 import org.springframework.test.web.servlet.MockMvc;
 
 import java.util.stream.Stream;
@@ -29,10 +28,9 @@ import static org.springframework.test.web.servlet.request.MockMvcRequestBuilder
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
-@Import(ControllerTestConfig.class)
 @WebMvcTest(AdminController.class)
 @DisplayNameGeneration(DisplayNameGenerator.ReplaceUnderscores.class)
-class AdminControllerTest {
+class AdminControllerTest extends BaseControllerTest {
 
     @Autowired
     private MockMvc mvc;
