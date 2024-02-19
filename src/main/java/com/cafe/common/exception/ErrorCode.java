@@ -8,7 +8,7 @@ import lombok.RequiredArgsConstructor;
 public enum ErrorCode {
 
     // ADMIN
-    FAILED_LOGIN(404, "이메일 또는 비밀번호를 확인해주세요."),
+    FAILED_LOGIN(404, "휴대폰번호 또는 비밀번호를 확인해주세요."),
     DUPLICATED_PHONE_NUMBER(409, "중복된 휴대폰 번호입니다."),
 
     // AUTH

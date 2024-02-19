@@ -58,4 +58,10 @@ public class ProductSizeJpaEntity extends BaseEntity {
     public Long getProductInfoId() {
         return productInfoJpaEntity.getProductInfoId();
     }
+
+    public void changePriceInfo(int extraCharge, int extraCost) {
+        this.extraCharge = extraCharge;
+        this.extraCost = extraCost;
+    }
+
 }

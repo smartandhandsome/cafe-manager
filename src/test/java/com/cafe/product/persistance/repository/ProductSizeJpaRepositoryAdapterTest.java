@@ -20,10 +20,10 @@ import static org.mockito.BDDMockito.then;
 
 @ExtendWith(MockitoExtension.class)
 @DisplayNameGeneration(DisplayNameGenerator.ReplaceUnderscores.class)
-class ProductSizeJdbcRepositoryAdapterTest extends BaseRepositoryTest {
+class ProductSizeJpaRepositoryAdapterTest extends BaseRepositoryTest {
 
     @InjectMocks
-    private ProductSizeJdbcRepositoryAdapter productSizeJdbcRepositoryAdapter;
+    private ProductSizeJpaRepositoryAdapter productSizeJpaRepositoryAdapter;
     @Mock
     private ProductSizeJdbcRepository productSizeJdbcRepository;
 
@@ -37,7 +37,7 @@ class ProductSizeJdbcRepositoryAdapterTest extends BaseRepositoryTest {
         );
 
         // when
-        productSizeJdbcRepositoryAdapter.createAll(productInfoJpaEntity, sizeRegistrationForms);
+        productSizeJpaRepositoryAdapter.createAll(productInfoJpaEntity, sizeRegistrationForms);
 
         // then
         then(productSizeJdbcRepository).should().saveAll(anyList());

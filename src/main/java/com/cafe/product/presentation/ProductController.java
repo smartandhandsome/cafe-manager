@@ -7,6 +7,7 @@ import com.cafe.product.presentation.request.ProductCategoryUpdateRequest;
 import com.cafe.product.presentation.request.ProductDetailInfoUpdateRequest;
 import com.cafe.product.presentation.request.ProductPriceInfoUpdateRequest;
 import com.cafe.product.presentation.request.ProductRegistrationRequest;
+import com.cafe.product.presentation.request.ProductSizePriceUpdateRequest;
 import com.cafe.product.service.ProductService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.security.SecurityRequirement;
@@ -85,6 +86,17 @@ public class ProductController {
             @RequestBody @Valid ProductCategoryUpdateRequest productCategoryUpdateRequest
     ) {
         productService.update(productCategoryUpdateRequest.toProductCategoryUpdateForm(productCategoryId));
+        return MyCafeResponse.success();
+    }
+
+    @Operation(description = "상품 사이즈 가격 수정", security = @SecurityRequirement(name = "Authorization"))
+    @PatchMapping("/sizes/{productSizeId}/price")
+    public MyCafeResponse<Void> requestProductSizePriceUpdate(
+            AdminAuthorization adminAuthorization,
+            @PathVariable Long productSizeId,
+            @RequestBody @Valid ProductSizePriceUpdateRequest productSizePriceUpdateRequest
+            ) {
+        productService.update(productSizePriceUpdateRequest.toProductSizePriceUpdateForm(productSizeId));
         return MyCafeResponse.success();
     }
 
