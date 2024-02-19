@@ -1,5 +1,6 @@
 package com.cafe.product.service.impl;
 
+import com.cafe.product.service.vo.ProductDetailInfoUpdateForm;
 import com.cafe.product.service.vo.ProductPriceInfoUpdateForm;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
@@ -15,4 +16,7 @@ public class ProductChanger {
         productInfoChanger.change(productPriceInfoUpdateForm);
     }
 
+    public void change(ProductDetailInfoUpdateForm productDetailInfoUpdateForm) {
+        productInfoChanger.change(productDetailInfoUpdateForm);
+    }
 }

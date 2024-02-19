@@ -3,6 +3,7 @@ package com.cafe.product.presentation;
 import com.cafe.common.model.AdminAuthorization;
 import com.cafe.common.model.MyCafeResponse;
 import com.cafe.product.presentation.request.ProductCategoryRegistrationRequest;
+import com.cafe.product.presentation.request.ProductDetailInfoUpdateRequest;
 import com.cafe.product.presentation.request.ProductPriceInfoUpdateRequest;
 import com.cafe.product.presentation.request.ProductRegistrationRequest;
 import com.cafe.product.service.ProductService;
@@ -52,10 +53,22 @@ public class ProductController {
     @PatchMapping("/price")
     public MyCafeResponse<Void> requestProductPriceInfoUpdate(
             AdminAuthorization adminAuthorization,
-            @RequestBody @Valid ProductPriceInfoUpdateRequest productRegistrationRequest
+            @RequestBody @Valid ProductPriceInfoUpdateRequest productPriceInfoUpdateRequest
     ) {
         productService.update(
-                productRegistrationRequest.toProductPriceInfoUpdateForm()
+                productPriceInfoUpdateRequest.toProductPriceInfoUpdateForm()
+        );
+        return MyCafeResponse.success();
+    }
+
+    @Operation(description = "상품 상세 정보 수정", security = @SecurityRequirement(name = "Authorization"))
+    @PatchMapping("/info")
+    public MyCafeResponse<Void> requestProductDetailInfoUpdate(
+            AdminAuthorization adminAuthorization,
+            @RequestBody @Valid ProductDetailInfoUpdateRequest productDetailInfoUpdateRequest
+    ) {
+        productService.update(
+                productDetailInfoUpdateRequest.toProductDetailInfoUpdateForm()
         );
         return MyCafeResponse.success();
     }

@@ -61,4 +61,16 @@ public class ProductInfoJpaEntity extends BaseEntity {
         this.baseCost = baseCost;
     }
 
+    public void changeDetailInfo(
+            String name,
+            String description,
+            String barcode,
+            String expirationDuration
+    ) {
+        this.name = name;
+        this.description = description;
+        this.barcode = barcode;
+        this.expirationDuration = expirationDuration;
+    }
+
 }

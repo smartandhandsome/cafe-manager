@@ -4,6 +4,7 @@ import com.cafe.product.persistance.entity.ProductInfoJpaEntity;
 import com.cafe.product.service.impl.ProductInfoChanger;
 import com.cafe.product.service.impl.ProductInfoCreator;
 import com.cafe.product.service.impl.ProductInfoReader;
+import com.cafe.product.service.vo.ProductDetailInfoUpdateForm;
 import com.cafe.product.service.vo.ProductInfoRegistrationForm;
 import com.cafe.product.service.vo.ProductPriceInfoUpdateForm;
 import jakarta.persistence.EntityNotFoundException;
@@ -33,14 +34,29 @@ public class ProductInfoJpaRepositoryAdapter implements ProductInfoCreator, Prod
 
     @Override
     public void change(ProductPriceInfoUpdateForm productPriceInfoUpdateForm) {
-        ProductInfoJpaEntity entity = productInfoJpaRepository.findById(productPriceInfoUpdateForm.productInfoId())
-                .orElseThrow(() -> new EntityNotFoundException(
-                        MessageFormat.format("해당 아이디와 일치하는 상품 정보가 존재하지 않습니다. [productInfoId: {0}]", productPriceInfoUpdateForm.productInfoId())
-                ));
+        ProductInfoJpaEntity entity = getById(productPriceInfoUpdateForm.productInfoId());
         entity.changePriceInfo(
                 productPriceInfoUpdateForm.basePrice(),
                 productPriceInfoUpdateForm.baseCost()
         );
+    }
+
+    @Override
+    public void change(ProductDetailInfoUpdateForm productDetailInfoUpdateForm) {
+        ProductInfoJpaEntity entity = getById(productDetailInfoUpdateForm.productInfoId());
+        entity.changeDetailInfo(
+                productDetailInfoUpdateForm.name(),
+                productDetailInfoUpdateForm.description(),
+                productDetailInfoUpdateForm.barcode(),
+                productDetailInfoUpdateForm.expirationDuration()
+        );
+    }
+
+    private ProductInfoJpaEntity getById(Long productInfoId) {
+        return productInfoJpaRepository.findById(productInfoId)
+                .orElseThrow(() -> new EntityNotFoundException(
+                        MessageFormat.format("해당 아이디와 일치하는 상품 정보가 존재하지 않습니다. [productInfoId: {0}]", productInfoId)
+                ));
     }
 
     private ProductInfoJpaEntity convertToEntity(ProductInfoRegistrationForm domain) {
