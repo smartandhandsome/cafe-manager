@@ -19,11 +19,12 @@ public class ProductValidator {
         productCategoryDuplicationValidator.validate(productCategoryRegistrationForm);
     }
 
+    @Transactional(readOnly = true)
     public void validate(ProductInfoRegistrationForm productInfoRegistrationForm) {
-        // TODO: 2/19/24 test
         productInfoDuplicationValidator.validate(productInfoRegistrationForm);
     }
 
+    @Transactional(readOnly = true)
     public void validate(ProductDetailInfoUpdateForm productDetailInfoUpdateForm) {
         productInfoDuplicationValidator.validate(productDetailInfoUpdateForm);
     }

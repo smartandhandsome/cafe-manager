@@ -6,6 +6,7 @@ import com.cafe.product.service.vo.ProductDetailInfoUpdateForm;
 import com.cafe.product.service.vo.ProductInfoRegistrationForm;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.text.MessageFormat;
 
@@ -16,6 +17,7 @@ public class ProductInfoDuplicationValidator {
 
     private final ProductInfoReader productInfoReader;
 
+    @Transactional(readOnly = true)
     public void validate(ProductInfoRegistrationForm productInfoRegistrationForm) {
         if (productInfoReader.existsByBarcode(productInfoRegistrationForm.barcode())) {
             throw new DuplicatedResourceException(
@@ -25,6 +27,7 @@ public class ProductInfoDuplicationValidator {
         }
     }
 
+    @Transactional(readOnly = true)
     public void validate(ProductDetailInfoUpdateForm productDetailInfoUpdateForm) {
         if (productInfoReader.existsByBarcodeProductInfoIdNot(
                 productDetailInfoUpdateForm.barcode(),

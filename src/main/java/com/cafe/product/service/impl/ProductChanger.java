@@ -16,6 +16,7 @@ public class ProductChanger {
         productInfoChanger.change(productPriceInfoUpdateForm);
     }
 
+    @Transactional
     public void change(ProductDetailInfoUpdateForm productDetailInfoUpdateForm) {
         productInfoChanger.change(productDetailInfoUpdateForm);
     }
