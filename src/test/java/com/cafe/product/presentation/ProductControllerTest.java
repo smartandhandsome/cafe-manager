@@ -16,7 +16,7 @@ import com.cafe.product.presentation.request.ProductSizeInfoUpdateRequest;
 import com.cafe.product.presentation.request.ProductSizeInfoUpdateRequestFixture;
 import com.cafe.product.presentation.request.ProductSizePriceUpdateRequest;
 import com.cafe.product.presentation.request.ProductSizePriceUpdateRequestFixture;
-import com.cafe.product.service.ProductService;
+import com.cafe.product.service.ProductCommandService;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
@@ -38,7 +38,7 @@ class ProductControllerTest extends AdminAuthorizationControllerTest {
     String BASE_URL = "/v1/products";
 
     @MockBean
-    ProductService productService;
+    ProductCommandService productCommandService;
     @Autowired
     private ProductController controller;
 
@@ -61,7 +61,7 @@ class ProductControllerTest extends AdminAuthorizationControllerTest {
                 .andExpect(status().isOk())
                 .andExpect(content().json(responseBody));
 
-        then(productService).should().register(request.toProductCategoryRegistrationForm());
+        then(productCommandService).should().register(request.toProductCategoryRegistrationForm());
     }
 
     @Test
@@ -84,7 +84,7 @@ class ProductControllerTest extends AdminAuthorizationControllerTest {
                 .andExpect(status().isOk())
                 .andExpect(content().json(responseBody));
 
-        then(productService).should().register(productRegistrationRequest.toProductInfoRegistrationForm(), productRegistrationRequest.toSizeRegistrationFormList());
+        then(productCommandService).should().register(productRegistrationRequest.toProductInfoRegistrationForm(), productRegistrationRequest.toSizeRegistrationFormList());
     }
 
     @Test
@@ -108,7 +108,7 @@ class ProductControllerTest extends AdminAuthorizationControllerTest {
                 .andExpect(status().isOk())
                 .andExpect(content().json(responseBody));
 
-        then(productService).should(times(1)).update(request.toProductPriceInfoUpdateForm(productInfoId));
+        then(productCommandService).should(times(1)).update(request.toProductPriceInfoUpdateForm(productInfoId));
     }
 
     @Test
@@ -132,7 +132,7 @@ class ProductControllerTest extends AdminAuthorizationControllerTest {
                 .andExpect(status().isOk())
                 .andExpect(content().json(responseBody));
 
-        then(productService).should(times(1)).update(request.toProductDetailInfoUpdateForm(productInfoId));
+        then(productCommandService).should(times(1)).update(request.toProductDetailInfoUpdateForm(productInfoId));
     }
 
     @Test
@@ -156,7 +156,7 @@ class ProductControllerTest extends AdminAuthorizationControllerTest {
                 .andExpect(status().isOk())
                 .andExpect(content().json(responseBody));
 
-        then(productService).should(times(1)).update(request.toProductCategoryUpdateForm(productCategoryId));
+        then(productCommandService).should(times(1)).update(request.toProductCategoryUpdateForm(productCategoryId));
     }
 
     @Test
@@ -180,7 +180,7 @@ class ProductControllerTest extends AdminAuthorizationControllerTest {
                 .andExpect(status().isOk())
                 .andExpect(content().json(responseBody));
 
-        then(productService).should(times(1)).update(request.toProductSizePriceUpdateForm(productSizeId));
+        then(productCommandService).should(times(1)).update(request.toProductSizePriceUpdateForm(productSizeId));
     }
 
     @Test
@@ -204,7 +204,7 @@ class ProductControllerTest extends AdminAuthorizationControllerTest {
                 .andExpect(status().isOk())
                 .andExpect(content().json(responseBody));
 
-        then(productService).should(times(1)).update(request.toProductSizeUpdateForm(productSizeId));
+        then(productCommandService).should(times(1)).update(request.toProductSizeUpdateForm(productSizeId));
     }
 
     @Test
@@ -226,7 +226,7 @@ class ProductControllerTest extends AdminAuthorizationControllerTest {
                 .andExpect(status().isOk())
                 .andExpect(content().json(responseBody));
 
-        then(productService).should(times(1)).deleteProductSize(productSizeId);
+        then(productCommandService).should(times(1)).deleteProductSize(productSizeId);
     }
 
     @Test
@@ -248,7 +248,7 @@ class ProductControllerTest extends AdminAuthorizationControllerTest {
                 .andExpect(status().isOk())
                 .andExpect(content().json(responseBody));
 
-        then(productService).should(times(1)).deleteProductInfo(productInfoId);
+        then(productCommandService).should(times(1)).deleteProductInfo(productInfoId);
     }
 
     @Test
@@ -271,7 +271,7 @@ class ProductControllerTest extends AdminAuthorizationControllerTest {
                 .andExpect(content().json(responseBody));
 
 
-        then(productService).should(times(1)).deleteProductCategory(productCategoryId);
+        then(productCommandService).should(times(1)).deleteProductCategory(productCategoryId);
     }
 
 

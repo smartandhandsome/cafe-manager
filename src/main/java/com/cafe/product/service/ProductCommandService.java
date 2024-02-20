@@ -25,7 +25,7 @@ import java.util.List;
 
 @Service
 @RequiredArgsConstructor
-public class ProductService {
+public class ProductCommandService {
 
     private final ProductCategoryDuplicationValidator productCategoryDuplicationValidator;
     private final ProductInfoDuplicationValidator productInfoDuplicationValidator;

@@ -9,7 +9,7 @@ import com.cafe.product.presentation.request.ProductPriceInfoUpdateRequest;
 import com.cafe.product.presentation.request.ProductRegistrationRequest;
 import com.cafe.product.presentation.request.ProductSizeInfoUpdateRequest;
 import com.cafe.product.presentation.request.ProductSizePriceUpdateRequest;
-import com.cafe.product.service.ProductService;
+import com.cafe.product.service.ProductCommandService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.security.SecurityRequirement;
 import io.swagger.v3.oas.annotations.tags.Tag;
@@ -29,7 +29,7 @@ import org.springframework.web.bind.annotation.RestController;
 @RequiredArgsConstructor
 public class ProductController {
 
-    private final ProductService productService;
+    private final ProductCommandService productCommandService;
 
     @Operation(description = "상품 카테고리 추가", security = @SecurityRequirement(name = "Authorization"))
     @PostMapping("/categories")
@@ -37,7 +37,7 @@ public class ProductController {
             AdminAuthorization adminAuthorization,
             @RequestBody @Valid ProductCategoryRegistrationRequest productCategoryRegistrationRequest
     ) {
-        productService.register(productCategoryRegistrationRequest.toProductCategoryRegistrationForm());
+        productCommandService.register(productCategoryRegistrationRequest.toProductCategoryRegistrationForm());
         return MyCafeResponse.success();
     }
 
@@ -47,7 +47,7 @@ public class ProductController {
             AdminAuthorization adminAuthorization,
             @RequestBody @Valid ProductRegistrationRequest productRegistrationRequest
     ) {
-        productService.register(
+        productCommandService.register(
                 productRegistrationRequest.toProductInfoRegistrationForm(),
                 productRegistrationRequest.toSizeRegistrationFormList()
         );
@@ -61,7 +61,7 @@ public class ProductController {
             @PathVariable Long productInfoId,
             @RequestBody @Valid ProductPriceInfoUpdateRequest productPriceInfoUpdateRequest
     ) {
-        productService.update(
+        productCommandService.update(
                 productPriceInfoUpdateRequest.toProductPriceInfoUpdateForm(productInfoId)
         );
         return MyCafeResponse.success();
@@ -74,7 +74,7 @@ public class ProductController {
             @PathVariable Long productInfoId,
             @RequestBody @Valid ProductDetailInfoUpdateRequest productDetailInfoUpdateRequest
     ) {
-        productService.update(
+        productCommandService.update(
                 productDetailInfoUpdateRequest.toProductDetailInfoUpdateForm(productInfoId)
         );
         return MyCafeResponse.success();
@@ -87,7 +87,7 @@ public class ProductController {
             @PathVariable Long productCategoryId,
             @RequestBody @Valid ProductCategoryUpdateRequest productCategoryUpdateRequest
     ) {
-        productService.update(productCategoryUpdateRequest.toProductCategoryUpdateForm(productCategoryId));
+        productCommandService.update(productCategoryUpdateRequest.toProductCategoryUpdateForm(productCategoryId));
         return MyCafeResponse.success();
     }
 
@@ -98,7 +98,7 @@ public class ProductController {
             @PathVariable Long productSizeId,
             @RequestBody @Valid ProductSizePriceUpdateRequest productSizePriceUpdateRequest
     ) {
-        productService.update(productSizePriceUpdateRequest.toProductSizePriceUpdateForm(productSizeId));
+        productCommandService.update(productSizePriceUpdateRequest.toProductSizePriceUpdateForm(productSizeId));
         return MyCafeResponse.success();
     }
 
@@ -109,7 +109,7 @@ public class ProductController {
             @PathVariable Long productSizeId,
             @RequestBody @Valid ProductSizeInfoUpdateRequest productSizeInfoUpdateRequest
     ) {
-        productService.update(productSizeInfoUpdateRequest.toProductSizeUpdateForm(productSizeId));
+        productCommandService.update(productSizeInfoUpdateRequest.toProductSizeUpdateForm(productSizeId));
         return MyCafeResponse.success();
     }
 
@@ -119,7 +119,7 @@ public class ProductController {
             AdminAuthorization adminAuthorization,
             @PathVariable Long productSizeId
     ) {
-        productService.deleteProductSize(productSizeId);
+        productCommandService.deleteProductSize(productSizeId);
         return MyCafeResponse.success();
     }
 
@@ -129,7 +129,7 @@ public class ProductController {
             AdminAuthorization adminAuthorization,
             @PathVariable Long productInfoId
     ) {
-        productService.deleteProductInfo(productInfoId);
+        productCommandService.deleteProductInfo(productInfoId);
         return MyCafeResponse.success();
     }
 
@@ -139,7 +139,7 @@ public class ProductController {
             AdminAuthorization adminAuthorization,
             @PathVariable Long productCategoryId
     ) {
-        productService.deleteProductCategory(productCategoryId);
+        productCommandService.deleteProductCategory(productCategoryId);
         return MyCafeResponse.success();
     }
 

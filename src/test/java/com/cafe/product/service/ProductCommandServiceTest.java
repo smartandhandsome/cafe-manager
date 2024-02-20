@@ -45,10 +45,10 @@ import static org.mockito.Mockito.times;
 
 @ExtendWith(MockitoExtension.class)
 @DisplayNameGeneration(DisplayNameGenerator.ReplaceUnderscores.class)
-class ProductServiceTest {
+class ProductCommandServiceTest {
 
     @InjectMocks
-    ProductService productService;
+    ProductCommandService productCommandService;
 
     @Mock
     ProductCategoryDuplicationValidator productCategoryDuplicationValidator;
@@ -82,7 +82,7 @@ class ProductServiceTest {
         ProductCategoryRegistrationForm productCategoryRegistrationForm = ProductCategoryRegistrationFormFixture.STANDARD.newInstance();
 
         // when
-        productService.register(productCategoryRegistrationForm);
+        productCommandService.register(productCategoryRegistrationForm);
 
         // then
         then(productCategoryDuplicationValidator).should(times(1)).validate(productCategoryRegistrationForm.name());
@@ -102,7 +102,7 @@ class ProductServiceTest {
         given(productInfoCreator.create(productInfoRegistrationForm)).willReturn(productInfoJpaEntity);
 
         // when
-        productService.register(productInfoRegistrationForm, sizeRegistrationFormList);
+        productCommandService.register(productInfoRegistrationForm, sizeRegistrationFormList);
 
         // then
 
@@ -115,7 +115,7 @@ class ProductServiceTest {
         ProductPriceInfoUpdateForm productPriceInfoUpdateForm = ProductPriceInfoUpdateFormFixture.STANDARD.newInstance();
 
         // when
-        productService.update(productPriceInfoUpdateForm);
+        productCommandService.update(productPriceInfoUpdateForm);
 
         // then
         then(productInfoChanger).should(times(1)).change(productPriceInfoUpdateForm);
@@ -127,7 +127,7 @@ class ProductServiceTest {
         ProductDetailInfoUpdateForm productDetailInfoUpdateForm = ProductDetailInfoUpdateFormFixture.STANDARD.newInstance();
 
         // when
-        productService.update(productDetailInfoUpdateForm);
+        productCommandService.update(productDetailInfoUpdateForm);
 
         // then
         then(productInfoDuplicationValidator).should(times(1)).validate(productDetailInfoUpdateForm);
@@ -140,7 +140,7 @@ class ProductServiceTest {
         ProductCategoryUpdateForm productCategoryUpdateForm = ProductCategoryUpdateFormFixture.STANDARD.newInstance();
 
         // when
-        productService.update(productCategoryUpdateForm);
+        productCommandService.update(productCategoryUpdateForm);
 
         // then
         then(productCategoryDuplicationValidator).should(times(1)).validate(productCategoryUpdateForm.name());
@@ -153,7 +153,7 @@ class ProductServiceTest {
         ProductSizePriceUpdateForm productSizePriceUpdateForm = ProductSizePriceUpdateFormFixture.STANDARD.newInstance();
 
         // when
-        productService.update(productSizePriceUpdateForm);
+        productCommandService.update(productSizePriceUpdateForm);
 
         // then
         then(productSizeChanger).should(times(1)).change(productSizePriceUpdateForm);
@@ -165,7 +165,7 @@ class ProductServiceTest {
         ProductSizeInfoUpdateForm productSizeInfoUpdateForm = ProductSizeInfoUpdateFormFixture.STANDARD.newInstance();
 
         // when
-        productService.update(productSizeInfoUpdateForm);
+        productCommandService.update(productSizeInfoUpdateForm);
 
         // then
         then(productSizeChanger).should(times(1)).change(productSizeInfoUpdateForm);
@@ -177,7 +177,7 @@ class ProductServiceTest {
         Long productSizeId = 1L;
 
         // when
-        productService.deleteProductSize(productSizeId);
+        productCommandService.deleteProductSize(productSizeId);
 
         // then
         then(productSizeDeleter).should(times(1)).deleteByProductSizeId(productSizeId);
@@ -189,7 +189,7 @@ class ProductServiceTest {
         Long productInfoId = 1L;
 
         // when
-        productService.deleteProductInfo(productInfoId);
+        productCommandService.deleteProductInfo(productInfoId);
 
         // then
         then(productInfoIntegrationDeleter).
@@ -203,7 +203,7 @@ class ProductServiceTest {
         Long productCategoryId = 1L;
 
         // when
-        productService.deleteProductCategory(productCategoryId);
+        productCommandService.deleteProductCategory(productCategoryId);
 
         // then
         then(productCategoryIntegrationDeleter)
