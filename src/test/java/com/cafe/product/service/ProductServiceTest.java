@@ -5,11 +5,14 @@ import com.cafe.product.persistance.entity.ProductInfoJpaEntityFixture;
 import com.cafe.product.service.impl.ProductCategoryChanger;
 import com.cafe.product.service.impl.ProductCategoryCreator;
 import com.cafe.product.service.impl.ProductCategoryDuplicationValidator;
+import com.cafe.product.service.impl.ProductCategoryIntegrationDeleter;
 import com.cafe.product.service.impl.ProductInfoChanger;
 import com.cafe.product.service.impl.ProductInfoCreator;
 import com.cafe.product.service.impl.ProductInfoDuplicationValidator;
+import com.cafe.product.service.impl.ProductInfoIntegrationDeleter;
 import com.cafe.product.service.impl.ProductSizeChanger;
 import com.cafe.product.service.impl.ProductSizeCreator;
+import com.cafe.product.service.impl.ProductSizeDeleter;
 import com.cafe.product.service.vo.ProductCategoryRegistrationForm;
 import com.cafe.product.service.vo.ProductCategoryRegistrationFormFixture;
 import com.cafe.product.service.vo.ProductCategoryUpdateForm;
@@ -65,6 +68,13 @@ class ProductServiceTest {
     ProductCategoryChanger productCategoryChanger;
     @Mock
     ProductSizeChanger productSizeChanger;
+
+    @Mock
+    ProductSizeDeleter productSizeDeleter;
+    @Mock
+    ProductInfoIntegrationDeleter productInfoIntegrationDeleter;
+    @Mock
+    ProductCategoryIntegrationDeleter productCategoryIntegrationDeleter;
 
     @Test
     void 상품_카테고리를_등록할_수_있다() {
@@ -159,6 +169,46 @@ class ProductServiceTest {
 
         // then
         then(productSizeChanger).should(times(1)).change(productSizeInfoUpdateForm);
+    }
+
+    @Test
+    void 상품_사이즈를_삭제할_수_있다() {
+        // given
+        Long productSizeId = 1L;
+
+        // when
+        productService.deleteProductSize(productSizeId);
+
+        // then
+        then(productSizeDeleter).should(times(1)).deleteByProductSizeId(productSizeId);
+    }
+
+    @Test
+    void 상품_정보를_삭제할_수_있다() {
+        // given
+        Long productInfoId = 1L;
+
+        // when
+        productService.deleteProductInfo(productInfoId);
+
+        // then
+        then(productInfoIntegrationDeleter).
+                should(times(1))
+                .deleteByProductInfoId(productInfoId);
+    }
+
+    @Test
+    void 상품_카테고리를_삭제할_수_있다() {
+        // given
+        Long productCategoryId = 1L;
+
+        // when
+        productService.deleteProductCategory(productCategoryId);
+
+        // then
+        then(productCategoryIntegrationDeleter)
+                .should(times(1))
+                .deleteByProductCategoryId(productCategoryId);
     }
 
 }

@@ -116,4 +116,16 @@ class ProductCategoryJpaRepositoryAdapterTest {
 
     }
 
+    @Test
+    void 상품_카테고리_아이디에_해당하는_카테고리를_삭제할_수_있다() {
+        // given
+        Long productCategoryId = 1L;
+
+        // when
+        productCategoryJpaRepositoryAdapter.deleteByProductCategoryId(productCategoryId);
+
+        // then
+        then(productCategoryJpaRepository).should(times(1)).deleteById(productCategoryId);
+    }
+
 }

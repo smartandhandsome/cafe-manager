@@ -11,8 +11,10 @@ import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
 import lombok.AccessLevel;
 import lombok.Builder;
+import lombok.Getter;
 import lombok.NoArgsConstructor;
 
+@Getter
 @Entity
 @Table(name = "product_sizes")
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
@@ -41,18 +43,6 @@ public class ProductSizeJpaEntity extends BaseEntity {
         this.extraCharge = extraCharge;
         this.extraCost = extraCost;
         this.productInfoJpaEntity = productInfoJpaEntity;
-    }
-
-    public String getName() {
-        return name;
-    }
-
-    public int getExtraCharge() {
-        return extraCharge;
-    }
-
-    public int getExtraCost() {
-        return extraCost;
     }
 
     public Long getProductInfoId() {

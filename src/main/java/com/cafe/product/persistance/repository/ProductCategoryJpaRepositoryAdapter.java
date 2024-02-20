@@ -3,6 +3,7 @@ package com.cafe.product.persistance.repository;
 import com.cafe.product.persistance.entity.ProductCategoryJpaEntity;
 import com.cafe.product.service.impl.ProductCategoryChanger;
 import com.cafe.product.service.impl.ProductCategoryCreator;
+import com.cafe.product.service.impl.ProductCategoryDeleter;
 import com.cafe.product.service.impl.ProductCategoryReader;
 import com.cafe.product.service.vo.ProductCategoryRegistrationForm;
 import com.cafe.product.service.vo.ProductCategoryUpdateForm;
@@ -14,7 +15,7 @@ import java.text.MessageFormat;
 
 @Component
 @RequiredArgsConstructor
-public class ProductCategoryJpaRepositoryAdapter implements ProductCategoryCreator, ProductCategoryReader, ProductCategoryChanger {
+public class ProductCategoryJpaRepositoryAdapter implements ProductCategoryCreator, ProductCategoryReader, ProductCategoryChanger, ProductCategoryDeleter {
 
     private final ProductCategoryJpaRepository productCategoryJpaRepository;
 
@@ -37,6 +38,11 @@ public class ProductCategoryJpaRepositoryAdapter implements ProductCategoryCreat
                         )
                 );
         entity.changeName(productCategoryUpdateForm.name());
+    }
+
+    @Override
+    public void deleteByProductCategoryId(Long productCategoryId) {
+        productCategoryJpaRepository.deleteById(productCategoryId);
     }
 
     private ProductCategoryJpaEntity convertToEntity(ProductCategoryRegistrationForm domain) {

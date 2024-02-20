@@ -3,6 +3,7 @@ package com.cafe.product.persistance.repository;
 import com.cafe.product.persistance.entity.ProductInfoJpaEntity;
 import com.cafe.product.service.impl.ProductInfoChanger;
 import com.cafe.product.service.impl.ProductInfoCreator;
+import com.cafe.product.service.impl.ProductInfoDeleter;
 import com.cafe.product.service.impl.ProductInfoReader;
 import com.cafe.product.service.vo.ProductDetailInfoUpdateForm;
 import com.cafe.product.service.vo.ProductInfoRegistrationForm;
@@ -12,11 +13,12 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
 
 import java.text.MessageFormat;
+import java.util.List;
 
 
 @Component
 @RequiredArgsConstructor
-public class ProductInfoJpaRepositoryAdapter implements ProductInfoCreator, ProductInfoReader, ProductInfoChanger {
+public class ProductInfoJpaRepositoryAdapter implements ProductInfoCreator, ProductInfoReader, ProductInfoChanger, ProductInfoDeleter {
 
     private final ProductInfoJpaRepository productInfoJpaRepository;
 
@@ -55,6 +57,16 @@ public class ProductInfoJpaRepositoryAdapter implements ProductInfoCreator, Prod
                 productDetailInfoUpdateForm.barcode(),
                 productDetailInfoUpdateForm.expirationDuration()
         );
+    }
+
+    @Override
+    public List<Long> readAllProductInfoIdByProductCategoryId(Long productCategoryId) {
+        return productInfoJpaRepository.findAllByProductCategoryId(productCategoryId);
+    }
+
+    @Override
+    public void deleteByProductInfoId(Long productInfoId) {
+        productInfoJpaRepository.deleteById(productInfoId);
     }
 
     private ProductInfoJpaEntity getById(Long productInfoId) {

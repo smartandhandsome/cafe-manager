@@ -3,10 +3,13 @@ package com.cafe.product.service;
 import com.cafe.product.service.impl.ProductCategoryChanger;
 import com.cafe.product.service.impl.ProductCategoryCreator;
 import com.cafe.product.service.impl.ProductCategoryDuplicationValidator;
+import com.cafe.product.service.impl.ProductCategoryIntegrationDeleter;
 import com.cafe.product.service.impl.ProductInfoChanger;
 import com.cafe.product.service.impl.ProductInfoDuplicationValidator;
 import com.cafe.product.service.impl.ProductInfoIntegrationCreator;
+import com.cafe.product.service.impl.ProductInfoIntegrationDeleter;
 import com.cafe.product.service.impl.ProductSizeChanger;
+import com.cafe.product.service.impl.ProductSizeDeleter;
 import com.cafe.product.service.vo.ProductCategoryRegistrationForm;
 import com.cafe.product.service.vo.ProductCategoryUpdateForm;
 import com.cafe.product.service.vo.ProductDetailInfoUpdateForm;
@@ -33,6 +36,10 @@ public class ProductService {
     private final ProductInfoChanger productInfoChanger;
     private final ProductCategoryChanger productCategoryChanger;
     private final ProductSizeChanger productSizeChanger;
+
+    private final ProductCategoryIntegrationDeleter productCategoryIntegrationDeleter;
+    private final ProductInfoIntegrationDeleter productInfoIntegrationDeleter;
+    private final ProductSizeDeleter productSizeDeleter;
 
     public void register(ProductCategoryRegistrationForm productCategoryRegistrationForm) {
         productCategoryDuplicationValidator.validate(productCategoryRegistrationForm.name());
@@ -71,4 +78,17 @@ public class ProductService {
     public void update(ProductSizeInfoUpdateForm productSizeInfoUpdateForm) {
         productSizeChanger.change(productSizeInfoUpdateForm);
     }
+
+    public void deleteProductSize(Long productSizeId) {
+        productSizeDeleter.deleteByProductSizeId(productSizeId);
+    }
+
+    public void deleteProductInfo(Long productInfoId) {
+        productInfoIntegrationDeleter.deleteByProductInfoId(productInfoId);
+    }
+
+    public void deleteProductCategory(Long productCategoryId) {
+        productCategoryIntegrationDeleter.deleteByProductCategoryId(productCategoryId);
+    }
+
 }

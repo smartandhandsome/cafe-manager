@@ -26,6 +26,7 @@ import static org.mockito.BDDMockito.then;
 import static org.mockito.Mockito.times;
 import static org.springframework.http.HttpHeaders.AUTHORIZATION;
 import static org.springframework.http.MediaType.APPLICATION_JSON;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.delete;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.patch;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
@@ -33,6 +34,8 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 
 @WebMvcTest(ProductController.class)
 class ProductControllerTest extends AdminAuthorizationControllerTest {
+
+    String BASE_URL = "/v1/products";
 
     @MockBean
     ProductService productService;
@@ -49,7 +52,7 @@ class ProductControllerTest extends AdminAuthorizationControllerTest {
         String responseBody = om.writeValueAsString(response);
 
         mvc.perform(
-                        post("/v1/products/categories")
+                        post(BASE_URL + "/categories")
                                 .header(AUTHORIZATION, authorizationHeader)
                                 .contentType(APPLICATION_JSON)
                                 .content(requestBody)
@@ -72,7 +75,7 @@ class ProductControllerTest extends AdminAuthorizationControllerTest {
 
         // when
         mvc.perform(
-                        post("/v1/products/infos")
+                        post(BASE_URL + "/infos")
                                 .header(AUTHORIZATION, authorizationHeader)
                                 .contentType(APPLICATION_JSON)
                                 .content(requestBody)
@@ -96,7 +99,7 @@ class ProductControllerTest extends AdminAuthorizationControllerTest {
 
         // when
         mvc.perform(
-                        patch("/v1/products/infos/{productInfoId}/price", productInfoId)
+                        patch(BASE_URL + "/infos/{productInfoId}/price", productInfoId)
                                 .header(AUTHORIZATION, authorizationHeader)
                                 .contentType(APPLICATION_JSON)
                                 .content(requestBody)
@@ -120,7 +123,7 @@ class ProductControllerTest extends AdminAuthorizationControllerTest {
 
         // when
         mvc.perform(
-                        patch("/v1/products/infos/{productInfoId}/detail", productInfoId)
+                        patch(BASE_URL + "/infos/{productInfoId}/detail", productInfoId)
                                 .header(AUTHORIZATION, authorizationHeader)
                                 .contentType(APPLICATION_JSON)
                                 .content(requestBody)
@@ -144,7 +147,7 @@ class ProductControllerTest extends AdminAuthorizationControllerTest {
 
         // when
         mvc.perform(
-                        patch("/v1/products/categories/{productCategoryId}", productCategoryId)
+                        patch(BASE_URL + "/categories/{productCategoryId}", productCategoryId)
                                 .header(AUTHORIZATION, authorizationHeader)
                                 .contentType(APPLICATION_JSON)
                                 .content(requestBody)
@@ -168,7 +171,7 @@ class ProductControllerTest extends AdminAuthorizationControllerTest {
 
         // when
         mvc.perform(
-                        patch("/v1/products/sizes/{productSizeId}/price", productSizeId)
+                        patch(BASE_URL + "/sizes/{productSizeId}/price", productSizeId)
                                 .header(AUTHORIZATION, authorizationHeader)
                                 .contentType(APPLICATION_JSON)
                                 .content(requestBody)
@@ -192,7 +195,7 @@ class ProductControllerTest extends AdminAuthorizationControllerTest {
 
         // when
         mvc.perform(
-                        patch("/v1/products/sizes/{productSizeId}/info", productSizeId)
+                        patch(BASE_URL + "/sizes/{productSizeId}/info", productSizeId)
                                 .header(AUTHORIZATION, authorizationHeader)
                                 .contentType(APPLICATION_JSON)
                                 .content(requestBody)
@@ -202,6 +205,73 @@ class ProductControllerTest extends AdminAuthorizationControllerTest {
                 .andExpect(content().json(responseBody));
 
         then(productService).should(times(1)).update(request.toProductSizeUpdateForm(productSizeId));
+    }
+
+    @Test
+    void 상품_사이즈_삭제_요청을_할_수_있다() throws Exception {
+        // given
+        Long productSizeId = 1L;
+
+        MyCafeResponse<Void> response = MyCafeResponse.success();
+
+        String responseBody = om.writeValueAsString(response);
+
+        // when
+        mvc.perform(
+                        delete(BASE_URL + "/sizes/{productSizeId}", productSizeId)
+                                .header(AUTHORIZATION, authorizationHeader)
+                                .contentType(APPLICATION_JSON)
+                )
+                // then
+                .andExpect(status().isOk())
+                .andExpect(content().json(responseBody));
+
+        then(productService).should(times(1)).deleteProductSize(productSizeId);
+    }
+
+    @Test
+    void 상품_정보_삭제_요청을_할_수_있다() throws Exception {
+        // given
+        Long productInfoId = 1L;
+
+        MyCafeResponse<Void> response = MyCafeResponse.success();
+
+        String responseBody = om.writeValueAsString(response);
+
+        // when
+        mvc.perform(
+                        delete(BASE_URL + "/infos/{productInfoId}", productInfoId)
+                                .header(AUTHORIZATION, authorizationHeader)
+                                .contentType(APPLICATION_JSON)
+                )
+                // then
+                .andExpect(status().isOk())
+                .andExpect(content().json(responseBody));
+
+        then(productService).should(times(1)).deleteProductInfo(productInfoId);
+    }
+
+    @Test
+    void 상품_카테고리_삭제_요청을_할_수_있다() throws Exception {
+        // given
+        Long productCategoryId = 1L;
+
+        MyCafeResponse<Void> response = MyCafeResponse.success();
+
+        String responseBody = om.writeValueAsString(response);
+
+        // when
+        mvc.perform(
+                        delete(BASE_URL + "/categories/{productCategoryId}", productCategoryId)
+                                .header(AUTHORIZATION, authorizationHeader)
+                                .contentType(APPLICATION_JSON)
+                )
+                // then
+                .andExpect(status().isOk())
+                .andExpect(content().json(responseBody));
+
+
+        then(productService).should(times(1)).deleteProductCategory(productCategoryId);
     }
 
 

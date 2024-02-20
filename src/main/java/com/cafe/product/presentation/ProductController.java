@@ -15,6 +15,7 @@ import io.swagger.v3.oas.annotations.security.SecurityRequirement;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.PatchMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -109,6 +110,36 @@ public class ProductController {
             @RequestBody @Valid ProductSizeInfoUpdateRequest productSizeInfoUpdateRequest
     ) {
         productService.update(productSizeInfoUpdateRequest.toProductSizeUpdateForm(productSizeId));
+        return MyCafeResponse.success();
+    }
+
+    @Operation(description = "상품 사이즈 삭제", security = @SecurityRequirement(name = "Authorization"))
+    @DeleteMapping("/sizes/{productSizeId}")
+    public MyCafeResponse<Void> requestProductSizeDeletion(
+            AdminAuthorization adminAuthorization,
+            @PathVariable Long productSizeId
+    ) {
+        productService.deleteProductSize(productSizeId);
+        return MyCafeResponse.success();
+    }
+
+    @Operation(description = "상품 정보 삭제", security = @SecurityRequirement(name = "Authorization"))
+    @DeleteMapping("/infos/{productInfoId}")
+    public MyCafeResponse<Void> requestProductInfoDeletion(
+            AdminAuthorization adminAuthorization,
+            @PathVariable Long productInfoId
+    ) {
+        productService.deleteProductInfo(productInfoId);
+        return MyCafeResponse.success();
+    }
+
+    @Operation(description = "상품 카테고리 삭제", security = @SecurityRequirement(name = "Authorization"))
+    @DeleteMapping("/categories/{productCategoryId}")
+    public MyCafeResponse<Void> requestProductCategoryDeletion(
+            AdminAuthorization adminAuthorization,
+            @PathVariable Long productCategoryId
+    ) {
+        productService.deleteProductCategory(productCategoryId);
         return MyCafeResponse.success();
     }
 

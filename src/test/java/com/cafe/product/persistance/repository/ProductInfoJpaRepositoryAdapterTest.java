@@ -17,6 +17,7 @@ import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 
+import java.util.List;
 import java.util.Objects;
 import java.util.Optional;
 
@@ -117,6 +118,23 @@ class ProductInfoJpaRepositoryAdapterTest extends BaseRepositoryTest {
                 () -> assertThat(Objects.requireNonNull(entity).getExpirationDuration())
                         .isEqualTo(productDetailInfoUpdateForm.expirationDuration())
         );
+    }
+
+    @Test
+    void 상품_카테고리_아이디를_갖고_있는_모든_상품_정보를_가져올_수_있다() {
+        // given
+        Long productCategoryId = 1L;
+        List<Long> productInfoIds = List.of(1L, 2L, 3L);
+
+        given(productInfoJpaRepository.findAllByProductCategoryId(productCategoryId)).willReturn(productInfoIds);
+
+        // when
+        List<Long> foundProductInfoIds = productInfoJpaRepositoryAdapter.readAllProductInfoIdByProductCategoryId(productCategoryId);
+
+        // then
+        assertThat(foundProductInfoIds)
+                .usingRecursiveComparison()
+                .isEqualTo(productInfoIds);
     }
 
 }
