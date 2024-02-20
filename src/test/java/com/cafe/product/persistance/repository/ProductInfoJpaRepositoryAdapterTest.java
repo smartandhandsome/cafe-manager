@@ -4,11 +4,11 @@ import com.cafe.common.model.BaseRepositoryTest;
 import com.cafe.product.persistance.dto.ProductListViewDto;
 import com.cafe.product.persistance.entity.ProductInfoJpaEntity;
 import com.cafe.product.persistance.entity.ProductInfoJpaEntityFixture;
+import com.cafe.product.service.vo.PreprocessedProductInfoRegistrationFormFixture;
 import com.cafe.product.service.vo.ProductDetailInfoUpdateFormFixture;
-import com.cafe.product.service.vo.ProductInfoRegistrationFormFixture;
 import com.cafe.product.service.vo.ProductPriceInfoUpdateFormFixture;
+import com.cafe.product.service.vo.info.PreprocessedProductInfoRegistrationForm;
 import com.cafe.product.service.vo.info.ProductDetailInfoUpdateForm;
-import com.cafe.product.service.vo.info.ProductInfoRegistrationForm;
 import com.cafe.product.service.vo.info.ProductPriceInfoUpdateForm;
 import org.junit.jupiter.api.DisplayNameGeneration;
 import org.junit.jupiter.api.DisplayNameGenerator;
@@ -57,14 +57,14 @@ class ProductInfoJpaRepositoryAdapterTest extends BaseRepositoryTest {
     void 상품_정보를_생성할_수_있다() {
         // given
         Long productInfoId = 1L;
-        ProductInfoRegistrationForm productInfoRegistrationForm = ProductInfoRegistrationFormFixture.STANDARD.newInstance();
+        PreprocessedProductInfoRegistrationForm form = PreprocessedProductInfoRegistrationFormFixture.STANDARD.newInstance();
         ProductInfoJpaEntity entity = mock();
 
         given(productInfoJpaRepository.save(any(ProductInfoJpaEntity.class))).willReturn(entity);
         given(entity.getProductInfoId()).willReturn(productInfoId);
 
         // when
-        productInfoJpaRepositoryAdapter.create(productInfoRegistrationForm);
+        productInfoJpaRepositoryAdapter.create(form);
 
         // then
         then(productInfoJpaRepository).should(times(1)).save(any(ProductInfoJpaEntity.class));

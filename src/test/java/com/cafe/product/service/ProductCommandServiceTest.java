@@ -8,8 +8,10 @@ import com.cafe.product.service.impl.info.ProductInfoChanger;
 import com.cafe.product.service.impl.info.ProductInfoDuplicationValidator;
 import com.cafe.product.service.impl.info.ProductInfoIntegrationCreator;
 import com.cafe.product.service.impl.info.ProductInfoIntegrationDeleter;
+import com.cafe.product.service.impl.info.ProductInfoPreprocessor;
 import com.cafe.product.service.impl.size.ProductSizeChanger;
 import com.cafe.product.service.impl.size.ProductSizeDeleter;
+import com.cafe.product.service.vo.PreprocessedProductInfoRegistrationFormFixture;
 import com.cafe.product.service.vo.ProductCategoryRegistrationFormFixture;
 import com.cafe.product.service.vo.ProductCategoryUpdateFormFixture;
 import com.cafe.product.service.vo.ProductDetailInfoUpdateFormFixture;
@@ -20,6 +22,7 @@ import com.cafe.product.service.vo.ProductSizePriceUpdateFormFixture;
 import com.cafe.product.service.vo.SizeRegistrationFormFixture;
 import com.cafe.product.service.vo.cateory.ProductCategoryRegistrationForm;
 import com.cafe.product.service.vo.cateory.ProductCategoryUpdateForm;
+import com.cafe.product.service.vo.info.PreprocessedProductInfoRegistrationForm;
 import com.cafe.product.service.vo.info.ProductDetailInfoUpdateForm;
 import com.cafe.product.service.vo.info.ProductInfoRegistrationForm;
 import com.cafe.product.service.vo.info.ProductPriceInfoUpdateForm;
@@ -36,6 +39,7 @@ import org.mockito.junit.jupiter.MockitoExtension;
 
 import java.util.List;
 
+import static org.mockito.BDDMockito.given;
 import static org.mockito.BDDMockito.then;
 import static org.mockito.Mockito.times;
 
@@ -45,6 +49,9 @@ class ProductCommandServiceTest {
 
     @InjectMocks
     ProductCommandService productCommandService;
+
+    @Mock
+    ProductInfoPreprocessor productInfoPreprocessor;
 
     @Mock
     ProductCategoryDuplicationValidator productCategoryDuplicationValidator;
@@ -86,18 +93,21 @@ class ProductCommandServiceTest {
     @Test
     void 상품을_등록할_수_있다() {
         // given
-        ProductInfoRegistrationForm productInfoRegistrationForm = ProductInfoRegistrationFormFixture.STANDARD.newInstance();
+        ProductInfoRegistrationForm form = ProductInfoRegistrationFormFixture.STANDARD.newInstance();
+        PreprocessedProductInfoRegistrationForm preprocessedForm = PreprocessedProductInfoRegistrationFormFixture.STANDARD.newInstance();
         List<SizeRegistrationForm> sizeRegistrationFormList = List.of(
                 SizeRegistrationFormFixture.SMALL.newInstance(),
                 SizeRegistrationFormFixture.LARGE.newInstance()
         );
 
+        given(productInfoPreprocessor.preprocess(form)).willReturn(preprocessedForm);
+
         // when
-        productCommandService.register(productInfoRegistrationForm, sizeRegistrationFormList);
+        productCommandService.register(form, sizeRegistrationFormList);
 
         // then
-        then(productInfoDuplicationValidator).should(times(1)).validate(productInfoRegistrationForm);
-        then(productInfoIntegrationCreator).should(times(1)).create(productInfoRegistrationForm, sizeRegistrationFormList);
+        then(productInfoDuplicationValidator).should(times(1)).validate(form);
+        then(productInfoIntegrationCreator).should(times(1)).create(preprocessedForm, sizeRegistrationFormList);
     }
 
     @Test

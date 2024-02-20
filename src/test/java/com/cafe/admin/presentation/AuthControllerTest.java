@@ -64,7 +64,7 @@ class AuthControllerTest extends BaseControllerTest {
             // given
             LoginRequest loginRequest = LoginRequestFixture.STANDARD.newInstance();
             AuthToken authToken = AuthTokenFixture.STANDARD.newInstance();
-            LoginResponse loginResponse = LoginResponseFixture.STANDARD.newInstance(authToken.value());
+            LoginResponse loginResponse = LoginResponseFixture.STANDARD.newInstance(authToken.accessToken(), authToken.refreshToken());
             MyCafeResponse<LoginResponse> myCafeResponse = MyCafeResponse.success(loginResponse);
 
             String requestBody = om.writeValueAsString(loginRequest);

@@ -27,14 +27,15 @@ class Auth0JWTManagerTest {
     AdminReader adminReader;
 
     String secretKey = "secret";
-    long tokenExpirationTime = 1000;
+    long accessTokenExpirationTime = 1000;
+    long refreshTokenExpirationTime = 10000;
 
     Long adminId = 1L;
     String phoneNumber = "010-1234-5678";
 
     @BeforeEach
     void setUp() {
-        auth0JWTManager = new Auth0JWTManager(adminReader, secretKey, tokenExpirationTime);
+        auth0JWTManager = new Auth0JWTManager(refreshTokenReader, refreshTokenDeleter, refreshTokenRepositoryAdapter, secretKey, accessTokenExpirationTime, refreshTokenExpirationTime);
     }
 
     @Test
@@ -47,7 +48,12 @@ class Auth0JWTManagerTest {
 
         // then
         assertThat(
-                JWT.decode(token.value())
+                JWT.decode(token.accessToken())
+                        .getClaim(Auth0JWTManager.ADMIN_ID)
+                        .asLong()
+        ).isEqualTo(adminId);
+        assertThat(
+                JWT.decode(token.refreshToken())
                         .getClaim(Auth0JWTManager.ADMIN_ID)
                         .asLong()
         ).isEqualTo(adminId);
@@ -62,7 +68,7 @@ class Auth0JWTManagerTest {
             AuthToken token = getAuthToken(auth0JWTManager);
 
             // when
-            Long extractAdminId = auth0JWTManager.extractAdminId(token.value());
+            Long extractAdminId = auth0JWTManager.extractAdminId(token.accessToken());
 
             // then
             assertThat(extractAdminId)
@@ -74,13 +80,13 @@ class Auth0JWTManagerTest {
         void 만료된_토근() {
             // given
             long tokenExpirationTime = -1L;
-            Auth0JWTManager expiredTokenManager = new Auth0JWTManager(adminReader, secretKey, tokenExpirationTime);
+            Auth0JWTManager expiredTokenManager = new Auth0JWTManager(refreshTokenReader, refreshTokenDeleter, refreshTokenRepositoryAdapter, secretKey, tokenExpirationTime, refreshTokenExpirationTime);
 
             AuthToken authToken = getAuthToken(expiredTokenManager);
 
             // when
             // then
-            String tokenValue = authToken.value();
+            String tokenValue = authToken.accessToken();
             assertThatThrownBy(() -> expiredTokenManager.extractAdminId(tokenValue))
                     .isExactlyInstanceOf(ExpiredTokenException.class);
         }
@@ -93,7 +99,7 @@ class Auth0JWTManagerTest {
             // when
 
             // then
-            String tokenValue = authToken.value();
+            String tokenValue = authToken.accessToken();
             assertThatThrownBy(() -> auth0JWTManager.extractAdminId(tokenValue))
                     .isExactlyInstanceOf(IllegalTokenException.class);
         }

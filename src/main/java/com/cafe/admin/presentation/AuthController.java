@@ -4,6 +4,7 @@ import com.cafe.admin.presentation.request.LoginRequest;
 import com.cafe.admin.presentation.response.LoginResponse;
 import com.cafe.admin.service.AuthService;
 import com.cafe.admin.service.vo.AuthToken;
+import com.cafe.common.model.AdminAuthorization;
 import com.cafe.common.model.MyCafeResponse;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
@@ -26,14 +27,24 @@ public class AuthController {
     @PostMapping("/login")
     public MyCafeResponse<LoginResponse> requestLogin(@RequestBody @Valid LoginRequest loginRequest) {
         AuthToken authToken = authService.login(loginRequest.toLoginForm());
-        return MyCafeResponse.success(new LoginResponse(authToken.value()));
+        return MyCafeResponse.success(new LoginResponse(authToken.accessToken(), authToken.refreshToken()));
+    }
+
+    @Operation(description = "토큰 갱신 로그인")
+    @PostMapping("/reissue")
+    public MyCafeResponse<LoginResponse> requestReissue(
+            AdminAuthorization adminAuthorization
+    ) {
+        AuthToken authToken = authService.reissue(adminAuthorization.adminId());
+        return MyCafeResponse.success(new LoginResponse(authToken.accessToken(), authToken.refreshToken()));
     }
 
     @Operation(description = "관리자 로그아웃")
     @PostMapping("/logout")
-    public MyCafeResponse<Void> requestLogin() {
-        // TODO: 2/17/24 RefreshToken 구현 시 세션에서 토큰 삭제
-        // TODO: 2/17/24 AccessToken만 구현하면 token blacklist 등록
+    public MyCafeResponse<Void> requestLogin(
+            AdminAuthorization adminAuthorization
+    ) {
+        authService.logout(adminAuthorization.adminId());
         return MyCafeResponse.success();
     }
 

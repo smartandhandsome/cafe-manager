@@ -22,4 +22,5 @@ logging:
 
 jwt:
   secret-key: secret
-  validity-in-millis: 1800000
+  access-token-validity-in-millis: 600000
+  refresh-token-validity-in-millis: 1209600000

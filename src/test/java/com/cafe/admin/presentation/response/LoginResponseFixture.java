@@ -7,8 +7,11 @@ public enum LoginResponseFixture {
     LoginResponseFixture() {
     }
 
-    public static LoginResponse newInstance(String value) {
-        return new LoginResponse(value);
+    public static LoginResponse newInstance(
+            String accessToken,
+            String refreshToken
+    ) {
+        return new LoginResponse(accessToken, refreshToken);
     }
 
 }
