@@ -1,5 +1,6 @@
 package com.cafe.product.persistance.repository;
 
+import com.cafe.product.persistance.dto.ProductListViewDto;
 import com.cafe.product.persistance.entity.ProductInfoJpaEntity;
 import com.cafe.product.service.impl.ProductInfoChanger;
 import com.cafe.product.service.impl.ProductInfoCreator;
@@ -21,6 +22,7 @@ import java.util.List;
 public class ProductInfoJpaRepositoryAdapter implements ProductInfoCreator, ProductInfoReader, ProductInfoChanger, ProductInfoDeleter {
 
     private final ProductInfoJpaRepository productInfoJpaRepository;
+    private final ProductInfoJdbcRepository productInfoJdbcRepository;
 
     @Override
     public ProductInfoJpaEntity create(ProductInfoRegistrationForm productInfoRegistrationForm) {
@@ -65,6 +67,16 @@ public class ProductInfoJpaRepositoryAdapter implements ProductInfoCreator, Prod
     }
 
     @Override
+    public List<ProductListViewDto> readProductListViewPagination(Long productInfoCursorId, int pageSize) {
+        return productInfoJdbcRepository.findProductListViewPagination(productInfoCursorId, pageSize);
+    }
+
+    @Override
+    public boolean hasProductInfoIdGreaterThan(Long productInfoId) {
+        return productInfoJpaRepository.existsByProductInfoIdGreaterThan(productInfoId);
+    }
+
+    @Override
     public void deleteByProductInfoId(Long productInfoId) {
         productInfoJpaRepository.deleteById(productInfoId);
     }
@@ -89,3 +101,4 @@ public class ProductInfoJpaRepositoryAdapter implements ProductInfoCreator, Prod
     }
 
 }
+

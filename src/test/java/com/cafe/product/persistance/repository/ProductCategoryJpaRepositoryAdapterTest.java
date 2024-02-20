@@ -47,6 +47,18 @@ class ProductCategoryJpaRepositoryAdapterTest {
         then(productCategoryJpaRepository).should(times(1)).save(any(ProductCategoryJpaEntity.class));
     }
 
+    @Test
+    void 상품_카테고리_아이디에_해당하는_카테고리를_삭제할_수_있다() {
+        // given
+        Long productCategoryId = 1L;
+
+        // when
+        productCategoryJpaRepositoryAdapter.deleteByProductCategoryId(productCategoryId);
+
+        // then
+        then(productCategoryJpaRepository).should(times(1)).deleteById(productCategoryId);
+    }
+
     @Nested
     class 카테고리_이름이_존재하는지_확인할_수_있다 {
 
@@ -114,18 +126,6 @@ class ProductCategoryJpaRepositoryAdapterTest {
                     .isExactlyInstanceOf(EntityNotFoundException.class);
         }
 
-    }
-
-    @Test
-    void 상품_카테고리_아이디에_해당하는_카테고리를_삭제할_수_있다() {
-        // given
-        Long productCategoryId = 1L;
-
-        // when
-        productCategoryJpaRepositoryAdapter.deleteByProductCategoryId(productCategoryId);
-
-        // then
-        then(productCategoryJpaRepository).should(times(1)).deleteById(productCategoryId);
     }
 
 }

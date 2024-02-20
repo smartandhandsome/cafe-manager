@@ -59,6 +59,32 @@ class ProductSizeJpaRepositoryAdapterTest extends BaseRepositoryTest {
         then(productSizeJdbcRepository).should().saveAll(anyList());
     }
 
+    @Test
+    void 상품_사이즈를_아이디로_삭제할_수_있다() {
+        // given
+        Long productSizeId = 1L;
+
+        // when
+        productSizeJpaRepositoryAdapter.deleteByProductSizeId(productSizeId);
+
+        // then
+        then(productSizeJpaRepository).should(times(1)).deleteById(productSizeId);
+    }
+
+    @Test
+    void 상품_정보_아이디에_해당하는_모든_상품_사이즈를_삭제할_수_있다() {
+        // given
+        Long productInfoId = 1L;
+
+        // when
+        productSizeJpaRepositoryAdapter.deleteAllByProductInfoId(productInfoId);
+
+        // then
+        then(productSizeJpaRepository)
+                .should(times(1))
+                .deleteAllByProductInfoId(productInfoId);
+    }
+
     @Nested
     class 상품_사이즈_정보를_수정할_수_있다 {
 
@@ -128,32 +154,6 @@ class ProductSizeJpaRepositoryAdapterTest extends BaseRepositoryTest {
                     .isExactlyInstanceOf(EntityNotFoundException.class);
         }
 
-    }
-
-    @Test
-    void 상품_사이즈를_아이디로_삭제할_수_있다() {
-        // given
-        Long productSizeId = 1L;
-
-        // when
-        productSizeJpaRepositoryAdapter.deleteByProductSizeId(productSizeId);
-
-        // then
-        then(productSizeJpaRepository).should(times(1)).deleteById(productSizeId);
-    }
-
-    @Test
-    void 상품_정보_아이디에_해당하는_모든_상품_사이즈를_삭제할_수_있다() {
-        // given
-        Long productInfoId = 1L;
-
-        // when
-        productSizeJpaRepositoryAdapter.deleteAllByProductInfoId(productInfoId);
-
-        // then
-        then(productSizeJpaRepository)
-                .should(times(1))
-                .deleteAllByProductInfoId(productInfoId);
     }
 
 }

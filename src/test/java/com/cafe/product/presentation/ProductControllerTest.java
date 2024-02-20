@@ -16,17 +16,26 @@ import com.cafe.product.presentation.request.ProductSizeInfoUpdateRequest;
 import com.cafe.product.presentation.request.ProductSizeInfoUpdateRequestFixture;
 import com.cafe.product.presentation.request.ProductSizePriceUpdateRequest;
 import com.cafe.product.presentation.request.ProductSizePriceUpdateRequestFixture;
+import com.cafe.product.presentation.response.ProductListViewListResponse;
+import com.cafe.product.presentation.response.ProductListViewListResponseFixture;
 import com.cafe.product.service.ProductCommandService;
+import com.cafe.product.service.ProductQueryService;
+import com.cafe.product.service.vo.ProductListViewList;
+import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
 
+import java.util.List;
+
+import static org.mockito.BDDMockito.given;
 import static org.mockito.BDDMockito.then;
 import static org.mockito.Mockito.times;
 import static org.springframework.http.HttpHeaders.AUTHORIZATION;
 import static org.springframework.http.MediaType.APPLICATION_JSON;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.delete;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.patch;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
@@ -39,6 +48,8 @@ class ProductControllerTest extends AdminAuthorizationControllerTest {
 
     @MockBean
     ProductCommandService productCommandService;
+    @MockBean
+    ProductQueryService productQueryService;
     @Autowired
     private ProductController controller;
 
@@ -274,5 +285,57 @@ class ProductControllerTest extends AdminAuthorizationControllerTest {
         then(productCommandService).should(times(1)).deleteProductCategory(productCategoryId);
     }
 
+    @Nested
+    class 상품_리스트_조회_요청을_할_수_있다 {
+
+        @Test
+        void lastProductId_파라미터_있을_때() throws Exception {
+            // given
+            Long lastProductId = 1L;
+
+            ProductListViewList viewList = new ProductListViewList(List.of(), false);
+            ProductListViewListResponse viewListResponse = ProductListViewListResponseFixture.EMPTY.newInstance();
+            MyCafeResponse<ProductListViewListResponse> response = MyCafeResponse.success(viewListResponse);
+
+            given(productQueryService.queryProductList(lastProductId)).willReturn(viewList);
+
+            String responseBody = om.writeValueAsString(response);
+
+            // when
+            mvc.perform(
+                            get(BASE_URL + "/list")
+                                    .param("lastProductId", String.valueOf(lastProductId))
+                                    .header(AUTHORIZATION, authorizationHeader)
+                                    .contentType(APPLICATION_JSON)
+                    )
+                    // then
+                    .andExpect(status().isOk())
+                    .andExpect(content().json(responseBody));
+        }
+
+        @Test
+        void lastProductId_파라미터_없을_때() throws Exception {
+            // given
+            ProductListViewList viewList = new ProductListViewList(List.of(), false);
+            ProductListViewListResponse viewListResponse =
+                    ProductListViewListResponseFixture.EMPTY.newInstance();
+            MyCafeResponse<ProductListViewListResponse> response = MyCafeResponse.success(viewListResponse);
+
+            given(productQueryService.queryProductList(0L)).willReturn(viewList);
+
+            String responseBody = om.writeValueAsString(response);
+
+            // when
+            mvc.perform(
+                            get(BASE_URL + "/list")
+                                    .header(AUTHORIZATION, authorizationHeader)
+                                    .contentType(APPLICATION_JSON)
+                    )
+                    // then
+                    .andExpect(status().isOk())
+                    .andExpect(content().json(responseBody));
+        }
+
+    }
 
 }

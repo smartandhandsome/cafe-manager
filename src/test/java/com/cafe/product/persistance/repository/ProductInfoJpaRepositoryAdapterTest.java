@@ -1,6 +1,7 @@
 package com.cafe.product.persistance.repository;
 
 import com.cafe.common.model.BaseRepositoryTest;
+import com.cafe.product.persistance.dto.ProductListViewDto;
 import com.cafe.product.persistance.entity.ProductInfoJpaEntity;
 import com.cafe.product.persistance.entity.ProductInfoJpaEntityFixture;
 import com.cafe.product.service.vo.ProductDetailInfoUpdateForm;
@@ -36,6 +37,8 @@ class ProductInfoJpaRepositoryAdapterTest extends BaseRepositoryTest {
     ProductInfoJpaRepositoryAdapter productInfoJpaRepositoryAdapter;
     @Mock
     ProductInfoJpaRepository productInfoJpaRepository;
+    @Mock
+    ProductInfoJdbcRepository productInfoJdbcRepository;
 
     @Test
     void 상품_바코드가_존재하는지_확인할_수_있다() {
@@ -135,6 +138,31 @@ class ProductInfoJpaRepositoryAdapterTest extends BaseRepositoryTest {
         assertThat(foundProductInfoIds)
                 .usingRecursiveComparison()
                 .isEqualTo(productInfoIds);
+    }
+
+    @Test
+    void 상품_리스트_형태를_페이지_사이즈만큼_가져올_수_있다() {
+        // given
+        Long productListCursorId = 1L;
+        int pageSize = 10;
+
+        // when
+        List<ProductListViewDto> productListViewDtos = productInfoJpaRepositoryAdapter.readProductListViewPagination(productListCursorId, pageSize);
+
+        // then
+        then(productInfoJdbcRepository).should().findProductListViewPagination(productListCursorId, pageSize);
+    }
+
+    @Test
+    void 해당_아이디보다_더_큰_아이디가_있는지_확인할_수_있다() {
+        // given
+        Long productInfoId = 1L;
+
+        // when
+        productInfoJpaRepositoryAdapter.hasProductInfoIdGreaterThan(productInfoId);
+
+        // then
+        then(productInfoJpaRepository).should(times(1)).existsByProductInfoIdGreaterThan(productInfoId);
     }
 
 }

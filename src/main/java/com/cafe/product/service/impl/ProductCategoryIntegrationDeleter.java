@@ -16,7 +16,7 @@ public class ProductCategoryIntegrationDeleter {
 
     @Transactional
     public void deleteByProductCategoryId(Long productCategoryId) {
-        List<Long> productInfoIds =  productInfoReader.readAllProductInfoIdByProductCategoryId(productCategoryId);
+        List<Long> productInfoIds = productInfoReader.readAllProductInfoIdByProductCategoryId(productCategoryId);
         productInfoIds.forEach(productInfoIntegrationDeleter::deleteByProductInfoId);
         productCategoryDeleter.deleteByProductCategoryId(productCategoryId);
     }

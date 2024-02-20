@@ -13,6 +13,13 @@ public interface ProductInfoJpaRepository extends JpaRepository<ProductInfoJpaEn
     boolean existsByBarcodeAndProductInfoIdNot(String barcode, Long productInfoId);
 
     @Transactional(readOnly = true)
-    @Query(value = "SELECT p.product_info_id FROM product_info p WHERE p.product_category_id = :productCategoryId", nativeQuery = true)
+    @Query(value = """
+            SELECT p.product_info_id
+            FROM product_info p
+            WHERE p.product_category_id = :productCategoryId
+            """, nativeQuery = true)
     List<Long> findAllByProductCategoryId(Long productCategoryId);
+
+    boolean existsByProductInfoIdGreaterThan(Long productInfoId);
+
 }

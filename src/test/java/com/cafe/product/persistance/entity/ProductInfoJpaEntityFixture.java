@@ -2,6 +2,9 @@ package com.cafe.product.persistance.entity;
 
 import com.cafe.common.util.EntityIdInjector;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public enum ProductInfoJpaEntityFixture {
     STANDARD(
             Constants.ID,
@@ -57,6 +60,29 @@ public enum ProductInfoJpaEntityFixture {
                 .build();
         EntityIdInjector.inject(entity, "productInfoId", productInfoId);
         return entity;
+    }
+
+    public ProductInfoJpaEntity newInstance(String barcode) {
+        ProductInfoJpaEntity entity = ProductInfoJpaEntity.builder()
+                .name(name)
+                .description(description)
+                .barcode(barcode)
+                .basePrice(basePrice)
+                .baseCost(baseCost)
+                .expirationDuration(expirationDuration)
+                .productCategoryId(productCategoryId)
+                .build();
+        return entity;
+    }
+
+    public static List<ProductInfoJpaEntity> dummys() {
+        List<ProductInfoJpaEntity> dummys = new ArrayList<>();
+        for (int i = 0; i < 11; i++) {
+            dummys.add(
+                    STANDARD.newInstance(String.valueOf(i))
+            );
+        }
+        return dummys;
     }
 
     private final static class Constants {

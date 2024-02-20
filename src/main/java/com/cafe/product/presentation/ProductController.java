@@ -9,18 +9,23 @@ import com.cafe.product.presentation.request.ProductPriceInfoUpdateRequest;
 import com.cafe.product.presentation.request.ProductRegistrationRequest;
 import com.cafe.product.presentation.request.ProductSizeInfoUpdateRequest;
 import com.cafe.product.presentation.request.ProductSizePriceUpdateRequest;
+import com.cafe.product.presentation.response.ProductListViewListResponse;
 import com.cafe.product.service.ProductCommandService;
+import com.cafe.product.service.ProductQueryService;
+import com.cafe.product.service.vo.ProductListViewList;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.security.SecurityRequirement;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.DeleteMapping;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PatchMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 @Tag(name = "Product", description = "상품 API")
@@ -30,6 +35,7 @@ import org.springframework.web.bind.annotation.RestController;
 public class ProductController {
 
     private final ProductCommandService productCommandService;
+    private final ProductQueryService productQueryService;
 
     @Operation(description = "상품 카테고리 추가", security = @SecurityRequirement(name = "Authorization"))
     @PostMapping("/categories")
@@ -141,6 +147,18 @@ public class ProductController {
     ) {
         productCommandService.deleteProductCategory(productCategoryId);
         return MyCafeResponse.success();
+    }
+
+    @Operation(description = "상품 정보 리스트 조회", security = @SecurityRequirement(name = "Authorization"))
+    @GetMapping("/list")
+    public MyCafeResponse<ProductListViewListResponse> requestProductCategoryList(
+            AdminAuthorization adminAuthorization,
+            @RequestParam(required = false) Long lastProductId
+    ) {
+        ProductListViewList productListViewList = productQueryService.queryProductList(
+                lastProductId == null ? 0 : lastProductId
+        );
+        return MyCafeResponse.success(productListViewList.toProductListViewListResponse());
     }
 
 }
