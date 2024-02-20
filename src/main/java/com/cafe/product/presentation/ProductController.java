@@ -175,16 +175,14 @@ public class ProductController {
         return MyCafeResponse.success(ProductDetailViewResponse.from(productDetailView));
     }
 
-    @Operation(description = "상품 이름 검색 조회", security = @SecurityRequirement(name = "Authorization"))
-    @GetMapping()
+    @Operation(description = "상품 이름 검색", security = @SecurityRequirement(name = "Authorization"))
+    @GetMapping("/search")
     public MyCafeResponse<ProductNameSearchResponse> requestProductSearch(
             AdminAuthorization adminAuthorization,
             @RequestParam String name
     ) {
         NameSearchResult nameSearchResult = productQueryService.searchName(name);
-        ProductNameSearchResponse response =
-                (nameSearchResult == null) ? null : ProductNameSearchResponse.from(nameSearchResult);
-        return MyCafeResponse.success(response);
+        return MyCafeResponse.success(ProductNameSearchResponse.from(nameSearchResult));
     }
 
 }

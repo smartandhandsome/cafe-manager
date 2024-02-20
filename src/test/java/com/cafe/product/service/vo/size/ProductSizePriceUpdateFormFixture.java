@@ -1,6 +1,4 @@
-package com.cafe.product.service.vo;
-
-import com.cafe.product.service.vo.size.ProductSizePriceUpdateForm;
+package com.cafe.product.service.vo.size;
 
 public enum ProductSizePriceUpdateFormFixture {
     STANDARD(

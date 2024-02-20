@@ -1,12 +1,10 @@
-package com.cafe.product.service.impl;
+package com.cafe.product.service.impl.info;
 
 import com.cafe.common.exception.DuplicatedResourceException;
-import com.cafe.product.service.impl.info.ProductInfoDuplicationValidator;
-import com.cafe.product.service.impl.info.ProductInfoReader;
-import com.cafe.product.service.vo.ProductDetailInfoUpdateFormFixture;
-import com.cafe.product.service.vo.ProductInfoRegistrationFormFixture;
 import com.cafe.product.service.vo.info.ProductDetailInfoUpdateForm;
+import com.cafe.product.service.vo.info.ProductDetailInfoUpdateFormFixture;
 import com.cafe.product.service.vo.info.ProductInfoRegistrationForm;
+import com.cafe.product.service.vo.info.ProductInfoRegistrationFormFixture;
 import org.junit.jupiter.api.DisplayNameGeneration;
 import org.junit.jupiter.api.DisplayNameGenerator;
 import org.junit.jupiter.api.Nested;

@@ -1,11 +1,12 @@
 package com.cafe.product.persistance.repository;
 
 import com.cafe.common.model.BaseRepositoryTest;
+import com.cafe.product.persistance.dto.ProductSizeDetailViewDto;
 import com.cafe.product.persistance.entity.ProductSizeJpaEntity;
 import com.cafe.product.persistance.entity.ProductSizeJpaEntityFixture;
-import com.cafe.product.service.vo.ProductSizeInfoUpdateFormFixture;
-import com.cafe.product.service.vo.ProductSizePriceUpdateFormFixture;
-import com.cafe.product.service.vo.SizeRegistrationFormFixture;
+import com.cafe.product.service.vo.size.ProductSizeInfoUpdateFormFixture;
+import com.cafe.product.service.vo.size.ProductSizePriceUpdateFormFixture;
+import com.cafe.product.service.vo.size.SizeRegistrationFormFixture;
 import com.cafe.product.service.vo.size.ProductSizeInfoUpdateForm;
 import com.cafe.product.service.vo.size.ProductSizePriceUpdateForm;
 import com.cafe.product.service.vo.size.SizeRegistrationForm;
@@ -21,9 +22,11 @@ import org.mockito.junit.jupiter.MockitoExtension;
 
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
+import static org.assertj.core.api.Assertions.entry;
 import static org.junit.jupiter.api.Assertions.assertAll;
 import static org.mockito.ArgumentMatchers.anyList;
 import static org.mockito.BDDMockito.given;
@@ -150,6 +153,30 @@ class ProductSizeJpaRepositoryAdapterTest extends BaseRepositoryTest {
                     .isExactlyInstanceOf(EntityNotFoundException.class);
         }
 
+    }
+
+    @Test
+    void 상품_정보_아이디로_상품_사이즈를_모두_가져올_수_있다() {
+        // given
+        Long productInfoId = 1L;
+        List<ProductSizeJpaEntity> productSizeJpaEntities = List.of(
+                ProductSizeJpaEntityFixture.SMALL.newInstance(productInfoId),
+                ProductSizeJpaEntityFixture.LARGE.newInstance(productInfoId)
+        );
+
+        given(productSizeJpaRepository.findAllByProductInfoId(productInfoId)).willReturn(productSizeJpaEntities);
+
+        // when
+        List<ProductSizeDetailViewDto> productSizeDetailViewDtos = productSizeJpaRepositoryAdapter.readAllByProductInfoId(productInfoId);
+
+        // then
+        List<Long> dtoIds = productSizeDetailViewDtos.stream()
+                .map(ProductSizeDetailViewDto::productSizeId)
+                .collect(Collectors.toList());
+        List<Long> entityIds = productSizeJpaEntities.stream()
+                .map(ProductSizeJpaEntity::getProductSizeId)
+                .collect(Collectors.toList());
+        assertThat(dtoIds).containsExactlyElementsOf(entityIds);
     }
 
 }

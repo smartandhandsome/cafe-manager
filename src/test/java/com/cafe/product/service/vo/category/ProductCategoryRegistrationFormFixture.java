@@ -1,4 +1,4 @@
-package com.cafe.product.service.vo;
+package com.cafe.product.service.vo.category;
 
 import com.cafe.product.service.vo.cateory.ProductCategoryRegistrationForm;
 

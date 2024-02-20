@@ -1,17 +1,23 @@
 package com.cafe.product.persistance.repository;
 
 import com.cafe.common.model.BaseRepositoryTest;
+import com.cafe.product.persistance.dto.ProductInfoCategoryDetailViewDto;
+import com.cafe.product.persistance.dto.ProductInfoCategoryDetailViewDtoFixture;
 import com.cafe.product.persistance.dto.ProductListViewDto;
 import com.cafe.product.persistance.entity.ProductInfoJpaEntity;
 import com.cafe.product.persistance.entity.ProductInfoJpaEntityFixture;
-import com.cafe.product.service.vo.PreprocessedProductInfoRegistrationFormFixture;
-import com.cafe.product.service.vo.ProductDetailInfoUpdateFormFixture;
-import com.cafe.product.service.vo.ProductPriceInfoUpdateFormFixture;
 import com.cafe.product.service.vo.info.PreprocessedProductInfoRegistrationForm;
+import com.cafe.product.service.vo.info.PreprocessedProductInfoRegistrationFormFixture;
 import com.cafe.product.service.vo.info.ProductDetailInfoUpdateForm;
+import com.cafe.product.service.vo.info.ProductDetailInfoUpdateFormFixture;
 import com.cafe.product.service.vo.info.ProductPriceInfoUpdateForm;
+import com.cafe.product.service.vo.info.ProductPriceInfoUpdateFormFixture;
+import com.cafe.product.service.vo.search.NameSearchResult;
+import com.cafe.product.service.vo.search.NameSearchView;
+import jakarta.persistence.EntityNotFoundException;
 import org.junit.jupiter.api.DisplayNameGeneration;
 import org.junit.jupiter.api.DisplayNameGenerator;
+import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
@@ -23,6 +29,7 @@ import java.util.Objects;
 import java.util.Optional;
 
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.assertThatThrownBy;
 import static org.junit.jupiter.api.Assertions.assertAll;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.BDDMockito.given;
@@ -169,6 +176,80 @@ class ProductInfoJpaRepositoryAdapterTest extends BaseRepositoryTest {
 
         // then
         then(productInfoJpaRepository).should(times(1)).existsByProductInfoIdGreaterThan(productInfoId);
+    }
+
+    @Nested
+    class 상품_정보와_카테고리를_가져올_수_있다 {
+
+        @Test
+        void 데이터_존재할_때() {
+            // given
+            ProductInfoCategoryDetailViewDto expectedDto = ProductInfoCategoryDetailViewDtoFixture.STANDARD.newInstance();
+
+            Long productInfoId = expectedDto.productInfoId();
+
+            given(productInfoJpaRepository.findProductDetail(productInfoId)).willReturn(Optional.of(expectedDto));
+
+            // when
+            ProductInfoCategoryDetailViewDto dto = productInfoJpaRepositoryAdapter.readProductDetail(productInfoId);
+
+            // then
+            assertThat(dto).usingRecursiveComparison()
+                    .isEqualTo(expectedDto);
+        }
+
+        @Test
+        void 데이터_존재_하지_않을_때() {
+            // given
+            Long productInfoId = -1L;
+
+            given(productInfoJpaRepository.findProductDetail(productInfoId)).willReturn(Optional.empty());
+
+            // when, then
+            assertThatThrownBy(() -> productInfoJpaRepositoryAdapter.readProductDetail(productInfoId))
+                    .isExactlyInstanceOf(EntityNotFoundException.class);
+        }
+
+    }
+
+    @Test
+    void 이름으로_LIKE_연산하여_불러올_수_있다() {
+        // given
+        String name = "라떼";
+        List<ProductInfoJpaEntity> entities = ProductInfoJpaEntityFixture.dummys();
+
+        given(productInfoJpaRepository.findByNameContaining(name)).willReturn(entities);
+
+        // when
+        NameSearchResult nameSearchResult = productInfoJpaRepositoryAdapter.searchComplete(name);
+
+        // then
+        List<Long> entitiesId = entities.stream()
+                .map(ProductInfoJpaEntity::getProductInfoId).toList();
+        List<Long> resultIds = nameSearchResult.nameSearchViews().stream().map(NameSearchView::productInfoId).toList();
+
+        assertThat(entitiesId).usingRecursiveComparison()
+                .isEqualTo(resultIds);
+    }
+
+    @Test
+    void 초성으로_LIKE_연산하여_불러올_수_있다() {
+        // given
+        String name = "ㄹㄷ";
+        List<ProductInfoJpaEntity> entities = ProductInfoJpaEntityFixture.dummys();
+
+        given(productInfoJpaRepository.findByNameChosungContaining(name)).willReturn(entities);
+
+        // when
+        NameSearchResult nameSearchResult = productInfoJpaRepositoryAdapter.searchChosung(name);
+
+        // then
+        List<Long> entitiesId = entities.stream()
+                .map(ProductInfoJpaEntity::getProductInfoId).toList();
+        List<Long> resultIds = nameSearchResult.nameSearchViews().stream().map(NameSearchView::productInfoId).toList();
+
+        assertThat(entitiesId).usingRecursiveComparison()
+                .isEqualTo(resultIds);
     }
 
 }

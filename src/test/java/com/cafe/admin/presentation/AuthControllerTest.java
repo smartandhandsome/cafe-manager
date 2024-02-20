@@ -54,6 +54,59 @@ class AuthControllerTest extends BaseControllerTest {
     @Autowired
     private AuthController authController;
 
+    @Test
+    void 토큰_갱신_요청을_할_수_있다() throws Exception {
+        // given
+        Long adminId = 1L;
+
+        AuthToken authToken = AuthTokenFixture.STANDARD.newInstance();
+        LoginResponse loginResponse = new LoginResponse(authToken.accessToken(), authToken.refreshToken());
+        MyCafeResponse<LoginResponse> response = MyCafeResponse.success(loginResponse);
+
+        String authorizationHeader = "Bearer mytoken";
+
+        String responseBody = om.writeValueAsString(response);
+
+        given(authTokenExtractor.extractAdminId(anyString())).willReturn(adminId);
+        given(resolver.resolveArgument(any(), any(), any(), any())).willReturn(new AdminAuthorization(adminId));
+        given(authService.reissue(adminId)).willReturn(authToken);
+
+        // when
+        mvc.perform(
+                        get(BASE_URI + "/reissue")
+                                .header(AUTHORIZATION, authorizationHeader)
+                                .contentType(APPLICATION_JSON)
+                )
+                // then
+                .andExpect(status().isOk())
+                .andExpect(content().json(responseBody));
+    }
+
+    @Test
+    void 로그아웃_요청을_할_수_있다() throws Exception {
+        // given
+        Long adminId = 1L;
+        MyCafeResponse<Void> response = MyCafeResponse.success();
+        String authorizationHeader = "Bearer mytoken";
+
+        String responseBody = om.writeValueAsString(response);
+
+        given(authTokenExtractor.extractAdminId(anyString())).willReturn(adminId);
+        given(resolver.resolveArgument(any(), any(), any(), any())).willReturn(new AdminAuthorization(adminId));
+
+        // when
+        mvc.perform(
+                        delete(BASE_URI + "/logout")
+                                .header(AUTHORIZATION, authorizationHeader)
+                                .contentType(APPLICATION_JSON)
+                )
+                // then
+                .andExpect(status().isOk())
+                .andExpect(content().json(responseBody));
+
+        then(authService).should(times(1)).logout(adminId);
+    }
+
     @Nested
     class 로그인_요청을_할_수_있다 {
 
@@ -113,59 +166,6 @@ class AuthControllerTest extends BaseControllerTest {
                     .andExpect(status().isBadRequest())
                     .andExpect(content().json(responseBody));
         }
-    }
-
-    @Test
-    void 토큰_갱신_요청을_할_수_있다() throws Exception {
-        // given
-        Long adminId = 1L;
-
-        AuthToken authToken = AuthTokenFixture.STANDARD.newInstance();
-        LoginResponse loginResponse = new LoginResponse(authToken.accessToken(), authToken.refreshToken());
-        MyCafeResponse<LoginResponse> response = MyCafeResponse.success(loginResponse);
-
-        String authorizationHeader = "Bearer mytoken";
-
-        String responseBody = om.writeValueAsString(response);
-
-        given(authTokenExtractor.extractAdminId(anyString())).willReturn(adminId);
-        given(resolver.resolveArgument(any(), any(), any(), any())).willReturn(new AdminAuthorization(adminId));
-        given(authService.reissue(adminId)).willReturn(authToken);
-
-        // when
-        mvc.perform(
-                        get(BASE_URI + "/reissue")
-                                .header(AUTHORIZATION, authorizationHeader)
-                                .contentType(APPLICATION_JSON)
-                )
-                // then
-                .andExpect(status().isOk())
-                .andExpect(content().json(responseBody));
-    }
-
-    @Test
-    void 로그아웃_요청을_할_수_있다() throws Exception {
-        // given
-        Long adminId = 1L;
-        MyCafeResponse<Void> response = MyCafeResponse.success();
-        String authorizationHeader = "Bearer mytoken";
-
-        String responseBody = om.writeValueAsString(response);
-
-        given(authTokenExtractor.extractAdminId(anyString())).willReturn(adminId);
-        given(resolver.resolveArgument(any(), any(), any(), any())).willReturn(new AdminAuthorization(adminId));
-
-        // when
-        mvc.perform(
-                        delete(BASE_URI + "/logout")
-                                .header(AUTHORIZATION, authorizationHeader)
-                                .contentType(APPLICATION_JSON)
-                )
-                // then
-                .andExpect(status().isOk())
-                .andExpect(content().json(responseBody));
-
-        then(authService).should(times(1)).logout(adminId);
     }
 
 }

@@ -1,6 +1,4 @@
-package com.cafe.product.service.vo;
-
-import com.cafe.product.service.vo.info.ProductInfoRegistrationForm;
+package com.cafe.product.service.vo.info;
 
 public enum ProductInfoRegistrationFormFixture {
     STANDARD(

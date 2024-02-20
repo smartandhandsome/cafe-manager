@@ -1,6 +1,4 @@
-package com.cafe.product.service.vo;
-
-import com.cafe.product.service.vo.info.ProductPriceInfoUpdateForm;
+package com.cafe.product.service.vo.info;
 
 public enum ProductPriceInfoUpdateFormFixture {
     STANDARD(

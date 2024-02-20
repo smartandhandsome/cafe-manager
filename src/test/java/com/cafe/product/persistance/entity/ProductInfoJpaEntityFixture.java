@@ -9,6 +9,7 @@ public enum ProductInfoJpaEntityFixture {
     STANDARD(
             Constants.ID,
             Constants.NAME,
+            Constants.NAME_CHOSUNG,
             Constants.DESCRIPTION,
             Constants.BARCODE,
             Constants.ZERO,
@@ -19,6 +20,7 @@ public enum ProductInfoJpaEntityFixture {
     NOT_EXISTED(
             Constants.NOT_EXISTED_ID,
             Constants.NAME,
+            Constants.NAME_CHOSUNG,
             Constants.DESCRIPTION,
             Constants.NOT_EXISTED_BARCODE,
             Constants.ZERO,
@@ -30,6 +32,7 @@ public enum ProductInfoJpaEntityFixture {
 
     private final Long productInfoId;
     private final String name;
+    private final String nameChosung;
     private final String description;
     private final String barcode;
     private final int basePrice;
@@ -37,9 +40,10 @@ public enum ProductInfoJpaEntityFixture {
     private final String expirationDuration;
     private final Long productCategoryId;
 
-    ProductInfoJpaEntityFixture(Long productInfoId, String name, String description, String barcode, int basePrice, int baseCost, String expirationDuration, Long productCategoryId) {
+    ProductInfoJpaEntityFixture(Long productInfoId, String name, String nameChosung, String description, String barcode, int basePrice, int baseCost, String expirationDuration, Long productCategoryId) {
         this.productInfoId = productInfoId;
         this.name = name;
+        this.nameChosung = nameChosung;
         this.description = description;
         this.barcode = barcode;
         this.basePrice = basePrice;
@@ -61,6 +65,7 @@ public enum ProductInfoJpaEntityFixture {
     public ProductInfoJpaEntity newInstance() {
         ProductInfoJpaEntity entity = ProductInfoJpaEntity.builder()
                 .name(name)
+                .nameChosung(nameChosung)
                 .description(description)
                 .barcode(barcode)
                 .basePrice(basePrice)
@@ -73,8 +78,9 @@ public enum ProductInfoJpaEntityFixture {
     }
 
     public ProductInfoJpaEntity newInstance(String barcode) {
-        ProductInfoJpaEntity entity = ProductInfoJpaEntity.builder()
+        return ProductInfoJpaEntity.builder()
                 .name(name)
+                .nameChosung(nameChosung)
                 .description(description)
                 .barcode(barcode)
                 .basePrice(basePrice)
@@ -82,11 +88,11 @@ public enum ProductInfoJpaEntityFixture {
                 .expirationDuration(expirationDuration)
                 .productCategoryId(productCategoryId)
                 .build();
-        return entity;
     }
 
     private final static class Constants {
-        private static final String NAME = "name";
+        private static final String NAME = "이름";
+        private static final String NAME_CHOSUNG = "ㅇㄹ";
         private static final String DESCRIPTION = "description";
         private static final String BARCODE = "barcode";
         private static final int ZERO = 0;

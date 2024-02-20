@@ -1,5 +1,6 @@
 package com.cafe.product.presentation;
 
+import com.cafe.common.model.AdminAuthorization;
 import com.cafe.common.model.AdminAuthorizationControllerTest;
 import com.cafe.common.model.MyCafeResponse;
 import com.cafe.product.presentation.request.ProductCategoryRegistrationRequest;
@@ -16,16 +17,29 @@ import com.cafe.product.presentation.request.ProductSizeInfoUpdateRequest;
 import com.cafe.product.presentation.request.ProductSizeInfoUpdateRequestFixture;
 import com.cafe.product.presentation.request.ProductSizePriceUpdateRequest;
 import com.cafe.product.presentation.request.ProductSizePriceUpdateRequestFixture;
+import com.cafe.product.presentation.response.ProductDetailViewResponse;
 import com.cafe.product.presentation.response.ProductListViewListResponse;
 import com.cafe.product.presentation.response.ProductListViewListResponseFixture;
+import com.cafe.product.presentation.response.ProductNameSearchResponse;
 import com.cafe.product.service.ProductCommandService;
 import com.cafe.product.service.ProductQueryService;
+import com.cafe.product.service.vo.ProductDetailView;
+import com.cafe.product.service.vo.ProductDetailViewFixture;
 import com.cafe.product.service.vo.ProductListViewList;
+import com.cafe.product.service.vo.search.NameSearchResult;
+import com.cafe.product.service.vo.search.NameSearchViewFixture;
+import com.cafe.product.service.vo.size.ProductSizeDetailView;
+import com.cafe.product.service.vo.size.ProductSizeDetailViewFixture;
+import com.fasterxml.jackson.core.JsonProcessingException;
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.security.SecurityRequirement;
 import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import java.util.List;
 
@@ -336,6 +350,63 @@ class ProductControllerTest extends AdminAuthorizationControllerTest {
                     .andExpect(content().json(responseBody));
         }
 
+    }
+
+    @Test
+    void 상품_상세_조회를_요청할_수_있다() throws Exception {
+        // given
+        List<ProductSizeDetailView> productSizeDetailViewList = List.of(
+                ProductSizeDetailViewFixture.SMALL.newInstance(),
+                ProductSizeDetailViewFixture.LARGE.newInstance()
+        );
+        ProductDetailView detailView = ProductDetailViewFixture.STANDARD.newInstance(productSizeDetailViewList);
+
+        Long productInfoId = detailView.productInfoId();
+
+        given(productQueryService.queryProductDetail(productInfoId)).willReturn(detailView);
+
+        ProductDetailViewResponse detailViewResponse = ProductDetailViewResponse.from(detailView);
+        MyCafeResponse<ProductDetailViewResponse> response = MyCafeResponse.success(detailViewResponse);
+
+        String responseBody = om.writeValueAsString(response);
+
+        // when
+        mvc.perform(
+                        get(BASE_URI + "/{productInfoId}", productInfoId)
+                                .header(AUTHORIZATION, authorizationHeader)
+                                .contentType(APPLICATION_JSON)
+                )
+                // then
+                .andExpect(status().isOk())
+                .andExpect(content().json(responseBody));
+    }
+
+    @Test
+    void 상품_이름_검색을_요청할_수_있다() throws Exception {
+        // given
+        String name = "라뗴";
+
+        NameSearchResult nameSearchResult = new NameSearchResult(
+                List.of(NameSearchViewFixture.LATTE.newInstance(), NameSearchViewFixture.ICE_LATTE.newInstance())
+        );
+
+        given(productQueryService.searchName(name)).willReturn(nameSearchResult);
+
+        ProductNameSearchResponse productNameSearchResponse = ProductNameSearchResponse.from(nameSearchResult);
+        MyCafeResponse<ProductNameSearchResponse> response = MyCafeResponse.success(productNameSearchResponse);
+
+        String responseBody = om.writeValueAsString(response);
+
+        // when
+        mvc.perform(
+                        get(BASE_URI + "/search")
+                                .header(AUTHORIZATION, authorizationHeader)
+                                .contentType(APPLICATION_JSON)
+                                .param("name", name)
+                )
+                // then
+                .andExpect(status().isOk())
+                .andExpect(content().json(responseBody));
     }
 
 }
