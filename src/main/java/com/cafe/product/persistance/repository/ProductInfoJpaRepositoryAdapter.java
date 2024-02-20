@@ -3,13 +3,16 @@ package com.cafe.product.persistance.repository;
 import com.cafe.product.persistance.dto.ProductInfoCategoryDetailViewDto;
 import com.cafe.product.persistance.dto.ProductListViewDto;
 import com.cafe.product.persistance.entity.ProductInfoJpaEntity;
-import com.cafe.product.service.impl.ProductInfoChanger;
-import com.cafe.product.service.impl.ProductInfoCreator;
-import com.cafe.product.service.impl.ProductInfoDeleter;
-import com.cafe.product.service.impl.ProductInfoReader;
-import com.cafe.product.service.vo.ProductDetailInfoUpdateForm;
-import com.cafe.product.service.vo.ProductInfoRegistrationForm;
-import com.cafe.product.service.vo.ProductPriceInfoUpdateForm;
+import com.cafe.product.service.impl.info.ProductInfoChanger;
+import com.cafe.product.service.impl.info.ProductInfoCreator;
+import com.cafe.product.service.impl.info.ProductInfoDeleter;
+import com.cafe.product.service.impl.info.ProductInfoReader;
+import com.cafe.product.service.impl.info.ProductInfoSearch;
+import com.cafe.product.service.vo.info.PreprocessedProductInfoRegistrationForm;
+import com.cafe.product.service.vo.info.ProductDetailInfoUpdateForm;
+import com.cafe.product.service.vo.info.ProductPriceInfoUpdateForm;
+import com.cafe.product.service.vo.search.NameSearchResult;
+import com.cafe.product.service.vo.search.NameSearchView;
 import jakarta.persistence.EntityNotFoundException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
@@ -20,15 +23,15 @@ import java.util.List;
 
 @Component
 @RequiredArgsConstructor
-public class ProductInfoJpaRepositoryAdapter implements ProductInfoCreator, ProductInfoReader, ProductInfoChanger, ProductInfoDeleter {
+public class ProductInfoJpaRepositoryAdapter implements ProductInfoCreator, ProductInfoReader, ProductInfoChanger, ProductInfoDeleter, ProductInfoSearch {
 
     private final ProductInfoJpaRepository productInfoJpaRepository;
     private final ProductInfoJdbcRepository productInfoJdbcRepository;
 
     @Override
-    public Long create(ProductInfoRegistrationForm productInfoRegistrationForm) {
+    public Long create(PreprocessedProductInfoRegistrationForm form) {
         return productInfoJpaRepository.save(
-                convertToEntity(productInfoRegistrationForm)
+                convertToEntity(form)
         ).getProductInfoId();
     }
 
@@ -92,6 +95,22 @@ public class ProductInfoJpaRepositoryAdapter implements ProductInfoCreator, Prod
         productInfoJpaRepository.deleteById(productInfoId);
     }
 
+    @Override
+    public NameSearchResult searchComplete(String name) {
+        List<ProductInfoJpaEntity> entities = productInfoJpaRepository.findByNameContaining(name);
+        return new NameSearchResult(entities.stream()
+                .map(entity -> new NameSearchView(entity.getProductInfoId(), entity.getName()))
+                .toList());
+    }
+
+    @Override
+    public NameSearchResult searchChosung(String name) {
+        List<ProductInfoJpaEntity> entities = productInfoJpaRepository.findByNameChosungContaining(name);
+        return new NameSearchResult(entities.stream()
+                .map(entity -> new NameSearchView(entity.getProductInfoId(), entity.getName()))
+                .toList());
+    }
+
     private ProductInfoJpaEntity getById(Long productInfoId) {
         return productInfoJpaRepository.findById(productInfoId)
                 .orElseThrow(() -> new EntityNotFoundException(
@@ -99,12 +118,13 @@ public class ProductInfoJpaRepositoryAdapter implements ProductInfoCreator, Prod
                 ));
     }
 
-    private ProductInfoJpaEntity convertToEntity(ProductInfoRegistrationForm domain) {
+    private ProductInfoJpaEntity convertToEntity(PreprocessedProductInfoRegistrationForm domain) {
         return ProductInfoJpaEntity.builder()
                 .productCategoryId(domain.productCategoryId())
                 .basePrice(domain.basePrice())
                 .baseCost(domain.baseCost())
                 .name(domain.name())
+                .nameChosung(domain.nameChosung())
                 .description(domain.description())
                 .barcode(domain.barcode())
                 .expirationDuration(domain.expirationDuration())

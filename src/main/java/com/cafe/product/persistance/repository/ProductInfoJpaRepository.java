@@ -43,5 +43,6 @@ public interface ProductInfoJpaRepository extends JpaRepository<ProductInfoJpaEn
 
     List<ProductInfoJpaEntity> findByNameContaining(String name);
 
+    List<ProductInfoJpaEntity> findByNameChosungContaining(String name);
 
 }

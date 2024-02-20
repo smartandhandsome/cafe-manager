@@ -1,11 +1,14 @@
 package com.cafe.product.service;
 
 import com.cafe.product.persistance.dto.ProductListViewDto;
-import com.cafe.product.service.impl.ProductInfoReader;
 import com.cafe.product.service.impl.ProductIntegrationReader;
+import com.cafe.product.service.impl.info.ProductInfoReader;
+import com.cafe.product.service.impl.search.ProductNameSearcher;
 import com.cafe.product.service.vo.ProductDetailView;
 import com.cafe.product.service.vo.ProductListView;
 import com.cafe.product.service.vo.ProductListViewList;
+import com.cafe.product.service.vo.search.NameSearchResult;
+import com.cafe.product.service.vo.search.NameSearchStrategy;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -17,6 +20,7 @@ public class ProductQueryService {
 
     private static final int PAGE_SIZE = 10;
 
+    private final ProductNameSearcher productNameSearcher;
     private final ProductInfoReader productInfoReader;
     private final ProductIntegrationReader productIntegrationReader;
 
@@ -33,4 +37,10 @@ public class ProductQueryService {
     public ProductDetailView queryProductDetail(Long productInfoId) {
         return productIntegrationReader.readDetail(productInfoId);
     }
+
+    public NameSearchResult searchName(String name) {
+        NameSearchStrategy strategy = NameSearchStrategy.determine(name);
+        return productNameSearcher.search(strategy, name);
+    }
+
 }

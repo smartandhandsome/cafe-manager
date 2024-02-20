@@ -11,10 +11,12 @@ import com.cafe.product.presentation.request.ProductSizeInfoUpdateRequest;
 import com.cafe.product.presentation.request.ProductSizePriceUpdateRequest;
 import com.cafe.product.presentation.response.ProductDetailViewResponse;
 import com.cafe.product.presentation.response.ProductListViewListResponse;
+import com.cafe.product.presentation.response.ProductNameSearchResponse;
 import com.cafe.product.service.ProductCommandService;
 import com.cafe.product.service.ProductQueryService;
 import com.cafe.product.service.vo.ProductDetailView;
 import com.cafe.product.service.vo.ProductListViewList;
+import com.cafe.product.service.vo.search.NameSearchResult;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.security.SecurityRequirement;
 import io.swagger.v3.oas.annotations.tags.Tag;
@@ -171,6 +173,18 @@ public class ProductController {
     ) {
         ProductDetailView productDetailView = productQueryService.queryProductDetail(productInfoId);
         return MyCafeResponse.success(ProductDetailViewResponse.from(productDetailView));
+    }
+
+    @Operation(description = "상품 이름 검색 조회", security = @SecurityRequirement(name = "Authorization"))
+    @GetMapping()
+    public MyCafeResponse<ProductNameSearchResponse> requestProductSearch(
+            AdminAuthorization adminAuthorization,
+            @RequestParam String name
+    ) {
+        NameSearchResult nameSearchResult = productQueryService.searchName(name);
+        ProductNameSearchResponse response =
+                (nameSearchResult == null) ? null : ProductNameSearchResponse.from(nameSearchResult);
+        return MyCafeResponse.success(response);
     }
 
 }

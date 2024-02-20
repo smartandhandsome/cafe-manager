@@ -1,5 +1,7 @@
 package com.cafe.product.service.vo;
 
+import com.cafe.product.service.vo.size.SizeRegistrationForm;
+
 public enum SizeRegistrationFormFixture {
     SMALL(
             Constants.SMALL,

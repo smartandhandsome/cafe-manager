@@ -1,5 +1,7 @@
 package com.cafe.product.service.vo;
 
+import com.cafe.product.service.vo.cateory.ProductCategoryRegistrationForm;
+
 public enum ProductCategoryRegistrationFormFixture {
     STANDARD(Constants.NAME),
     ;

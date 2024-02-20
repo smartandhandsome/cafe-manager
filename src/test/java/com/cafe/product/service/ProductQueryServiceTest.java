@@ -1,7 +1,7 @@
 package com.cafe.product.service;
 
 import com.cafe.product.persistance.dto.ProductListViewDto;
-import com.cafe.product.service.impl.ProductInfoReader;
+import com.cafe.product.service.impl.info.ProductInfoReader;
 import com.cafe.product.service.vo.ProductListView;
 import com.cafe.product.service.vo.ProductListViewList;
 import org.junit.jupiter.api.DisplayNameGeneration;

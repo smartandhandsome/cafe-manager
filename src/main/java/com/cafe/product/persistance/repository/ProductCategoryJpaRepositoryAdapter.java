@@ -1,12 +1,12 @@
 package com.cafe.product.persistance.repository;
 
 import com.cafe.product.persistance.entity.ProductCategoryJpaEntity;
-import com.cafe.product.service.impl.ProductCategoryChanger;
-import com.cafe.product.service.impl.ProductCategoryCreator;
-import com.cafe.product.service.impl.ProductCategoryDeleter;
-import com.cafe.product.service.impl.ProductCategoryReader;
-import com.cafe.product.service.vo.ProductCategoryRegistrationForm;
-import com.cafe.product.service.vo.ProductCategoryUpdateForm;
+import com.cafe.product.service.impl.category.ProductCategoryChanger;
+import com.cafe.product.service.impl.category.ProductCategoryCreator;
+import com.cafe.product.service.impl.category.ProductCategoryDeleter;
+import com.cafe.product.service.impl.category.ProductCategoryReader;
+import com.cafe.product.service.vo.cateory.ProductCategoryRegistrationForm;
+import com.cafe.product.service.vo.cateory.ProductCategoryUpdateForm;
 import jakarta.persistence.EntityNotFoundException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;

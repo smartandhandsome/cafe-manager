@@ -2,6 +2,8 @@ package com.cafe.product.service.impl;
 
 import com.cafe.product.persistance.dto.ProductInfoCategoryDetailViewDto;
 import com.cafe.product.persistance.dto.ProductSizeDetailViewDto;
+import com.cafe.product.service.impl.info.ProductInfoReader;
+import com.cafe.product.service.impl.size.ProductSizeReader;
 import com.cafe.product.service.vo.ProductDetailView;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;

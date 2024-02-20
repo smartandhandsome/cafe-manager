@@ -8,5 +8,7 @@ import static lombok.AccessLevel.PRIVATE;
 public final class RegexPattern {
 
     public static final String PHONE_REGEX = "^01([016789])-\\d{3,4}-\\d{4}$";
+    public static final String CHOSUNG = "^[ㄱ-ㅎ]+$";
+    public static final String COMPLETE_WORD = "^[가-힣]+$";
 
 }

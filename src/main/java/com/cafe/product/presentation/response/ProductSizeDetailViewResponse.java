@@ -1,6 +1,6 @@
 package com.cafe.product.presentation.response;
 
-import com.cafe.product.service.vo.ProductSizeDetailView;
+import com.cafe.product.service.vo.size.ProductSizeDetailView;
 import lombok.Builder;
 
 @Builder

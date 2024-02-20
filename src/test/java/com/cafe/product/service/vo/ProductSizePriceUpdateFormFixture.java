@@ -1,5 +1,7 @@
 package com.cafe.product.service.vo;
 
+import com.cafe.product.service.vo.size.ProductSizePriceUpdateForm;
+
 public enum ProductSizePriceUpdateFormFixture {
     STANDARD(
             Constants.ID,

@@ -1,23 +1,25 @@
 package com.cafe.product.service;
 
-import com.cafe.product.service.impl.ProductCategoryChanger;
-import com.cafe.product.service.impl.ProductCategoryCreator;
-import com.cafe.product.service.impl.ProductCategoryDuplicationValidator;
-import com.cafe.product.service.impl.ProductCategoryIntegrationDeleter;
-import com.cafe.product.service.impl.ProductInfoChanger;
-import com.cafe.product.service.impl.ProductInfoDuplicationValidator;
-import com.cafe.product.service.impl.ProductInfoIntegrationCreator;
-import com.cafe.product.service.impl.ProductInfoIntegrationDeleter;
-import com.cafe.product.service.impl.ProductSizeChanger;
-import com.cafe.product.service.impl.ProductSizeDeleter;
-import com.cafe.product.service.vo.ProductCategoryRegistrationForm;
-import com.cafe.product.service.vo.ProductCategoryUpdateForm;
-import com.cafe.product.service.vo.ProductDetailInfoUpdateForm;
-import com.cafe.product.service.vo.ProductInfoRegistrationForm;
-import com.cafe.product.service.vo.ProductPriceInfoUpdateForm;
-import com.cafe.product.service.vo.ProductSizeInfoUpdateForm;
-import com.cafe.product.service.vo.ProductSizePriceUpdateForm;
-import com.cafe.product.service.vo.SizeRegistrationForm;
+import com.cafe.product.service.impl.category.ProductCategoryChanger;
+import com.cafe.product.service.impl.category.ProductCategoryCreator;
+import com.cafe.product.service.impl.category.ProductCategoryDuplicationValidator;
+import com.cafe.product.service.impl.category.ProductCategoryIntegrationDeleter;
+import com.cafe.product.service.impl.info.ProductInfoChanger;
+import com.cafe.product.service.impl.info.ProductInfoDuplicationValidator;
+import com.cafe.product.service.impl.info.ProductInfoIntegrationCreator;
+import com.cafe.product.service.impl.info.ProductInfoIntegrationDeleter;
+import com.cafe.product.service.impl.info.ProductInfoPreprocessor;
+import com.cafe.product.service.impl.size.ProductSizeChanger;
+import com.cafe.product.service.impl.size.ProductSizeDeleter;
+import com.cafe.product.service.vo.cateory.ProductCategoryRegistrationForm;
+import com.cafe.product.service.vo.cateory.ProductCategoryUpdateForm;
+import com.cafe.product.service.vo.info.PreprocessedProductInfoRegistrationForm;
+import com.cafe.product.service.vo.info.ProductDetailInfoUpdateForm;
+import com.cafe.product.service.vo.info.ProductInfoRegistrationForm;
+import com.cafe.product.service.vo.info.ProductPriceInfoUpdateForm;
+import com.cafe.product.service.vo.size.ProductSizeInfoUpdateForm;
+import com.cafe.product.service.vo.size.ProductSizePriceUpdateForm;
+import com.cafe.product.service.vo.size.SizeRegistrationForm;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -41,20 +43,22 @@ public class ProductCommandService {
     private final ProductInfoIntegrationDeleter productInfoIntegrationDeleter;
     private final ProductSizeDeleter productSizeDeleter;
 
+    private final ProductInfoPreprocessor productInfoPreprocessor;
+
     public void register(ProductCategoryRegistrationForm productCategoryRegistrationForm) {
         productCategoryDuplicationValidator.validate(productCategoryRegistrationForm.name());
         productCategoryCreator.create(productCategoryRegistrationForm);
     }
 
     public void register(
-            ProductInfoRegistrationForm productInfoRegistrationForm,
+            ProductInfoRegistrationForm form,
             List<SizeRegistrationForm> sizeRegistrationFormList
     ) {
-        productInfoDuplicationValidator.validate(productInfoRegistrationForm);
-        productInfoIntegrationCreator.create(
-                productInfoRegistrationForm,
-                sizeRegistrationFormList
-        );
+        productInfoDuplicationValidator.validate(form);
+        PreprocessedProductInfoRegistrationForm preprocessedForm
+                = productInfoPreprocessor.preprocess(form);
+
+        productInfoIntegrationCreator.create(preprocessedForm, sizeRegistrationFormList);
     }
 
     public void update(ProductPriceInfoUpdateForm productPriceInfoUpdateForm) {

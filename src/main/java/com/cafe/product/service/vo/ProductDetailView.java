@@ -2,6 +2,7 @@ package com.cafe.product.service.vo;
 
 import com.cafe.product.persistance.dto.ProductInfoCategoryDetailViewDto;
 import com.cafe.product.persistance.dto.ProductSizeDetailViewDto;
+import com.cafe.product.service.vo.size.ProductSizeDetailView;
 import lombok.Builder;
 
 import java.util.List;

@@ -1,6 +1,6 @@
 package com.cafe.product.presentation.request;
 
-import com.cafe.product.service.vo.ProductDetailInfoUpdateForm;
+import com.cafe.product.service.vo.info.ProductDetailInfoUpdateForm;
 import io.swagger.v3.oas.annotations.media.Schema;
 import jakarta.validation.constraints.NotBlank;
 

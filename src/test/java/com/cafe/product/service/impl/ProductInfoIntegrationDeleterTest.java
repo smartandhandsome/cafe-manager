@@ -1,5 +1,8 @@
 package com.cafe.product.service.impl;
 
+import com.cafe.product.service.impl.info.ProductInfoDeleter;
+import com.cafe.product.service.impl.info.ProductInfoIntegrationDeleter;
+import com.cafe.product.service.impl.size.ProductSizeDeleter;
 import org.junit.jupiter.api.DisplayNameGeneration;
 import org.junit.jupiter.api.DisplayNameGenerator;
 import org.junit.jupiter.api.Test;

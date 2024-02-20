@@ -2,10 +2,10 @@ package com.cafe.product.persistance.repository;
 
 import com.cafe.product.persistance.entity.ProductCategoryJpaEntity;
 import com.cafe.product.persistance.entity.ProductCategoryJpaEntityFixture;
-import com.cafe.product.service.vo.ProductCategoryRegistrationForm;
 import com.cafe.product.service.vo.ProductCategoryRegistrationFormFixture;
-import com.cafe.product.service.vo.ProductCategoryUpdateForm;
 import com.cafe.product.service.vo.ProductCategoryUpdateFormFixture;
+import com.cafe.product.service.vo.cateory.ProductCategoryRegistrationForm;
+import com.cafe.product.service.vo.cateory.ProductCategoryUpdateForm;
 import jakarta.persistence.EntityNotFoundException;
 import org.junit.jupiter.api.DisplayNameGeneration;
 import org.junit.jupiter.api.DisplayNameGenerator;

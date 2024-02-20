@@ -1,7 +1,7 @@
 package com.cafe.product.presentation.request;
 
-import com.cafe.product.service.vo.ProductInfoRegistrationForm;
-import com.cafe.product.service.vo.SizeRegistrationForm;
+import com.cafe.product.service.vo.info.ProductInfoRegistrationForm;
+import com.cafe.product.service.vo.size.SizeRegistrationForm;
 import io.swagger.v3.oas.annotations.media.Schema;
 import jakarta.validation.Valid;
 import jakarta.validation.constraints.NotBlank;

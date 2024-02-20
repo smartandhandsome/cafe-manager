@@ -40,18 +40,22 @@ public class ProductInfoJpaEntity extends BaseEntity {
     private int baseCost;
 
     @Column(nullable = false)
+    private String nameChosung;
+
+    @Column(nullable = false)
     private String expirationDuration;
 
     @Column(nullable = false)
     private Long productCategoryId;
 
     @Builder
-    private ProductInfoJpaEntity(String name, String description, String barcode, int basePrice, int baseCost, String expirationDuration, Long productCategoryId) {
+    private ProductInfoJpaEntity(String name, String description, String barcode, int basePrice, int baseCost, String nameChosung, String expirationDuration, Long productCategoryId) {
         this.name = name;
         this.description = description;
         this.barcode = barcode;
         this.basePrice = basePrice;
         this.baseCost = baseCost;
+        this.nameChosung = nameChosung;
         this.expirationDuration = expirationDuration;
         this.productCategoryId = productCategoryId;
     }
