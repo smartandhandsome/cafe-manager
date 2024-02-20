@@ -29,12 +29,12 @@ public enum ProductSizeJpaEntityFixture {
         this.extraCost = extraCost;
     }
 
-    public ProductSizeJpaEntity newInstance(ProductInfoJpaEntity productInfoJpaEntity) {
+    public ProductSizeJpaEntity newInstance(Long productInfoId) {
         ProductSizeJpaEntity entity = ProductSizeJpaEntity.builder()
                 .name(name)
                 .extraCharge(extraCharge)
                 .extraCost(extraCost)
-                .productInfoJpaEntity(productInfoJpaEntity)
+                .productInfoId(productInfoId)
                 .build();
 
         EntityIdInjector.inject(entity, "productSizeId", productSizeId);

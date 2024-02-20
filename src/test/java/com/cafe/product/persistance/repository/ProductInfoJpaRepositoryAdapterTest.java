@@ -27,6 +27,7 @@ import static org.junit.jupiter.api.Assertions.assertAll;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.BDDMockito.given;
 import static org.mockito.BDDMockito.then;
+import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.times;
 
 @ExtendWith(MockitoExtension.class)
@@ -55,7 +56,12 @@ class ProductInfoJpaRepositoryAdapterTest extends BaseRepositoryTest {
     @Test
     void 상품_정보를_생성할_수_있다() {
         // given
+        Long productInfoId = 1L;
         ProductInfoRegistrationForm productInfoRegistrationForm = ProductInfoRegistrationFormFixture.STANDARD.newInstance();
+        ProductInfoJpaEntity entity = mock();
+
+        given(productInfoJpaRepository.save(any(ProductInfoJpaEntity.class))).willReturn(entity);
+        given(entity.getProductInfoId()).willReturn(productInfoId);
 
         // when
         productInfoJpaRepositoryAdapter.create(productInfoRegistrationForm);

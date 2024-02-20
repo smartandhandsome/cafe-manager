@@ -1,10 +1,11 @@
 package com.cafe.product.persistance.repository;
 
-import com.cafe.product.persistance.entity.ProductInfoJpaEntity;
+import com.cafe.product.persistance.dto.ProductSizeDetailViewDto;
 import com.cafe.product.persistance.entity.ProductSizeJpaEntity;
 import com.cafe.product.service.impl.ProductSizeChanger;
 import com.cafe.product.service.impl.ProductSizeCreator;
 import com.cafe.product.service.impl.ProductSizeDeleter;
+import com.cafe.product.service.impl.ProductSizeReader;
 import com.cafe.product.service.vo.ProductSizeInfoUpdateForm;
 import com.cafe.product.service.vo.ProductSizePriceUpdateForm;
 import com.cafe.product.service.vo.SizeRegistrationForm;
@@ -16,19 +17,20 @@ import java.util.List;
 
 @Component
 @RequiredArgsConstructor
-public class ProductSizeJpaRepositoryAdapter implements ProductSizeCreator, ProductSizeChanger, ProductSizeDeleter {
+public class ProductSizeJpaRepositoryAdapter implements ProductSizeCreator, ProductSizeChanger, ProductSizeDeleter, ProductSizeReader {
 
     private final ProductSizeJpaRepository productSizeJpaRepository;
     private final ProductSizeJdbcRepository productSizeJdbcRepository;
 
     @Override
     public void createAll(
-            ProductInfoJpaEntity productInfoJpaEntity,
+            Long productInfoId,
             List<SizeRegistrationForm> sizeRegistrationForms
     ) {
-        productSizeJdbcRepository.saveAll(
-                convertToEntities(productInfoJpaEntity, sizeRegistrationForms)
-        );
+        List<ProductSizeJpaEntity> productSizeJpaEntities = sizeRegistrationForms.stream()
+                .map(sizeRegistrationForm -> convertToEntity(productInfoId, sizeRegistrationForm))
+                .toList();
+        productSizeJdbcRepository.saveAll(productSizeJpaEntities);
     }
 
     @Override
@@ -61,25 +63,32 @@ public class ProductSizeJpaRepositoryAdapter implements ProductSizeCreator, Prod
         productSizeJpaRepository.deleteAllByProductInfoId(productInfoId);
     }
 
+    @Override
+    public List<ProductSizeDetailViewDto> readAllByProductInfoId(Long productInfoId) {
+        List<ProductSizeJpaEntity> productSizeJpaEntities = productSizeJpaRepository.findAllByProductInfoId(productInfoId);
+        return productSizeJpaEntities.stream()
+                .map(this::convertToSizeDetailViewDto)
+                .toList();
+    }
+
+    private ProductSizeDetailViewDto convertToSizeDetailViewDto(ProductSizeJpaEntity productSizeJpaEntity) {
+        return new ProductSizeDetailViewDto(
+                productSizeJpaEntity.getProductSizeId(),
+                productSizeJpaEntity.getName(),
+                productSizeJpaEntity.getExtraCharge(),
+                productSizeJpaEntity.getExtraCost()
+        );
+    }
+
     private ProductSizeJpaEntity convertToEntity(
-            ProductInfoJpaEntity productInfoJpaEntity,
+            Long productInfoId,
             SizeRegistrationForm sizeRegistrationForm
     ) {
         return ProductSizeJpaEntity.builder()
                 .name(sizeRegistrationForm.name())
                 .extraCharge(sizeRegistrationForm.extraCharge())
                 .extraCost(sizeRegistrationForm.extraCost())
-                .productInfoJpaEntity(productInfoJpaEntity)
+                .productInfoId(productInfoId)
                 .build();
-    }
-
-    private List<ProductSizeJpaEntity> convertToEntities(
-            ProductInfoJpaEntity productInfoJpaEntity,
-            List<SizeRegistrationForm> sizeRegistrationForms
-    ) {
-        return sizeRegistrationForms.stream()
-                .map(sizeRegistrationForm ->
-                        convertToEntity(productInfoJpaEntity, sizeRegistrationForm)
-                ).toList();
     }
 }

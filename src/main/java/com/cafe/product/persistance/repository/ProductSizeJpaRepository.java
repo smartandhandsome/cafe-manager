@@ -6,11 +6,15 @@ import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.List;
+
 public interface ProductSizeJpaRepository extends JpaRepository<ProductSizeJpaEntity, Long> {
 
     @Modifying
     @Transactional
     @Query(value = "DELETE FROM product_sizes WHERE product_info_id = :productInfoId", nativeQuery = true)
     void deleteAllByProductInfoId(Long productInfoId);
+
+    List<ProductSizeJpaEntity> findAllByProductInfoId(Long productInfoId);
 
 }

@@ -1,5 +1,6 @@
 package com.cafe.product.service.impl;
 
+import com.cafe.product.persistance.dto.ProductInfoCategoryDetailViewDto;
 import com.cafe.product.persistance.dto.ProductListViewDto;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -21,4 +22,7 @@ public interface ProductInfoReader {
 
     @Transactional(readOnly = true)
     boolean hasProductInfoIdGreaterThan(Long productInfoId);
+
+    @Transactional(readOnly = true)
+    ProductInfoCategoryDetailViewDto readProductDetail(Long productInfoId);
 }

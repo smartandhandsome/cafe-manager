@@ -48,6 +48,16 @@ public enum ProductInfoJpaEntityFixture {
         this.productCategoryId = productCategoryId;
     }
 
+    public static List<ProductInfoJpaEntity> dummys() {
+        List<ProductInfoJpaEntity> dummys = new ArrayList<>();
+        for (int i = 0; i < 11; i++) {
+            dummys.add(
+                    STANDARD.newInstance(String.valueOf(i))
+            );
+        }
+        return dummys;
+    }
+
     public ProductInfoJpaEntity newInstance() {
         ProductInfoJpaEntity entity = ProductInfoJpaEntity.builder()
                 .name(name)
@@ -73,16 +83,6 @@ public enum ProductInfoJpaEntityFixture {
                 .productCategoryId(productCategoryId)
                 .build();
         return entity;
-    }
-
-    public static List<ProductInfoJpaEntity> dummys() {
-        List<ProductInfoJpaEntity> dummys = new ArrayList<>();
-        for (int i = 0; i < 11; i++) {
-            dummys.add(
-                    STANDARD.newInstance(String.valueOf(i))
-            );
-        }
-        return dummys;
     }
 
     private final static class Constants {

@@ -39,9 +39,10 @@ class ProductSizeJdbcRepositoryTest extends BaseRepositoryTest {
     @Test
     void 상품_사이즈를_배치_삽입할_수_있다() {
         // given
+        Long productInfoId = 1L;
         List<ProductSizeJpaEntity> productSizeJpaEntities = List.of(
-                ProductSizeJpaEntityFixture.SMALL.newInstance(productInfoJpaEntity),
-                ProductSizeJpaEntityFixture.LARGE.newInstance(productInfoJpaEntity)
+                ProductSizeJpaEntityFixture.SMALL.newInstance(productInfoId),
+                ProductSizeJpaEntityFixture.LARGE.newInstance(productInfoId)
         );
 
         // when, then

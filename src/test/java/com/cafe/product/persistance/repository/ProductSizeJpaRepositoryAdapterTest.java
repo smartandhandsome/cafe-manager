@@ -1,8 +1,6 @@
 package com.cafe.product.persistance.repository;
 
 import com.cafe.common.model.BaseRepositoryTest;
-import com.cafe.product.persistance.entity.ProductInfoJpaEntity;
-import com.cafe.product.persistance.entity.ProductInfoJpaEntityFixture;
 import com.cafe.product.persistance.entity.ProductSizeJpaEntity;
 import com.cafe.product.persistance.entity.ProductSizeJpaEntityFixture;
 import com.cafe.product.service.vo.ProductSizeInfoUpdateForm;
@@ -46,14 +44,14 @@ class ProductSizeJpaRepositoryAdapterTest extends BaseRepositoryTest {
     @Test
     void 상품_사이즈_정보를_모두_생성할_수_있다() {
         // given
-        ProductInfoJpaEntity productInfoJpaEntity = ProductInfoJpaEntityFixture.STANDARD.newInstance();
+        Long productInfoId = 1L;
         List<SizeRegistrationForm> sizeRegistrationForms = List.of(
                 SizeRegistrationFormFixture.SMALL.newInstance(),
                 SizeRegistrationFormFixture.LARGE.newInstance()
         );
 
         // when
-        productSizeJpaRepositoryAdapter.createAll(productInfoJpaEntity, sizeRegistrationForms);
+        productSizeJpaRepositoryAdapter.createAll(productInfoId, sizeRegistrationForms);
 
         // then
         then(productSizeJdbcRepository).should().saveAll(anyList());
@@ -91,10 +89,9 @@ class ProductSizeJpaRepositoryAdapterTest extends BaseRepositoryTest {
         @Test
         void 해당_아이디의_데이터가_존재할_때() {
             // given
+            long productInfoId = 1L;
             ProductSizeInfoUpdateForm productSizeInfoUpdateForm = ProductSizeInfoUpdateFormFixture.STANDARD.newInstance();
-            ProductSizeJpaEntity entity = ProductSizeJpaEntityFixture.LARGE.newInstance(
-                    ProductInfoJpaEntityFixture.STANDARD.newInstance()
-            );
+            ProductSizeJpaEntity entity = ProductSizeJpaEntityFixture.LARGE.newInstance(productInfoId);
 
             given(productSizeJpaRepository.findById(productSizeInfoUpdateForm.productSizeId())).willReturn(Optional.of(entity));
 
@@ -126,9 +123,8 @@ class ProductSizeJpaRepositoryAdapterTest extends BaseRepositoryTest {
         void 해당_아이디의_데이터가_존재할_때() {
             // given
             ProductSizePriceUpdateForm productSizePriceUpdateForm = ProductSizePriceUpdateFormFixture.STANDARD.newInstance();
-            ProductSizeJpaEntity entity = ProductSizeJpaEntityFixture.LARGE.newInstance(
-                    ProductInfoJpaEntityFixture.STANDARD.newInstance()
-            );
+            long productInfoId = 1L;
+            ProductSizeJpaEntity entity = ProductSizeJpaEntityFixture.LARGE.newInstance(productInfoId);
 
             given(productSizeJpaRepository.findById(productSizePriceUpdateForm.productSizeId())).willReturn(Optional.of(entity));
 

@@ -9,9 +9,11 @@ import com.cafe.product.presentation.request.ProductPriceInfoUpdateRequest;
 import com.cafe.product.presentation.request.ProductRegistrationRequest;
 import com.cafe.product.presentation.request.ProductSizeInfoUpdateRequest;
 import com.cafe.product.presentation.request.ProductSizePriceUpdateRequest;
+import com.cafe.product.presentation.response.ProductDetailViewResponse;
 import com.cafe.product.presentation.response.ProductListViewListResponse;
 import com.cafe.product.service.ProductCommandService;
 import com.cafe.product.service.ProductQueryService;
+import com.cafe.product.service.vo.ProductDetailView;
 import com.cafe.product.service.vo.ProductListViewList;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.security.SecurityRequirement;
@@ -149,16 +151,26 @@ public class ProductController {
         return MyCafeResponse.success();
     }
 
-    @Operation(description = "상품 정보 리스트 조회", security = @SecurityRequirement(name = "Authorization"))
+    @Operation(description = "상품 리스트 조회", security = @SecurityRequirement(name = "Authorization"))
     @GetMapping("/list")
-    public MyCafeResponse<ProductListViewListResponse> requestProductCategoryList(
+    public MyCafeResponse<ProductListViewListResponse> requestProductListQuery(
             AdminAuthorization adminAuthorization,
             @RequestParam(required = false) Long lastProductId
     ) {
         ProductListViewList productListViewList = productQueryService.queryProductList(
                 lastProductId == null ? 0 : lastProductId
         );
-        return MyCafeResponse.success(productListViewList.toProductListViewListResponse());
+        return MyCafeResponse.success(ProductListViewListResponse.from(productListViewList));
+    }
+
+    @Operation(description = "상품 상세 조회", security = @SecurityRequirement(name = "Authorization"))
+    @GetMapping("/{productInfoId}")
+    public MyCafeResponse<ProductDetailViewResponse> requestProductDetailQuery(
+            AdminAuthorization adminAuthorization,
+            @PathVariable Long productInfoId
+    ) {
+        ProductDetailView productDetailView = productQueryService.queryProductDetail(productInfoId);
+        return MyCafeResponse.success(ProductDetailViewResponse.from(productDetailView));
     }
 
 }

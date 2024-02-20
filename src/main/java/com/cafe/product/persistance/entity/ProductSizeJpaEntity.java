@@ -6,8 +6,6 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
-import jakarta.persistence.JoinColumn;
-import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
 import lombok.AccessLevel;
 import lombok.Builder;
@@ -33,20 +31,14 @@ public class ProductSizeJpaEntity extends BaseEntity {
     @Column(nullable = false)
     private int extraCost;
 
-    @ManyToOne
-    @JoinColumn(name = "product_info_id")
-    private ProductInfoJpaEntity productInfoJpaEntity;
+    private Long productInfoId;
 
     @Builder
-    private ProductSizeJpaEntity(String name, int extraCharge, int extraCost, ProductInfoJpaEntity productInfoJpaEntity) {
+    private ProductSizeJpaEntity(String name, int extraCharge, int extraCost, Long productInfoId) {
         this.name = name;
         this.extraCharge = extraCharge;
         this.extraCost = extraCost;
-        this.productInfoJpaEntity = productInfoJpaEntity;
-    }
-
-    public Long getProductInfoId() {
-        return productInfoJpaEntity.getProductInfoId();
+        this.productInfoId = productInfoId;
     }
 
     public void changePriceInfo(int extraCharge, int extraCost) {

@@ -1,11 +1,12 @@
 package com.cafe.admin.service;
 
 import com.cafe.admin.service.impl.AdminCreator;
-import com.cafe.admin.service.impl.AdminValidator;
+import com.cafe.admin.service.impl.AdminDuplicationValidator;
 import com.cafe.admin.service.impl.SensitiveDataEncryptor;
 import com.cafe.admin.service.vo.EncryptedSignUpForm;
 import com.cafe.admin.service.vo.EncryptedSignUpFormFixture;
 import com.cafe.admin.service.vo.SignUpForm;
+import com.cafe.admin.service.vo.SignUpFormFixture;
 import org.junit.jupiter.api.DisplayNameGeneration;
 import org.junit.jupiter.api.DisplayNameGenerator;
 import org.junit.jupiter.api.Test;
@@ -14,7 +15,6 @@ import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 
-import static com.cafe.admin.service.vo.SignUpFormFixture.STANDARD;
 import static org.mockito.BDDMockito.given;
 import static org.mockito.BDDMockito.then;
 import static org.mockito.Mockito.times;
@@ -28,14 +28,14 @@ class AdminServiceTest {
     @Mock
     SensitiveDataEncryptor sensitiveDataEncryptor;
     @Mock
-    AdminValidator adminValidator;
-    @Mock
     AdminCreator adminCreator;
+    @Mock
+    AdminDuplicationValidator adminDuplicationValidator;
 
     @Test
     void 회원가입을_할_수_있다() {
         // given
-        SignUpForm signUpForm = STANDARD.newInstance();
+        SignUpForm signUpForm = SignUpFormFixture.STANDARD.newInstance();
         EncryptedSignUpForm encryptedSignUpForm = EncryptedSignUpFormFixture.STANDARD.newInstance();
 
         given(sensitiveDataEncryptor.encrypt(signUpForm)).willReturn(encryptedSignUpForm);
@@ -44,7 +44,7 @@ class AdminServiceTest {
         adminService.signUp(signUpForm);
 
         // then
-        then(adminValidator).should(times(1)).validate(signUpForm);
+        then(adminDuplicationValidator).should(times(1)).validate(signUpForm.phoneNumber());
         then(sensitiveDataEncryptor).should(times(1)).encrypt(signUpForm);
         then(adminCreator).should(times(1)).create(encryptedSignUpForm);
     }

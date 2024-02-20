@@ -1,17 +1,14 @@
 package com.cafe.product.service;
 
-import com.cafe.product.persistance.entity.ProductInfoJpaEntity;
-import com.cafe.product.persistance.entity.ProductInfoJpaEntityFixture;
 import com.cafe.product.service.impl.ProductCategoryChanger;
 import com.cafe.product.service.impl.ProductCategoryCreator;
 import com.cafe.product.service.impl.ProductCategoryDuplicationValidator;
 import com.cafe.product.service.impl.ProductCategoryIntegrationDeleter;
 import com.cafe.product.service.impl.ProductInfoChanger;
-import com.cafe.product.service.impl.ProductInfoCreator;
 import com.cafe.product.service.impl.ProductInfoDuplicationValidator;
+import com.cafe.product.service.impl.ProductInfoIntegrationCreator;
 import com.cafe.product.service.impl.ProductInfoIntegrationDeleter;
 import com.cafe.product.service.impl.ProductSizeChanger;
-import com.cafe.product.service.impl.ProductSizeCreator;
 import com.cafe.product.service.impl.ProductSizeDeleter;
 import com.cafe.product.service.vo.ProductCategoryRegistrationForm;
 import com.cafe.product.service.vo.ProductCategoryRegistrationFormFixture;
@@ -39,7 +36,6 @@ import org.mockito.junit.jupiter.MockitoExtension;
 
 import java.util.List;
 
-import static org.mockito.BDDMockito.given;
 import static org.mockito.BDDMockito.then;
 import static org.mockito.Mockito.times;
 
@@ -56,11 +52,9 @@ class ProductCommandServiceTest {
     ProductInfoDuplicationValidator productInfoDuplicationValidator;
 
     @Mock
+    ProductInfoIntegrationCreator productInfoIntegrationCreator;
+    @Mock
     ProductCategoryCreator productCategoryCreator;
-    @Mock
-    ProductInfoCreator productInfoCreator;
-    @Mock
-    ProductSizeCreator productSizeCreator;
 
     @Mock
     ProductInfoChanger productInfoChanger;
@@ -70,11 +64,11 @@ class ProductCommandServiceTest {
     ProductSizeChanger productSizeChanger;
 
     @Mock
-    ProductSizeDeleter productSizeDeleter;
+    ProductCategoryIntegrationDeleter productCategoryIntegrationDeleter;
     @Mock
     ProductInfoIntegrationDeleter productInfoIntegrationDeleter;
     @Mock
-    ProductCategoryIntegrationDeleter productCategoryIntegrationDeleter;
+    ProductSizeDeleter productSizeDeleter;
 
     @Test
     void 상품_카테고리를_등록할_수_있다() {
@@ -97,16 +91,13 @@ class ProductCommandServiceTest {
                 SizeRegistrationFormFixture.SMALL.newInstance(),
                 SizeRegistrationFormFixture.LARGE.newInstance()
         );
-        ProductInfoJpaEntity productInfoJpaEntity = ProductInfoJpaEntityFixture.STANDARD.newInstance();
-
-        given(productInfoCreator.create(productInfoRegistrationForm)).willReturn(productInfoJpaEntity);
 
         // when
         productCommandService.register(productInfoRegistrationForm, sizeRegistrationFormList);
 
         // then
-
-        then(productSizeCreator).should(times(1)).createAll(productInfoJpaEntity, sizeRegistrationFormList);
+        then(productInfoDuplicationValidator).should(times(1)).validate(productInfoRegistrationForm);
+        then(productInfoIntegrationCreator).should(times(1)).create(productInfoRegistrationForm, sizeRegistrationFormList);
     }
 
     @Test

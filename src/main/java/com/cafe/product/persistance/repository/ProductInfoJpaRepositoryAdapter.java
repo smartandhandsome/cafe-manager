@@ -1,5 +1,6 @@
 package com.cafe.product.persistance.repository;
 
+import com.cafe.product.persistance.dto.ProductInfoCategoryDetailViewDto;
 import com.cafe.product.persistance.dto.ProductListViewDto;
 import com.cafe.product.persistance.entity.ProductInfoJpaEntity;
 import com.cafe.product.service.impl.ProductInfoChanger;
@@ -25,10 +26,10 @@ public class ProductInfoJpaRepositoryAdapter implements ProductInfoCreator, Prod
     private final ProductInfoJdbcRepository productInfoJdbcRepository;
 
     @Override
-    public ProductInfoJpaEntity create(ProductInfoRegistrationForm productInfoRegistrationForm) {
+    public Long create(ProductInfoRegistrationForm productInfoRegistrationForm) {
         return productInfoJpaRepository.save(
                 convertToEntity(productInfoRegistrationForm)
-        );
+        ).getProductInfoId();
     }
 
     @Override
@@ -74,6 +75,16 @@ public class ProductInfoJpaRepositoryAdapter implements ProductInfoCreator, Prod
     @Override
     public boolean hasProductInfoIdGreaterThan(Long productInfoId) {
         return productInfoJpaRepository.existsByProductInfoIdGreaterThan(productInfoId);
+    }
+
+    @Override
+    public ProductInfoCategoryDetailViewDto readProductDetail(Long productInfoId) {
+        return productInfoJpaRepository.findProductDetail(productInfoId)
+                .orElseThrow(
+                        () -> new EntityNotFoundException(
+                                MessageFormat.format("해당 아이디와 일치하는 상품 정보가 존재하지 않습니다. [productInfoId: {0}]", productInfoId)
+                        )
+                );
     }
 
     @Override

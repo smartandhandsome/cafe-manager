@@ -6,6 +6,15 @@ spring:
     properties:
       hibernate:
         format_sql: true
+  sql:
+    init:
+      encoding: UTF-8
+
+server:
+  servlet:
+    encoding:
+      force-request: true
+      force-response: true
 
 logging:
   level:

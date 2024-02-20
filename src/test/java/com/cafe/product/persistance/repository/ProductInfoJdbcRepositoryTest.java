@@ -2,12 +2,7 @@ package com.cafe.product.persistance.repository;
 
 import com.cafe.common.model.BaseRepositoryTest;
 import com.cafe.product.persistance.dto.ProductListViewDto;
-import com.cafe.product.persistance.entity.ProductCategoryJpaEntity;
-import com.cafe.product.persistance.entity.ProductCategoryJpaEntityFixture;
-import com.cafe.product.persistance.entity.ProductInfoJpaEntity;
 import com.cafe.product.persistance.entity.ProductInfoJpaEntityFixture;
-import com.cafe.product.service.vo.ProductInfoRegistrationForm;
-import com.cafe.product.service.vo.ProductInfoRegistrationFormFixture;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayNameGeneration;
 import org.junit.jupiter.api.DisplayNameGenerator;

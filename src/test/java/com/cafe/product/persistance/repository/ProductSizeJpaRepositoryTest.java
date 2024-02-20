@@ -35,8 +35,8 @@ class ProductSizeJpaRepositoryTest extends BaseRepositoryTest {
         ProductInfoJpaEntity info = ProductInfoJpaEntityFixture.STANDARD.newInstance();
         productInfoJpaRepository.save(info);
 
-        ProductSizeJpaEntity small = ProductSizeJpaEntityFixture.SMALL.newInstance(info);
-        ProductSizeJpaEntity large = ProductSizeJpaEntityFixture.LARGE.newInstance(info);
+        ProductSizeJpaEntity small = ProductSizeJpaEntityFixture.SMALL.newInstance(info.getProductInfoId());
+        ProductSizeJpaEntity large = ProductSizeJpaEntityFixture.LARGE.newInstance(info.getProductInfoId());
         productSizeJpaRepository.saveAll(List.of(small, large));
 
         // when
