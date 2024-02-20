@@ -44,7 +44,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 @WebMvcTest(ProductController.class)
 class ProductControllerTest extends AdminAuthorizationControllerTest {
 
-    String BASE_URL = "/v1/products";
+    String BASE_URI = "/v1/products";
 
     @MockBean
     ProductCommandService productCommandService;
@@ -63,7 +63,7 @@ class ProductControllerTest extends AdminAuthorizationControllerTest {
         String responseBody = om.writeValueAsString(response);
 
         mvc.perform(
-                        post(BASE_URL + "/categories")
+                        post(BASE_URI + "/categories")
                                 .header(AUTHORIZATION, authorizationHeader)
                                 .contentType(APPLICATION_JSON)
                                 .content(requestBody)
@@ -86,7 +86,7 @@ class ProductControllerTest extends AdminAuthorizationControllerTest {
 
         // when
         mvc.perform(
-                        post(BASE_URL + "/infos")
+                        post(BASE_URI + "/infos")
                                 .header(AUTHORIZATION, authorizationHeader)
                                 .contentType(APPLICATION_JSON)
                                 .content(requestBody)
@@ -110,7 +110,7 @@ class ProductControllerTest extends AdminAuthorizationControllerTest {
 
         // when
         mvc.perform(
-                        patch(BASE_URL + "/infos/{productInfoId}/price", productInfoId)
+                        patch(BASE_URI + "/infos/{productInfoId}/price", productInfoId)
                                 .header(AUTHORIZATION, authorizationHeader)
                                 .contentType(APPLICATION_JSON)
                                 .content(requestBody)
@@ -134,7 +134,7 @@ class ProductControllerTest extends AdminAuthorizationControllerTest {
 
         // when
         mvc.perform(
-                        patch(BASE_URL + "/infos/{productInfoId}/detail", productInfoId)
+                        patch(BASE_URI + "/infos/{productInfoId}/detail", productInfoId)
                                 .header(AUTHORIZATION, authorizationHeader)
                                 .contentType(APPLICATION_JSON)
                                 .content(requestBody)
@@ -158,7 +158,7 @@ class ProductControllerTest extends AdminAuthorizationControllerTest {
 
         // when
         mvc.perform(
-                        patch(BASE_URL + "/categories/{productCategoryId}", productCategoryId)
+                        patch(BASE_URI + "/categories/{productCategoryId}", productCategoryId)
                                 .header(AUTHORIZATION, authorizationHeader)
                                 .contentType(APPLICATION_JSON)
                                 .content(requestBody)
@@ -182,7 +182,7 @@ class ProductControllerTest extends AdminAuthorizationControllerTest {
 
         // when
         mvc.perform(
-                        patch(BASE_URL + "/sizes/{productSizeId}/price", productSizeId)
+                        patch(BASE_URI + "/sizes/{productSizeId}/price", productSizeId)
                                 .header(AUTHORIZATION, authorizationHeader)
                                 .contentType(APPLICATION_JSON)
                                 .content(requestBody)
@@ -206,7 +206,7 @@ class ProductControllerTest extends AdminAuthorizationControllerTest {
 
         // when
         mvc.perform(
-                        patch(BASE_URL + "/sizes/{productSizeId}/info", productSizeId)
+                        patch(BASE_URI + "/sizes/{productSizeId}/info", productSizeId)
                                 .header(AUTHORIZATION, authorizationHeader)
                                 .contentType(APPLICATION_JSON)
                                 .content(requestBody)
@@ -229,7 +229,7 @@ class ProductControllerTest extends AdminAuthorizationControllerTest {
 
         // when
         mvc.perform(
-                        delete(BASE_URL + "/sizes/{productSizeId}", productSizeId)
+                        delete(BASE_URI + "/sizes/{productSizeId}", productSizeId)
                                 .header(AUTHORIZATION, authorizationHeader)
                                 .contentType(APPLICATION_JSON)
                 )
@@ -251,7 +251,7 @@ class ProductControllerTest extends AdminAuthorizationControllerTest {
 
         // when
         mvc.perform(
-                        delete(BASE_URL + "/infos/{productInfoId}", productInfoId)
+                        delete(BASE_URI + "/infos/{productInfoId}", productInfoId)
                                 .header(AUTHORIZATION, authorizationHeader)
                                 .contentType(APPLICATION_JSON)
                 )
@@ -273,7 +273,7 @@ class ProductControllerTest extends AdminAuthorizationControllerTest {
 
         // when
         mvc.perform(
-                        delete(BASE_URL + "/categories/{productCategoryId}", productCategoryId)
+                        delete(BASE_URI + "/categories/{productCategoryId}", productCategoryId)
                                 .header(AUTHORIZATION, authorizationHeader)
                                 .contentType(APPLICATION_JSON)
                 )
@@ -303,7 +303,7 @@ class ProductControllerTest extends AdminAuthorizationControllerTest {
 
             // when
             mvc.perform(
-                            get(BASE_URL + "/list")
+                            get(BASE_URI + "/list")
                                     .param("lastProductId", String.valueOf(lastProductId))
                                     .header(AUTHORIZATION, authorizationHeader)
                                     .contentType(APPLICATION_JSON)
@@ -327,7 +327,7 @@ class ProductControllerTest extends AdminAuthorizationControllerTest {
 
             // when
             mvc.perform(
-                            get(BASE_URL + "/list")
+                            get(BASE_URI + "/list")
                                     .header(AUTHORIZATION, authorizationHeader)
                                     .contentType(APPLICATION_JSON)
                     )

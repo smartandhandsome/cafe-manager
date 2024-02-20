@@ -36,7 +36,7 @@ public class AuthValidator {
         }
     }
 
-    public void validate(Long adminId) {
+    public void validateRefreshToken(Long adminId) {
         if (!refreshTokenReader.exist(adminId)) {
             throw new ForbiddenException(
                     ErrorCode.FORBIDDEN,

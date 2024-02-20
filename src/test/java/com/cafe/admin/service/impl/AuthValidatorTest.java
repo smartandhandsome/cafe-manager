@@ -4,6 +4,7 @@ import com.cafe.admin.service.vo.Admin;
 import com.cafe.admin.service.vo.AdminFixture;
 import com.cafe.admin.service.vo.LoginForm;
 import com.cafe.admin.service.vo.LoginFormFixture;
+import com.cafe.common.exception.ForbiddenException;
 import com.cafe.common.exception.LoginFailException;
 import jakarta.persistence.EntityNotFoundException;
 import org.junit.jupiter.api.DisplayNameGeneration;
@@ -29,6 +30,8 @@ class AuthValidatorTest {
     AuthValidator authValidator;
     @Mock
     AdminReader adminReader;
+    @Mock
+    RefreshTokenReader refreshTokenReader;
     @Mock
     PasswordValidator passwordValidator;
 
@@ -82,6 +85,35 @@ class AuthValidatorTest {
             assertThatThrownBy(() -> authValidator.validate(loginForm))
                     .isExactlyInstanceOf(LoginFailException.class);
         }
+    }
+
+    @Nested
+    class 리프레시_토큰이_존재하는지_확인할_수_있다 {
+
+        @Test
+        void 리프레시_토큰_존재할_떄() {
+            // given
+            Long adminId = 1L;
+
+            given(refreshTokenReader.exist(adminId)).willReturn(true);
+
+            // when, then
+            assertThatCode(() -> authValidator.validateRefreshToken(adminId))
+                    .doesNotThrowAnyException();
+        }
+
+        @Test
+        void 리프레시_토큰_존재하지_않을_때() {
+            // given
+            Long adminId = 1L;
+
+            given(refreshTokenReader.exist(adminId)).willReturn(false);
+
+            // when, then
+            assertThatThrownBy(() -> authValidator.validateRefreshToken(adminId))
+                    .isExactlyInstanceOf(ForbiddenException.class);
+        }
+
     }
 
 }

@@ -8,6 +8,7 @@ import com.cafe.admin.service.AuthService;
 import com.cafe.admin.service.vo.AuthToken;
 import com.cafe.admin.service.vo.AuthTokenFixture;
 import com.cafe.common.exception.ErrorCode;
+import com.cafe.common.model.AdminAuthorization;
 import com.cafe.common.model.BaseControllerTest;
 import com.cafe.common.model.MyCafeResponse;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -25,8 +26,15 @@ import org.springframework.test.web.servlet.MockMvc;
 
 import java.util.stream.Stream;
 
+import static org.mockito.ArgumentMatchers.any;
+import static org.mockito.ArgumentMatchers.anyString;
 import static org.mockito.BDDMockito.given;
+import static org.mockito.BDDMockito.then;
+import static org.mockito.Mockito.times;
+import static org.springframework.http.HttpHeaders.AUTHORIZATION;
 import static org.springframework.http.MediaType.APPLICATION_JSON;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.delete;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
@@ -34,6 +42,8 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 @WebMvcTest(AuthController.class)
 @DisplayNameGeneration(DisplayNameGenerator.ReplaceUnderscores.class)
 class AuthControllerTest extends BaseControllerTest {
+
+    static String BASE_URI = "/v1/auth";
 
     @Autowired
     private MockMvc mvc;
@@ -64,7 +74,7 @@ class AuthControllerTest extends BaseControllerTest {
             // given
             LoginRequest loginRequest = LoginRequestFixture.STANDARD.newInstance();
             AuthToken authToken = AuthTokenFixture.STANDARD.newInstance();
-            LoginResponse loginResponse = LoginResponseFixture.STANDARD.newInstance(authToken.accessToken(), authToken.refreshToken());
+            LoginResponse loginResponse = LoginResponseFixture.newInstance(authToken.accessToken(), authToken.refreshToken());
             MyCafeResponse<LoginResponse> myCafeResponse = MyCafeResponse.success(loginResponse);
 
             String requestBody = om.writeValueAsString(loginRequest);
@@ -74,7 +84,7 @@ class AuthControllerTest extends BaseControllerTest {
 
             // when
             mvc.perform(
-                            post("/v1/auth/login")
+                            post(BASE_URI + "/login")
                                     .contentType(APPLICATION_JSON)
                                     .content(requestBody)
                     ) // then
@@ -96,13 +106,66 @@ class AuthControllerTest extends BaseControllerTest {
 
             // when
             mvc.perform(
-                            post("/v1/auth/login")
+                            post(BASE_URI + "/login")
                                     .contentType(APPLICATION_JSON)
                                     .content(requestBody)
                     ) // then
                     .andExpect(status().isBadRequest())
                     .andExpect(content().json(responseBody));
         }
+    }
+
+    @Test
+    void 토큰_갱신_요청을_할_수_있다() throws Exception {
+        // given
+        Long adminId = 1L;
+
+        AuthToken authToken = AuthTokenFixture.STANDARD.newInstance();
+        LoginResponse loginResponse = new LoginResponse(authToken.accessToken(), authToken.refreshToken());
+        MyCafeResponse<LoginResponse> response = MyCafeResponse.success(loginResponse);
+
+        String authorizationHeader = "Bearer mytoken";
+
+        String responseBody = om.writeValueAsString(response);
+
+        given(authTokenExtractor.extractAdminId(anyString())).willReturn(adminId);
+        given(resolver.resolveArgument(any(), any(), any(), any())).willReturn(new AdminAuthorization(adminId));
+        given(authService.reissue(adminId)).willReturn(authToken);
+
+        // when
+        mvc.perform(
+                        get(BASE_URI + "/reissue")
+                                .header(AUTHORIZATION, authorizationHeader)
+                                .contentType(APPLICATION_JSON)
+                )
+                // then
+                .andExpect(status().isOk())
+                .andExpect(content().json(responseBody));
+    }
+
+    @Test
+    void 로그아웃_요청을_할_수_있다() throws Exception {
+        // given
+        Long adminId = 1L;
+        MyCafeResponse<Void> response = MyCafeResponse.success();
+        String authorizationHeader = "Bearer mytoken";
+
+        String responseBody = om.writeValueAsString(response);
+
+        given(authTokenExtractor.extractAdminId(anyString())).willReturn(adminId);
+        given(resolver.resolveArgument(any(), any(), any(), any())).willReturn(new AdminAuthorization(adminId));
+
+        // when
+        mvc.perform(
+                        delete(BASE_URI + "/logout")
+                                .header(AUTHORIZATION, authorizationHeader)
+                                .contentType(APPLICATION_JSON)
+                )
+                // then
+                .andExpect(status().isOk())
+                .andExpect(content().json(responseBody));
+
+        then(authService).should(times(1)).logout(adminId);
     }
 
 }

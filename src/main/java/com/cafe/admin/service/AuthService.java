@@ -25,7 +25,7 @@ public class AuthService {
     }
 
     public AuthToken reissue(Long adminId) {
-        authValidator.validate(adminId);
+        authValidator.validateRefreshToken(adminId);
         return tokenGenerator.generate(adminId);
     }
 

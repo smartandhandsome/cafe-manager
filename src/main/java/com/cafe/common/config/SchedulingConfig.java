@@ -13,7 +13,7 @@ public class SchedulingConfig {
     private final Auth0JWTManager auth0JWTManager;
 
     @Scheduled(cron = "0 0 0 * * *")
-    private void evict() {
+    private void deleteExpiredRefreshToken() {
         auth0JWTManager.deleteAllExpired();
     }
 

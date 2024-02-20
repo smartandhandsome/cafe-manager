@@ -10,6 +10,8 @@ import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
+import org.springframework.web.bind.annotation.DeleteMapping;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -31,7 +33,7 @@ public class AuthController {
     }
 
     @Operation(description = "토큰 갱신 로그인")
-    @PostMapping("/reissue")
+    @GetMapping("/reissue")
     public MyCafeResponse<LoginResponse> requestReissue(
             AdminAuthorization adminAuthorization
     ) {
@@ -40,7 +42,7 @@ public class AuthController {
     }
 
     @Operation(description = "관리자 로그아웃")
-    @PostMapping("/logout")
+    @DeleteMapping("/logout")
     public MyCafeResponse<Void> requestLogin(
             AdminAuthorization adminAuthorization
     ) {
