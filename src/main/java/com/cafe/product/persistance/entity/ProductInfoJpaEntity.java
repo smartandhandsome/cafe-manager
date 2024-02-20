@@ -15,7 +15,8 @@ import lombok.NoArgsConstructor;
 @Getter
 @Entity
 @Table(name = "product_Infos", indexes = {
-        @Index(name = "product_Infos_category_index", columnList = "product_category_id")
+        @Index(name = "product_Infos_category_index", columnList = "product_category_id"),
+        @Index(name = "product_Infos_barcode_index", columnList = "barcode", unique = true)
 })
 @NoArgsConstructor
 public class ProductInfoJpaEntity extends BaseEntity {
